@@ -1,0 +1,1081 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Unrolling and BMC - Verification For Dummies: SMT and Induction by OCamlPro</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item expanded "><a href="../bmc/index.html" class="active"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Verification For Dummies: SMT and Induction by OCamlPro</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="unrolling-and-bmc"><a class="header" href="#unrolling-and-bmc">Unrolling and BMC</a></h1>
+<blockquote>
+<p>Here we finally start doing things. We will perform a kind of analysis called BMC. While not a
+proof technique in general, it is a very useful <em>falsification</em> technique and paves the way
+towards <em>induction</em>.</p>
+</blockquote>
+<p>In the previous chapter, we played with our running example using Z3 by</p>
+<ul>
+<li>defining the transition relation as a <code>define-fun</code>,</li>
+</ul>
+<details>
+	<summary>Expand for a refresher on this definition.</summary>
+<pre><code class="language-text">(define-fun trans
+    (
+        ; &quot;Previous&quot; state.
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+        ; &quot;Next&quot; state.
+        (|s'.start_stop| Bool)
+        (|s'.reset| Bool)
+        (|s'.is_counting| Bool)
+        (|s'.cnt| Int)
+    )
+    Bool
+
+    (and
+        (=&gt; |s'.start_stop|
+            (= |s'.is_counting| (not |s.is_counting|))
+        )
+        (=&gt; (not |s'.start_stop|)
+            (= |s'.is_counting| |s.is_counting|)
+        )
+        (= |s'.cnt|
+            (ite |s'.reset|
+                0
+                (ite |s'.is_counting|
+                    (+ |s.cnt| 1)
+                    |s.cnt|
+                )
+            )
+        )
+    )
+)
+</code></pre>
+</details>
+<ul>
+<li>declaring two states <code>0</code> and <code>1</code>,</li>
+</ul>
+<details>
+	<summary>Expand for a refresher on these declarations.</summary>
+<pre><code class="language-text">; &quot;Previous&quot; state.
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+; &quot;Next&quot; state.
+(declare-const start_stop_1 Bool)
+(declare-const reset_1 Bool)
+(declare-const is_counting_1 Bool)
+(declare-const cnt_1 Int)
+</code></pre>
+</details>
+<ul>
+<li>asserting the transition relation between state <code>0</code> and state <code>1</code>, and</li>
+</ul>
+<details>
+	<summary>Expand for a refresher on this assertion.</summary>
+<pre><code class="language-text">(assert (trans
+    start_stop_0 reset_0 is_counting_0 cnt_0
+    start_stop_1 reset_1 is_counting_1 cnt_1
+))
+</code></pre>
+</details>
+<ul>
+<li>querying Z3 by constraining state <code>0</code> and/or state <code>1</code> to inspect the transition relation and
+prove some basic properties over it.</li>
+</ul>
+<details>
+	<summary>Expand for the last assertion and the queries.</summary>
+<pre><code class="language-text">(assert (and
+    ; constraints over state 0
+    (&gt; cnt_0 7)
+    (not is_counting_0)
+    ; constraints over state 1's inputs
+    start_stop_1
+    (not reset_1)
+))
+
+(check-sat)
+(get-model)
+</code></pre>
+</details>
+<p><br />
+</p>
+<h2 id="unrolling"><a class="header" href="#unrolling">Unrolling</a></h2>
+<p>Now, this process of asserting the transition relation between two states <code>0</code> and <code>1</code> effectively
+enforces the constraint that state <code>1</code> must be a legal successor of state <code>0</code>. This process is
+called <em>unrolling the transition relation</em>, or <em>unrolling the system</em>, or just <em>unrolling</em>.</p>
+<p>So far, we have only unrolled once to relate state <code>0</code> and state <code>1</code>. We can unroll more than once,
+simply by declaring more states and relate <code>0</code> to <code>1</code>, <code>1</code> to <code>2</code>, <em>etc.</em> by asserting the
+transition relation over the appropriate state variables.</p>
+<details>
+	<summary>Expand for an example of unrolling the system thrice.</summary>
+<pre><code class="language-text">; ANCHOR: all
+; ANCHOR: trans_def
+(define-fun trans
+    (
+        ; &quot;Previous&quot; state.
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+        ; &quot;Next&quot; state.
+        (|s'.start_stop| Bool)
+        (|s'.reset| Bool)
+        (|s'.is_counting| Bool)
+        (|s'.cnt| Int)
+    )
+    Bool
+
+    (and
+        (=&gt; |s'.start_stop|
+            (= |s'.is_counting| (not |s.is_counting|))
+        )
+        (=&gt; (not |s'.start_stop|)
+            (= |s'.is_counting| |s.is_counting|)
+        )
+        (= |s'.cnt|
+            (ite |s'.reset|
+                0
+                (ite |s'.is_counting|
+                    (+ |s.cnt| 1)
+                    |s.cnt|
+                )
+            )
+        )
+    )
+)
+; ANCHOR_END: trans_def
+
+; ANCHOR: states_def
+; State 0.
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+; State 1.
+(declare-const start_stop_1 Bool)
+(declare-const reset_1 Bool)
+(declare-const is_counting_1 Bool)
+(declare-const cnt_1 Int)
+; State 2.
+(declare-const start_stop_2 Bool)
+(declare-const reset_2 Bool)
+(declare-const is_counting_2 Bool)
+(declare-const cnt_2 Int)
+; State 3.
+(declare-const start_stop_3 Bool)
+(declare-const reset_3 Bool)
+(declare-const is_counting_3 Bool)
+(declare-const cnt_3 Int)
+; ANCHOR_END: states_def
+
+; ANCHOR: unroll_1
+(assert (trans
+    start_stop_0 reset_0 is_counting_0 cnt_0
+    start_stop_1 reset_1 is_counting_1 cnt_1
+))
+(assert (trans
+    start_stop_1 reset_1 is_counting_1 cnt_1
+    start_stop_2 reset_2 is_counting_2 cnt_2
+))
+(assert (trans
+    start_stop_2 reset_2 is_counting_2 cnt_2
+    start_stop_3 reset_3 is_counting_3 cnt_3
+))
+; ANCHOR_END: unroll_1
+
+; ANCHOR: state_constraints
+(assert (and
+    ; starting from `cnt &gt; 7`,
+    (&gt; cnt_0 7)
+    ; can we reach a state where `cnt = 5` in three transitions?
+    (= cnt_3 5)
+))
+
+(check-sat)
+; ANCHOR_END: state_constraints
+; ANCHOR_END: all
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; z3 test.smt2
+unsat
+</code></pre>
+</details>
+<p><br />
+</p>
+<h2 id="reachability"><a class="header" href="#reachability">Reachability</a></h2>
+<p>Before we actually get to BMC, let's define a few notions. Remember that transition systems have
+state variables, and that a <em>state</em> is a valuation of all these state variables. Let's say a state
+<code>s</code> is <em>reachable</em> if the system, starting from one of its initial states, can reach <code>s</code> by
+applying its transition relation <code>n</code> times, where <code>n</code> is an arbitrary natural number.</p>
+<blockquote>
+<p>Note that <code>n</code> can be <code>0</code>, <em>i.e.</em> the initial states of a system are reachable, naturally.</p>
+</blockquote>
+<p>This notion of <em>reachability</em> is usually extended to apply to state predicates. For instance, in
+the stopwatch system, we can say that the state predicate <code>cnt &gt; 5</code> is reachable: just start from
+<code>0</code> and keep counting.</p>
+<p><br />
+</p>
+<p>Using this notion, we can talk about the set of all reachable states for a given system, called its
+<em>reachable state space</em>. This set can be infinite, and even when it's not, actually constructing
+this set for realistic systems tends to be impractical. A tool that tries to construct this set is
+called <em>explicit-state</em>. SMT-based approaches are almost always <em>implicit-state</em>, as SMT solvers
+reason at theory-level about booleans, integers... directly to assess whether a given formula is
+satisfiable. The only time actual values (and thus states) are produced is when the formula is
+satisfiable and we ask for a model.</p>
+<blockquote>
+<p>While generally inefficient, tools such as <a href="https://lamport.azurewebsites.net/tla/tla.html" title="TLA+ website">TLA+</a> do manage to scale the explicit-state approach
+to impressively large systems. Also, it should be noted that when such a tool manages to
+terminate, <em>i.e.</em> compute the entire reachable state space, they are able to (dis)prove
+properties that are much more complex than anything we will do here. <a href="https://lamport.azurewebsites.net/tla/tla.html" title="TLA+ website">TLA+</a> for instance can
+reason about <em>linear temporal logic</em> formulas which are far beyond the scope of this book.</p>
+</blockquote>
+<p><br />
+</p>
+<p>Let's introduce one more notion, that of <em>invariants</em>. Given some transition system, we can write
+down a state predicate (such as <code>cnt ≥ 0</code>) and wonder whether it <em>holds</em> (evaluates to <code>true</code>) on
+all reachable states. If it does, then that state predicate is an <em>invariant</em> of the system, or
+<em>holds</em> for the system.</p>
+<p>From now on, we will be interested in transition systems with some <em>candidate invariants</em>. That is,
+we will have <em>&quot;properties&quot;</em> and we will have to (dis)prove that they are invariants for the system.
+We will say a system is <em>safe</em> if all the candidate invariants are actually invariants. Otherwise,
+the system is <em>unsafe</em>.</p>
+<p><br />
+</p>
+<h2 id="fantastic-counterexamples-and-how-to-find-them"><a class="header" href="#fantastic-counterexamples-and-how-to-find-them">Fantastic Counterexamples and How to Find Them</a></h2>
+<p>When a candidate invariant <code>I</code> is not an actual invariant, it means there is <em>at least</em> one
+reachable state <code>s</code> that <em>falsifies</em> <code>I</code>, <em>i.e.</em> <code>I(s)</code> evaluates to <code>false</code>. Since <code>s</code> is
+a reachable state, it means that there exists a trace of states <code>s_0</code>, <code>s_1</code>, ... <code>s_n</code> such that</p>
+<ul>
+<li><code>s_0</code> is an initial state, meaning <code>init(s_0)</code> is <code>true</code>,</li>
+<li><code>∀ i ∈ [0, n[</code>, <code>s_i+1</code> is a successor of <code>s_i</code>, meaning <code>trans(s_i, s_i+1)</code> is <code>true</code>, and</li>
+<li><code>s_n = s</code>, meaning <code>I(s_n)</code> is <code>false</code>.</li>
+</ul>
+<p>Assuming we are reporting to someone/something, we want to do better than just say <code>unsafe</code> when a
+candidate invariant does not hold for the system. Ideally, we should produce a witness of the
+candidate's falsification: a <em>counterexample</em>, which would be a trace of succeeding states leading
+to a state falsifying the candidate.</p>
+<p><br />
+</p>
+<p>Thankfully, we have an SMT solver to do this. Can we actually explore the reachable state space and
+look for a falsification given what we have seen so far?</p>
+<p>A first approach to doing this would be to write a bunch of assertions that are satisfiable if and
+only if there exists such a counterexample trace of some arbitrary length. Unfortunately, we cannot
+really do this as unrolling is a manual process: we declare state <code>i</code>, then assert the relation
+between state <code>i-1</code> and state <code>i</code>. We cannot write a finite number of assertions that encode an
+arbitrary number of unrollings for the SMT solver to reason about. You can go ahead and try it, but
+it will not work. At least not without quantifiers (<code>∀</code>, <code>∃</code>), which would not scale well at all.</p>
+<p><br />
+</p>
+<p>Now that we are frustrated by this dead-end approach, let's forget about our ideal goal and try
+tackle something simpler: can we look for a falsification of the candidate invariants in the
+initial states?</p>
+<p>Let's get back to our running stopwatch example, and add a candidate invariant: <code>cnt ≥ 0</code>. Recall
+that the stopwatch's initial predicate is</p>
+<pre><code class="language-text">init(s) ≜ (s.reset ⇒ s.cnt = 0) ∧ (s.is_counting = s.start_stop)
+</code></pre>
+<p><br />
+</p>
+<p>Now, we need to design some assertions for the SMT solver such that they are satisfiable if and
+only if there exists an initial state that falsifies our candidate. This is quite similar to the
+unrolling we did in the previous chapter, where we wrote assertions that were satisfiable if and
+only if state <code>1</code> was a successor of state <code>0</code>, and <code>cnt_1</code> was something else than <code>0</code>, <code>cnt_0</code> or
+<code>cnt_0 + 1</code>.</p>
+<p>Following the same approach, we first need to <code>define-fun</code> our initial state predicate.</p>
+<pre><code class="language-text">(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+    )
+)
+</code></pre>
+<p>That was easy. Next up, declare a state so that we can assert <code>init</code> on it.</p>
+<pre><code class="language-text">(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+</code></pre>
+<p>Then we write the <code>init</code> assertion.</p>
+<pre><code class="language-text">(assert
+    (init start_stop_0 reset_0 is_counting_0 cnt_0)
+)
+</code></pre>
+<p>So easy. We want the SMT solver to look for a falsification of our candidate <code>cnt ≥ 0</code>, so we just
+assert that.</p>
+<pre><code class="language-text">(assert
+    (not (&gt;= cnt_0 0))
+)
+
+(check-sat)
+(get-model)
+</code></pre>
+<p>If Z3 answers <code>sat</code> to these constraints, it means it found some values for the state variables
+such that they</p>
+<ul>
+<li>represent an actual initial state, and</li>
+<li>falsify our candidate.</li>
+</ul>
+<blockquote>
+<p>Full code in the <a href="#version-1">Version 1</a> section below.</p>
+</blockquote>
+<pre><code class="language-text">&gt; z3 test.smt2
+sat
+(
+  (define-fun reset_0 () Bool
+    false)
+  (define-fun cnt_0 () Int
+    (- 1))
+  (define-fun start_stop_0 () Bool
+    false)
+  (define-fun is_counting_0 () Bool
+    false)
+)
+</code></pre>
+<p>Did it work? Let's look at our initial predicate again:</p>
+<pre><code class="language-text">init(s) ≜ (s.reset ⇒ s.cnt = 0) ∧ (s.is_counting = s.start_stop)
+</code></pre>
+<p>The specification of the system did not really say anything about the initial value <code>cnt</code> should
+have. At least not besides the fact that it should be <code>0</code> when <code>reset</code> is <code>true</code>. Hence, when
+<code>reset</code> is <code>false</code>, <code>cnt</code> is not constrained in any way. In a real program, one could see this as a
+<em>use-before-init</em> problem where we declare (but not initialize) a <code>cnt</code> variable, set it to <code>0</code> if
+<code>reset</code> is <code>true</code>, but do nothing otherwise: <code>cnt</code> could be anything (including an invalid integer).</p>
+<p><br />
+</p>
+<p>So our system is unsafe: the candidate does not hold. The specification was not precise enough.
+Let's say from now on that the specification tells us <em><code>cnt</code> is initially an arbitrary positive
+integer</em>. Let's fix our initial predicate.</p>
+<pre><code class="language-text">(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+        (&gt;= |s.cnt| 0)
+;       ^^^^^^^^^^^^^^~~~~ fixed the specification
+    )
+)
+</code></pre>
+<p>We do not need to change anything else, we can just run the same check on the updated initial
+predicate.</p>
+<blockquote>
+<p>Full code in the <a href="#version-2">Version 2</a> section below.</p>
+</blockquote>
+<pre><code class="language-text">&gt; z3 test.smt2
+unsat
+</code></pre>
+<p>Perfect: by answering <code>unsat</code>, Z3 is telling us that it proved that no valuation of <code>s_0</code> is such
+that it is an initial state and it falsifies the candidate invariant. We just proved something: no
+falsification of the candidate is reachable in <code>0</code> transitions. Nice.</p>
+<p>Can we keep going? Is the candidate falsifiable in <code>1</code> transitions, or <code>7</code>, or more? Of course we
+can, thanks to unrolling. We previously used unrolling to start from some arbitrary state <code>s_0</code> and
+perform checks about its potential successor(s). If we just force <code>s_0</code> to be initial, like we just
+did, we can then unroll once to ask Z3 whether a successor <code>s_1</code> of <code>s_0</code> can falsify the
+candidate. If not, we can unroll once more, and so on until we find a falsification.</p>
+<p>Congratulations to us, we just invented BMC.</p>
+<p><br />
+</p>
+<blockquote>
+<p>The stopwatch system has an infinite reachable state space since <code>cnt</code> can reach any integer
+value (just keep incrementing it). Start actually proving candidates in the next chapter, this
+one focuses solely on finding counterexamples.</p>
+</blockquote>
+<p><br />
+</p>
+<h2 id="bmc"><a class="header" href="#bmc">BMC</a></h2>
+<p><strong>B</strong>ounded <strong>M</strong>odel-<strong>C</strong>hecking (BMC) is a <em>forward exploration</em> of the reachable state space of
+a transition system. The term <em>forward exploration</em> refers to the fact that BMC starts from the
+initial states and explores the state space by unrolling the transition relation incrementally.</p>
+<p>As a technique <strong>B</strong>MC is explicitly <em>bounded</em>: it explores the reachable state space <strong>up to
+some</strong> depth (number of unrollings). That is, as long as the reachable state space is infinite, BMC
+cannot prove anything because it will never finish exploring the state space. All it can do is
+<em>disprove</em> candidates.</p>
+<p><br />
+</p>
+<p>By this point, I expect most readers to be able to write SMT-LIB code that corresponds to a BMC
+check for a given number of unrollings. Just to make sure, the <a href="#bmc-with-unrolling">BMC with
+Unrolling</a> section showcases a BMC check where the transition relation is
+unrolled twice.</p>
+<p><br />
+</p>
+<blockquote>
+<p><strong>Warning:</strong> slightly (more) technical and practical discussion ahead. What follows is not
+mandatory to understand the upcoming chapters, but I think it is quite interesting and definitely
+mandatory for writing your own (efficient) verification engine.</p>
+</blockquote>
+<p><br />
+</p>
+<p>Let's discuss a few practical points regarding BMC. Mainly, the fact that it is incremental and
+that what we do at a given step depends on the solver's previous answer. For instance, say we have
+several candidate invariants and we are checking whether we can falsify some of them by unrolling
+<code>k</code> times. Say also the solver answers yes (<code>sat</code>) and gives us a model. Then what we want to do is
+check which candidates are falsified (using the model), and keep BMC-ing the candidates that were
+not falsified. We got a counterexample for some of the candidates, but there might be a different
+counterexample at the same depth falsifying other candidates. If not (<code>unsat</code>), we move on and
+check the remaining candidates at <code>k+1</code> and so on. Maybe they can be falsified by unrolling more
+than <code>k</code> times.</p>
+<p>So, this whole process is interactive: what BMC does depends on what the solver previously said. In
+the next chapter, I will introduce mikino which is a tool that will perform BMC (and more) for us.
+The way mikino conducts BMC is by launching Z3 as a separate process and feed it definitions,
+declarations, assertions, <code>check-sat</code>s and <code>get-model</code>s on its standard input. Z3 produces answers
+on its standard output, which mikino looks at to decide if/how to continue and what to stream to
+the input of the Z3 process.</p>
+<p><br />
+</p>
+<p>Based on what we have done so far, this would require restarting the solver each time. Say Z3
+answers <code>unsat</code> when we unroll <code>k</code> times. It means that we have an assertion of the negation of the
+candidate(s) for <code>s_k</code> which made our whole SMT-LIB instance (all the assertions together) <code>unsat</code>:
+<code>(assert (not (candidate s_k)))</code>. Now, this assertion is only there for our check at depth <code>k</code>, to
+ask for a falsification of the candidate(s). Still, we cannot move on and unroll at <code>k+1</code>: this
+assertion will still be there, and the instance will remain <code>unsat</code>.</p>
+<p>So, instead of restarting Z3, we can make the assertion of the negation of the candidates
+conditional. That is, we can give ourselves a <em>boolean flag</em> that <em>activates</em> this assertion.
+Such a flag is called an <em>activation literal</em>, or <em>actlit</em>.</p>
+<p>Say we are performing a BMC check at depth <code>k</code>. First, we need to declare this <em>&quot;boolean flag&quot;</em>.</p>
+<pre><code class="language-text">(declare-const actlit_k Bool)
+</code></pre>
+<p>Next, we write our assertion of the negation of the candidate(s) in such a way that <code>actlit_k</code>
+needs to be true for the assertion to be active.</p>
+<pre><code class="language-text">(assert
+	(=&gt; actlit_k
+		(not (and (candidate_1 s_k) (candidate_2 s_k) ...))
+	)
+)
+</code></pre>
+<p>Notice that if <code>actlit_k</code> is <code>false</code>, then this assertion is trivially <code>true</code> and thus does not
+contribute to whether other assertions are satisfiable. This is because <code>false ⇒ P</code> is always
+<code>true</code>, regardless of what <code>P</code> is. In particular, <code>false ⇒ false</code> is true.</p>
+<p>The last thing we need now is to perform a <code>check-sat</code> <em>assuming</em> <code>actlit_k</code> is true. We could
+<code>(assert actlit_k)</code> but that would not solve our problem: we cannot go back and <em>undo</em> this
+assertion, hence the negation of the candidates is active, hence the whole instance is <code>unsat</code>.</p>
+<p><br />
+</p>
+<p>Instead, we can use the <code>check-sat-assuming</code> SMT-LIB command. This command takes a list of boolean
+variables and forces to <code>check-sat</code> our assertions <strong>assuming</strong> these variables are <code>true</code>, but
+<strong>without</strong> actually asserting them. Meaning that, after the check-sat, these variables are still
+unconstrained.</p>
+<p>In particular, it means we can perform a <code>check-sat-assuming</code> on <code>actlit_k</code>, and then just assert
+<code>actlit_k</code> to be false to effectively deactivate the assertion of the negation of the candidates.</p>
+<p><br />
+</p>
+<p>This is all a bit abstract, let's see it in action on the stopwatch system. The <a href="#bmc-with-unrolling">BMC with
+Unrolling</a> section shows an unrolling of the system at depth <code>2</code> with the
+corresponding check for candidate <code>cnt ≥ 0</code>, and just that check. Let's modify it so that it uses
+activation literals to perform all checks up to depth <code>2</code>.</p>
+<p>The first check to perform is at depth <code>0</code>, so all we asserted so far is that state <code>0</code> is initial.</p>
+<pre><code class="language-text">; State 0 is initial.
+(assert
+    (init start_stop_0 reset_0 is_counting_0 cnt_0)
+)
+</code></pre>
+<p>Next we declare our activation literal for the upcoming check.</p>
+<pre><code class="language-text">; Activation literal for the first check.
+(declare-const actlit_0 Bool)
+</code></pre>
+<p>Then we conditionally assert the negation of the candidate.</p>
+<pre><code class="language-text">; Conditional assertion of the negation of the candidate at 0.
+(assert (=&gt; actlit_0
+    (not (&gt;= cnt_0 0))
+))
+</code></pre>
+<p>Then comes the check itself, using the brand new <code>check-sat-assuming</code> command we just discussed.</p>
+<pre><code class="language-text">; Check-sat, assuming `actlit_0` is true.
+(echo &quot;; info: falsification at depth 0?&quot;)
+(check-sat-assuming ( actlit_0 ))
+</code></pre>
+<p>Notice the use of the <code>echo</code> command which takes a string and causes the solver to output said
+string to its standard output. Remember that we will perform more than one check, so we use <code>echo</code>
+to keep track of what question the <code>sat</code>/<code>unsat</code> answers are for.</p>
+<p>As we already saw, this check will produce <code>unsat</code>: there is no falsification of this candidate at
+depth <code>0</code> (or at any depth, but we have not proved that yet).</p>
+<pre><code class="language-text">; Solver answers `unsat`, we want to unroll the system some more.
+; Before we do that, we deactivate the actlit.
+(assert (not actlit_0))
+; At this point, the solver realized the conditional assertion
+; of the negation of the candidate is trivially `true`, and will
+; ignore it from now on.
+</code></pre>
+<p>As a sanity check, we can <code>check-sat</code> right after we deactivated <code>actlit_0</code>. We just got an <code>unsat</code>
+because we assumed <code>actlit_0</code>, so if the deactivation of the negation of the candidate failed then
+a regular <code>check-sat</code> would also yield <code>unsat</code>. If deactivation worked, we should get <code>sat</code> because
+<code>(init s_0)</code>, our only active assertion, is <code>sat</code>.</p>
+<pre><code class="language-text">(echo &quot;; info: making sure assertion at 0 is not active anymore, expecting `sat`&quot;)
+(check-sat)
+</code></pre>
+<p>We can now keep on unrolling and <code>check-sat-assuming</code>, since the assertion of the negation of the
+candidate should now be deactivated.</p>
+<pre><code class="language-text">(assert
+    (trans
+        start_stop_0 reset_0 is_counting_0 cnt_0
+        start_stop_1 reset_1 is_counting_1 cnt_1
+    )
+)
+(declare-const actlit_1 Bool)
+(assert (=&gt; actlit_1
+    (not (&gt;= cnt_1 0))
+))
+(echo &quot;; info: falsification at depth 1?&quot;)
+(check-sat-assuming ( actlit_1 ))
+(assert (not actlit_1))
+(echo &quot;; info: making sure assertion at 1 is not active anymore, expecting `sat`&quot;)
+(check-sat)
+</code></pre>
+<p>We can keep going like that for as long as we want. Running Z3 on SMT-LIB code enforcing this
+methodology up to depth <code>2</code> produces the following output (see the <a href="#bmc-with-actlits">BMC with
+Actlits</a> section below for the full code).</p>
+<pre><code class="language-text">; info: falsification at depth 0?
+unsat
+; info: making sure assertion at 0 is not active anymore, expecting `sat`
+sat
+; info: falsification at depth 1?
+unsat
+; info: making sure assertion at 1 is not active anymore, expecting `sat`
+sat
+; info: falsification at depth 2?
+unsat
+; info: making sure assertion at 2 is not active anymore, expecting `sat`
+sat
+</code></pre>
+<p>Pretty nice 😸. Let's never do this again manually to preserve our own sanity, and move on to the
+next chapter where we will introduce mikino to do all of this automatically.</p>
+<h3 id="full-code-for-all-examples"><a class="header" href="#full-code-for-all-examples">Full Code For All Examples</a></h3>
+<h4 id="version-1"><a class="header" href="#version-1">Version 1</a></h4>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><code class="language-text">(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+    )
+)
+
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+
+(assert
+    (init start_stop_0 reset_0 is_counting_0 cnt_0)
+)
+
+(assert
+    (not (&gt;= cnt_0 0))
+)
+
+(check-sat)
+(get-model)
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; z3 test.smt2
+sat
+(
+  (define-fun reset_0 () Bool
+    false)
+  (define-fun cnt_0 () Int
+    (- 1))
+  (define-fun start_stop_0 () Bool
+    false)
+  (define-fun is_counting_0 () Bool
+    false)
+)
+</code></pre>
+</details>
+<h4 id="version-2"><a class="header" href="#version-2">Version 2</a></h4>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><code class="language-text">(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+        (&gt;= |s.cnt| 0)
+;       ^^^^^^^^^^^^^^~~~~ fixed the specification
+    )
+)
+
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+
+(assert
+    (init start_stop_0 reset_0 is_counting_0 cnt_0)
+)
+
+(assert
+    (not (&gt;= cnt_0 0))
+)
+
+(check-sat)
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; z3 test.smt2
+unsat
+</code></pre>
+</details>
+<h4 id="bmc-with-unrolling"><a class="header" href="#bmc-with-unrolling">BMC with Unrolling</a></h4>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><code class="language-text">; Initial predicate.
+(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+        (&gt;= |s.cnt| 0)
+    )
+)
+
+; Transition relation.
+(define-fun trans
+    (
+        ; &quot;Previous&quot; state.
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+        ; &quot;Next&quot; state.
+        (|s'.start_stop| Bool)
+        (|s'.reset| Bool)
+        (|s'.is_counting| Bool)
+        (|s'.cnt| Int)
+    )
+    Bool
+
+    (and
+        (=&gt; |s'.start_stop|
+            (= |s'.is_counting| (not |s.is_counting|))
+        )
+        (=&gt; (not |s'.start_stop|)
+            (= |s'.is_counting| |s.is_counting|)
+        )
+        (= |s'.cnt|
+            (ite |s'.reset|
+                0
+                (ite |s'.is_counting|
+                    (+ |s.cnt| 1)
+                    |s.cnt|
+                )
+            )
+        )
+    )
+)
+
+; State 0.
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+; State 1.
+(declare-const start_stop_1 Bool)
+(declare-const reset_1 Bool)
+(declare-const is_counting_1 Bool)
+(declare-const cnt_1 Int)
+; State 2.
+(declare-const start_stop_2 Bool)
+(declare-const reset_2 Bool)
+(declare-const is_counting_2 Bool)
+(declare-const cnt_2 Int)
+
+; State 0 is initial.
+(assert
+    (init start_stop_0 reset_0 is_counting_0 cnt_0)
+)
+
+; State 1 is a successor of state 0.
+(assert
+    (trans
+        start_stop_0 reset_0 is_counting_0 cnt_0
+        start_stop_1 reset_1 is_counting_1 cnt_1
+    )
+)
+
+; State 2 is a successor of state 1.
+(assert
+    (trans
+        start_stop_1 reset_1 is_counting_1 cnt_1
+        start_stop_2 reset_2 is_counting_2 cnt_2
+    )
+)
+
+; State 2 must falsify the candidate.
+(assert
+    (not (&gt;= cnt_2 0))
+)
+
+; Is this possible?
+(check-sat)
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; z3 test.smt2
+unsat
+</code></pre>
+</details>
+<h4 id="bmc-with-actlits"><a class="header" href="#bmc-with-actlits">BMC with Actlits</a></h4>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><code class="language-text">; Initial predicate.
+(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+        (&gt;= |s.cnt| 0)
+    )
+)
+
+; Transition relation.
+(define-fun trans
+    (
+        ; &quot;Previous&quot; state.
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+        ; &quot;Next&quot; state.
+        (|s'.start_stop| Bool)
+        (|s'.reset| Bool)
+        (|s'.is_counting| Bool)
+        (|s'.cnt| Int)
+    )
+    Bool
+
+    (and
+        (=&gt; |s'.start_stop|
+            (= |s'.is_counting| (not |s.is_counting|))
+        )
+        (=&gt; (not |s'.start_stop|)
+            (= |s'.is_counting| |s.is_counting|)
+        )
+        (= |s'.cnt|
+            (ite |s'.reset|
+                0
+                (ite |s'.is_counting|
+                    (+ |s.cnt| 1)
+                    |s.cnt|
+                )
+            )
+        )
+    )
+)
+
+; State 0.
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+; State 1.
+(declare-const start_stop_1 Bool)
+(declare-const reset_1 Bool)
+(declare-const is_counting_1 Bool)
+(declare-const cnt_1 Int)
+; State 2.
+(declare-const start_stop_2 Bool)
+(declare-const reset_2 Bool)
+(declare-const is_counting_2 Bool)
+(declare-const cnt_2 Int)
+
+; State 0 is initial.
+(assert
+    (init start_stop_0 reset_0 is_counting_0 cnt_0)
+)
+
+; Activation literal for the first check.
+(declare-const actlit_0 Bool)
+; Conditional assertion of the negation of the candidate at 0.
+(assert (=&gt; actlit_0
+    (not (&gt;= cnt_0 0))
+))
+; Check-sat, assuming `actlit_0` is true.
+(echo &quot;; info: falsification at depth 0?&quot;)
+(check-sat-assuming ( actlit_0 ))
+; Solver answers `unsat`, we want to unroll the system some more.
+; Before we do that, we deactivate the actlit.
+(assert (not actlit_0))
+; At this point, the solver realized the conditional assertion
+; of the negation of the candidate is trivially `true`, and will
+; ignore it from now on.
+
+(echo &quot;; info: making sure assertion at 0 is not active anymore, expecting `sat`&quot;)
+(check-sat)
+
+(assert
+    (trans
+        start_stop_0 reset_0 is_counting_0 cnt_0
+        start_stop_1 reset_1 is_counting_1 cnt_1
+    )
+)
+(declare-const actlit_1 Bool)
+(assert (=&gt; actlit_1
+    (not (&gt;= cnt_1 0))
+))
+(echo &quot;; info: falsification at depth 1?&quot;)
+(check-sat-assuming ( actlit_1 ))
+(assert (not actlit_1))
+(echo &quot;; info: making sure assertion at 1 is not active anymore, expecting `sat`&quot;)
+(check-sat)
+
+(assert
+    (trans
+        start_stop_1 reset_1 is_counting_1 cnt_1
+        start_stop_2 reset_2 is_counting_2 cnt_2
+    )
+)
+(declare-const actlit_2 Bool)
+(assert (=&gt; actlit_2
+    (not (&gt;= cnt_2 0))
+))
+(echo &quot;; info: falsification at depth 2?&quot;)
+(check-sat-assuming ( actlit_2 ))
+(assert (not actlit_2))
+(echo &quot;; info: making sure assertion at 2 is not active anymore, expecting `sat`&quot;)
+(check-sat)
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; z3 test.smt2
+; info: falsification at depth 0?
+unsat
+; info: making sure assertion at 0 is not active anymore, expecting `sat`
+sat
+; info: falsification at depth 1?
+unsat
+; info: making sure assertion at 1 is not active anymore, expecting `sat`
+sat
+; info: falsification at depth 2?
+unsat
+; info: making sure assertion at 2 is not active anymore, expecting `sat`
+sat
+</code></pre>
+</details>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../trans_smt/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../mikino_bmc/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../trans_smt/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../mikino_bmc/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

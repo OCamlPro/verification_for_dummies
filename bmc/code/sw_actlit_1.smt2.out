@@ -1,0 +1,12 @@
+; info: falsification at depth 0?
+unsat
+; info: making sure assertion at 0 is not active anymore, expecting `sat`
+sat
+; info: falsification at depth 1?
+unsat
+; info: making sure assertion at 1 is not active anymore, expecting `sat`
+sat
+; info: falsification at depth 2?
+unsat
+; info: making sure assertion at 2 is not active anymore, expecting `sat`
+sat

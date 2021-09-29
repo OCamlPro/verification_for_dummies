@@ -1,0 +1,79 @@
+running BMC, looking for falsifications for 3 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+checking for falsifications at depth 2
+checking for falsifications at depth 3
+found a falsification at depth 3:
+- `cnt ≤ 2` = (<= cnt 2)
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=| Step 1
+  |         cnt = 1
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 2
+  |         cnt = 2
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 3
+  |         cnt = 3
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 4
+checking for falsifications at depth 5
+found a falsification at depth 5:
+- `cnt ≤ 4` = (<= cnt 4)
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=| Step 1
+  |         cnt = 1
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 2
+  |         cnt = 2
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 3
+  |         cnt = 3
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 4
+  |         cnt = 4
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 5
+  |         cnt = 5
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 6
+checking for falsifications at depth 7
+checking for falsifications at depth 8
+checking for falsifications at depth 9
+checking for falsifications at depth 10
+
+|===| Bmc result
+| - could not find falsifications for the following candidate(s)
+|   `cnt is positive`
+|
+| - found a falsification for the following candidate(s)
+|   `cnt ≤ 2`
+|   `cnt ≤ 4`
+|
+| - system is unsafe
+|===|

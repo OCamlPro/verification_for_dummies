@@ -1,0 +1,667 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Induction - Verification For Dummies: SMT and Induction by OCamlPro</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item expanded "><a href="../induction/index.html" class="active"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Verification For Dummies: SMT and Induction by OCamlPro</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="induction"><a class="header" href="#induction">Induction</a></h1>
+<p>Let's get a little bit abstract and meta. The incremental BMC approach we have seen in previous
+chapters can itself be seen as a transition system. To do this formally, we would need a whole
+bunch of notions from logics which are far beyond this book's scope. No matter, we can discuss
+BMC as a transition system informally, with words. Writing <em>counterexample</em> constantly is quite
+tedious, we will use the much shorter <em>cex</em> (plural <em>cex-s</em>) contraction instead. Also, assume
+there is only one candidate for simplicity.</p>
+<p><br />
+</p>
+<p>We can see BMC as having a state: the unrolling depth <code>k</code> from the initial state at which it
+currently is. We can say it produces a boolean output that's <code>true</code> if a cex for the candidate
+exists at depth <code>k</code>. BMC's starting point is <em>&quot;check the initial states for a cex (of the
+candidate)&quot;</em>, which we can rephrase as</p>
+<ul>
+<li><code>init</code>: unroll the system at depth <code>0</code> from the initial state and check for cex.</li>
+</ul>
+<p>A BMC <em>transition</em> amounts to unrolling the transition relation one step further (depth <code>k</code>), and
+check for falsification at <code>k</code>. Rephrased to echo <code>init</code>'s formulation, we get</p>
+<ul>
+<li><code>trans(k-1, k)</code>: from an unrolling at <code>k-1</code> from the initial states with no cex, unroll to <code>k</code>
+and check for a cex (with <code>k &gt; 0</code>).</li>
+</ul>
+<p>So now we have a representation of BMC as a transition system with its <code>init</code> predicate and <code>trans</code>
+relation.</p>
+<p><br />
+</p>
+<p>It would be interesting to find a candidate invariant for BMC and try to prove it over the
+transition system representation of BMC we just introduced. As some readers have probably intuited,
+BMC actually has the property that it always finds the shortest cex possible in terms of <em>depth</em>
+(number of unrollings). More precisely, it finds one of them: if BMC produces a cex (trace of <code>k</code>
+states) of length <code>k</code>, there might be other cex-s of length <code>k</code> (and of length <code>i &gt; k</code>). However,
+there cannot exist a shorter cex (of length <code>i &lt; k</code>). More generally:</p>
+<ul>
+<li><code>candidate(k)</code>: when BMC is unrolled at <code>k</code> from the initial states, then no cex of length <code>0 ≤ i &lt; k</code> exists.</li>
+</ul>
+<p>To be clear, our goal is to find a way to prove that <code>candidate</code> is an invariant for BMC, which
+is represented as a transition system by the <code>init</code> predicate and <code>trans</code> relation above.</p>
+<p><br />
+</p>
+<p>The question now is <em>&quot;How can we prove that BMC verifies <code>candidate</code>?&quot;</em>, or <em>&quot;What would such a
+proof look like?&quot;</em>. Back when we discussed transition system, we managed to prove a few properties
+regarding the stopwatch system's transition relation. For instance, we previously proved that
+assuming <code>cnt_0 &gt; 7</code>, then we cannot have <code>cnt_1 = 0</code> without <code>reset_1</code> being <code>true</code> if state <code>1</code>
+is a successor of state <code>0</code>.</p>
+<p>So we could start building a proof for <code>candidate</code> by checking if it is a <em>consequence</em> of <code>trans</code>:
+is it true that <code>trans(k-1, k) ⇒ candidate(k)</code>?. Let's assume we have an unrolling at depth <code>k-1</code>
+from the initial states with no cex; by <code>trans</code>, the next BMC step is to unroll to <code>k</code> and check
+for a cex at <code>k</code>. Looking at <code>candidate</code> now, is it the case that no cex of length <code>i &lt; k</code> can
+exist?</p>
+<p>Well no, looking only at the assumptions we made we cannot draw that conclusion: <code>trans</code> tells us
+there is no cex at <code>k-1</code>, but that's it. We know nothing of potential cex-s at <code>i &lt; k - 1</code>. So,
+<code>candidate</code> is not a <em>consequence</em> of <code>trans</code>. All hope is not lost: our tiny proofs over the
+stopwatch system actually made assumptions about the <em>previous</em> state. &quot;<strong>Assuming</strong> <code>cnt_0 &gt; 7</code>,
+then we cannot have <code>cnt_1 = 0</code> without ...&quot;</p>
+<p><br />
+</p>
+<p>Instead of checking if <code>candidate</code> is a <em>consequence</em> of <code>trans</code> (which it is not as we just saw)
+we could check <code>trans</code> <em>preserves</em> <code>candidate</code>. Since <code>trans</code> relates succeeding states <code>k-1</code> and
+<code>k</code>, we say that <code>trans</code> <em>preserves</em> <code>candidate</code> if <code>candidate(k) ∧ trans(k-1, k) ⇒ candidate(k)</code>.
+That is, <em>&quot;states verifying <code>candidate</code> cannot, in one application of <code>trans</code>, reach a state
+falsifying <code>candidate</code>&quot;</em>.</p>
+<p>Is it the case though? We take the same assumptions as above, when we looked at a transition from
+<code>k-1</code> to <code>k</code>, and also assume <code>candidate</code> at <code>k-1</code>: <em>&quot;no cex of length <code>i &lt; k-1</code> exists&quot;</em>. By
+<code>trans</code>, we unroll to <code>k</code> and check for a cex at <code>k</code>. Can there be cex of length <code>i &lt; k</code>? No:
+<code>trans</code> tells us there was no cex at <code>k-1</code>, and our new <code>candidate</code>-assumption in the previous
+state tells us no cex of length <code>i &lt; kh-1 </code> exists.</p>
+<p><br />
+</p>
+<p>Sweet, <code>trans</code> preserves <code>candidate</code>: from a state verifying <code>candidate</code>, we can only reach states
+that also verify <code>candidate</code>. Hence, a state verifying <code>candidate</code> <em>cannot lead</em> to a state
+falsifying it by repeated applications of <code>trans</code>. Is this enough to decide <code>candidate</code> to be an
+invariant for BMC? No, unless we show all our initial states verify <code>candidate</code>.</p>
+<p>Imagine for instance we got BMC wrong and started at depth <code>1</code> instead of <code>0</code>, with exactly the
+same <code>trans</code>. Then, since we never checked for a cex at <code>0</code>, <code>candidate</code> has no reason to be true
+at <code>1</code>. More generally, if our initial states do not all verify <code>candidate</code>, then the fact that
+<code>trans</code> preserves <code>candidate</code> is not helpful because it says nothing about transitions from a
+state that does <strong>not</strong> verify <code>candidate</code>.</p>
+<p>Do(es) BMC's initial state(s) verify <code>candidate</code> then? That is, when BMC is unrolled at <code>0</code> from
+the initial states, is it possible that a cex of length <code>i</code> with <code>0 ≤ i &lt; 0</code> exists? Well, since
+there is no <code>i</code> such that <code>0 ≤ i &lt; 0</code>, then no.</p>
+<p><br />
+</p>
+<p>Putting both results together we have</p>
+<ul>
+<li>BMC's starting point verifies <code>candidate</code>, <em>i.e.</em> <code>init ⇒ candidate(0)</code>, and</li>
+<li>BMC's notion of transition preserves <code>candidate</code>, <em>i.e.</em> <code>candidate(k-1) ∧ trans(k-1, k) ⇒ candidate(k)</code>.</li>
+</ul>
+<p>Then, by <em>induction</em>, executions of BMC cannot ever falsify <code>candidate</code>.</p>
+<h2 id="one-last-short-smt-dive"><a class="header" href="#one-last-short-smt-dive">One Last Short SMT Dive</a></h2>
+<p>To sum up, given a transition system <code>𝕋</code> with state variables <code>s</code> and specified by <code>(init(s), trans(s, s'))</code>, we can invoke <em>induction</em> to prove that <code>candidate(s)</code> is an invariant for <code>𝕋</code> if
+we have shown both <em>base</em> and <em>step</em>:</p>
+<ul>
+<li><em>base</em>: for all <code>s</code>, <code>init(s) ⇒ candidate(s)</code>;</li>
+<li><em>step</em>: for all <code>s</code> and <code>s'</code>, <code>candidate(s) ∧ trans(s, s') ⇒ candidate(s')</code>.</li>
+</ul>
+<p>We can rephrase these two in terms of SMT solving and formula (un)satisfiability:</p>
+<ul>
+<li><em>base</em>: <code>init(s) ∧ ¬candidate(s)</code> is unsatisfiable;</li>
+<li><em>step</em>: <code>candidate(s) ∧ trans(s, s') ∧ ¬candidate(s')</code> is unsatisfiable.</li>
+</ul>
+<p>We all know what this means: it is finally time to achieve our dream of proving that the
+stopwatch's counter is always positive. I will use the version that starts from <code>cnt = 0</code>, not the
+one where it can take an arbitrary positive value. Both versions work for this proof, but the
+former is better for obtaining non-trivial (length <code>0</code>) counterexamples if we need to.</p>
+<blockquote>
+<p>Readers eager to <em>learn by doing</em> can start from any of the previous SMT examples involving BMC
+and try to conduct the proof themselves. The SMT examples for BMC have definitions for both
+<code>init</code> and <code>trans</code> ready to use. The easy version consists in having an SMT-LIB script for the
+<em>base</em> case, and another one for the <em>step</em> case. Solution in the <a href="#stopwatch-base">Stopwatch
+Base</a> and <a href="#stopwatch-step">Stopwatch Step</a> sections.</p>
+<p>Bonus points if you can do both with just one script, using activation literals. Perfect score if
+you can do both checks using only one activation literal, <strong>solely</strong> for the purpose of
+(de)activating <code>init</code>.</p>
+<p>Perfect score solution in the <a href="#stopwatch-actlit">Stopwatch Actlit</a> section.</p>
+</blockquote>
+<p><br />
+</p>
+<h3 id="base"><a class="header" href="#base">Base</a></h3>
+<p>SMT examples for BMC from previous chapters already have definitions for the stopwatch's <code>init</code> and
+<code>trans</code>. For convenience and readability, we define a <code>candidate</code> predicate over the system's
+counter:</p>
+<pre><code class="language-text">(define-fun candidate ((|s.cnt| Int)) Bool
+    (&gt;= |s.cnt| 0)
+)
+</code></pre>
+<p>In the <em>base</em> check, we are only concerned with the initial states. All we need to do</p>
+<ul>
+<li>is declare our state variables,</li>
+<li>assert that they are a legal initial state,</li>
+<li>assert that they falsify our candidate, and</li>
+<li>ask whether this is satisfiable.</li>
+</ul>
+<pre><code class="language-text">(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+
+(assert (init start_stop_0 reset_0 is_counting_0 cnt_0))
+(assert (not (candidate cnt_0)))
+
+; Is there a state that's initial but does not verify `candidate`?
+(check-sat)
+</code></pre>
+<p>Z3 easily answers our question.</p>
+<blockquote>
+<p>Full code in the <a href="#stopwatch-base">Stopwatch Base</a> section below.</p>
+</blockquote>
+<pre><code class="language-text">&gt; z3 test.smt2
+unsat
+</code></pre>
+<p>Done: we proved the <em>base</em> case, <em>step</em> is next, let's move on.</p>
+<p><br />
+</p>
+<h3 id="step"><a class="header" href="#step">Step</a></h3>
+<p>For the <em>step</em> check, which we are doing separately (in a different file) from <em>base</em>, we first
+need to declare two states since we need to check that <code>trans</code> preserves <code>candidate</code>.</p>
+<pre><code class="language-text">; Previous state.
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+; Next state.
+(declare-const start_stop_1 Bool)
+(declare-const reset_1 Bool)
+(declare-const is_counting_1 Bool)
+(declare-const cnt_1 Int)
+</code></pre>
+<p>Next, we want to ask whether it is possible to have</p>
+<ul>
+<li>state <code>0</code> verify <code>candidate</code>,</li>
+<li>state <code>1</code> be a successor of state <code>0</code>, and</li>
+<li>state <code>0</code> falsify <code>candidate</code>.</li>
+</ul>
+<pre><code class="language-text">(assert (candidate cnt_0))
+(assert (trans
+    start_stop_0 reset_0 is_counting_0 cnt_0
+    start_stop_1 reset_1 is_counting_1 cnt_1
+))
+(assert (not (candidate cnt_1)))
+
+; Is there a state verifying `candidate` that can
+; reach a state falsifying it in one transition?
+(check-sat)
+</code></pre>
+<p>And that's it. Unless Z3 decides to answer <code>sat</code> for some reason, we are done.</p>
+<blockquote>
+<p>Full code in the <a href="#stopwatch-step">Stopwatch Step</a> section below.</p>
+</blockquote>
+<pre><code class="language-text">&gt; play drumroll.wav
+&gt; z3 test.smt2
+unsat
+</code></pre>
+<p>Done and done. Both <em>base</em> and <em>step</em> hold, and thus we can finally invoke induction and conclude
+that <code>cnt ≥ 0</code> is an invariant for the stopwatch system.</p>
+<p>Before we move on to mikino's induction mode, some readers might want to check out Section
+<a href="#stopwatch-actlit">Stopwatch Actlit</a> below. In it, we conduct <em>base</em> and <em>step</em> in succession in a
+single file using an activation literal. That's not all we do however, there is a clever trick that
+we use for the checks. The trick is discussed in details in the comments.</p>
+<p><br />
+</p>
+<h3 id="full-code-for-all-examples"><a class="header" href="#full-code-for-all-examples">Full Code For All Examples</a></h3>
+<h4 id="stopwatch-base"><a class="header" href="#stopwatch-base">Stopwatch Base</a></h4>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><code class="language-text">; Initial predicate.
+(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+        (&gt;= |s.cnt| 0)
+    )
+)
+
+(define-fun candidate ((|s.cnt| Int)) Bool
+    (&gt;= |s.cnt| 0)
+)
+
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+
+(assert (init start_stop_0 reset_0 is_counting_0 cnt_0))
+(assert (not (candidate cnt_0)))
+
+; Is there a state that's initial but does not verify `candidate`?
+(check-sat)
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; z3 test.smt2
+unsat
+</code></pre>
+</details>
+<h4 id="stopwatch-step"><a class="header" href="#stopwatch-step">Stopwatch Step</a></h4>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><code class="language-text">; Initial predicate.
+(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+        (&gt;= |s.cnt| 0)
+    )
+)
+(define-fun trans
+    (
+        ; &quot;Previous&quot; state.
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+        ; &quot;Next&quot; state.
+        (|s'.start_stop| Bool)
+        (|s'.reset| Bool)
+        (|s'.is_counting| Bool)
+        (|s'.cnt| Int)
+    )
+    Bool
+
+    (and
+        (=&gt; |s'.start_stop|
+            (= |s'.is_counting| (not |s.is_counting|))
+        )
+        (=&gt; (not |s'.start_stop|)
+            (= |s'.is_counting| |s.is_counting|)
+        )
+        (= |s'.cnt|
+            (ite |s'.reset|
+                0
+                (ite |s'.is_counting|
+                    (+ |s.cnt| 1)
+                    |s.cnt|
+                )
+            )
+        )
+    )
+)
+
+(define-fun candidate ((|s.cnt| Int)) Bool
+    (&gt;= |s.cnt| 0)
+)
+
+; Previous state.
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+; Next state.
+(declare-const start_stop_1 Bool)
+(declare-const reset_1 Bool)
+(declare-const is_counting_1 Bool)
+(declare-const cnt_1 Int)
+
+(assert (candidate cnt_0))
+(assert (trans
+    start_stop_0 reset_0 is_counting_0 cnt_0
+    start_stop_1 reset_1 is_counting_1 cnt_1
+))
+(assert (not (candidate cnt_1)))
+
+; Is there a state verifying `candidate` that can
+; reach a state falsifying it in one transition?
+(check-sat)
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; z3 test.smt2
+unsat
+</code></pre>
+</details>
+<h4 id="stopwatch-actlit"><a class="header" href="#stopwatch-actlit">Stopwatch Actlit</a></h4>
+<details>
+	<summary>Expand this for the full code.</summary>
+<p>Until now, we performed the <em>step</em> check of an induction proof by giving ourselves a state <code>0</code> and
+a state <code>1</code> such that</p>
+<ul>
+<li><code>trans(s_0, s_1)</code>: state <code>1</code> is state <code>0</code>'s successor,</li>
+<li><code>candidate(s_0)</code>: state <code>0</code> verifies the candidate,</li>
+<li><code>¬candidate(s_1)</code>: state <code>1</code> falsifies the candidate.</li>
+</ul>
+<p>Now, the example below swaps the state indices <code>0</code> and <code>1</code>. That is:</p>
+<ul>
+<li><code>trans(s_1, s_0)</code>: state <code>0</code> is state <code>1</code>'s successor,</li>
+<li><code>candidate(s_1)</code>: state <code>1</code> verifies the candidate,</li>
+<li><code>¬candidate(s_0)</code>: state <code>0</code> falsifies the candidate.</li>
+</ul>
+<p>This does not really change anything by itself, the check is same except that the indices have
+changed. We do need to be careful to extract the counterexample correctly though.</p>
+<p>The reason we present this version is that this <em>reverse-unrolling</em> version lets us keep state <code>0</code>
+as the <em>last state of the trace</em>, <em>i.e.</em> the state on which the falsification occurs. In normal
+unrolling, if we wanted to unroll the transition relation more, we would need to introduce <code>s_2</code>,
+deactivate <code>¬candidate(s_1)</code>, assert <code>candidate(s_1)</code>, and conditionally assert <code>¬candidate(s_2)</code>.</p>
+<p>With reverse-unrolling we can just say <code>s_2</code> is <code>s_1</code>'s previous state, and assert
+<code>candidate(s_2)</code>. We are not unrolling more than once here (a process called <code>k</code>-induction), but
+this reverse-unrolling trick is still convenient <em>w.r.t.</em> the <em>base</em> check. The <em>base</em> check asserts
+<code>¬candidate(s_0)</code>, which <em>step</em> also needs.</p>
+<pre><code class="language-text">; Initial predicate.
+(define-fun init
+    (
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+    )
+    Bool
+
+    (and
+        (= |s.is_counting| |s.start_stop|)
+        (=&gt; |s.reset| (= |s.cnt| 0))
+        (&gt;= |s.cnt| 0)
+    )
+)
+(define-fun trans
+    (
+        ; &quot;Previous&quot; state.
+        (|s.start_stop| Bool)
+        (|s.reset| Bool)
+        (|s.is_counting| Bool)
+        (|s.cnt| Int)
+        ; &quot;Next&quot; state.
+        (|s'.start_stop| Bool)
+        (|s'.reset| Bool)
+        (|s'.is_counting| Bool)
+        (|s'.cnt| Int)
+    )
+    Bool
+
+    (and
+        (=&gt; |s'.start_stop|
+            (= |s'.is_counting| (not |s.is_counting|))
+        )
+        (=&gt; (not |s'.start_stop|)
+            (= |s'.is_counting| |s.is_counting|)
+        )
+        (= |s'.cnt|
+            (ite |s'.reset|
+                0
+                (ite |s'.is_counting|
+                    (+ |s.cnt| 1)
+                    |s.cnt|
+                )
+            )
+        )
+    )
+)
+
+(define-fun candidate ((|s.cnt| Int)) Bool
+    (&gt;= |s.cnt| 0)
+)
+
+
+(declare-const start_stop_0 Bool)
+(declare-const reset_0 Bool)
+(declare-const is_counting_0 Bool)
+(declare-const cnt_0 Int)
+
+; Wait, shouldn't this be under an activation literal?
+(assert (not (candidate cnt_0)))
+; No because we're being very clever. More on that in the
+; step check below.
+
+(echo &quot;base check, expecting `unsat`&quot;)
+(declare-const base_actlit Bool)
+(assert (=&gt; base_actlit
+    (init start_stop_0 reset_0 is_counting_0 cnt_0)
+))
+(check-sat-assuming (base_actlit))
+
+
+(declare-const start_stop_1 Bool)
+(declare-const reset_1 Bool)
+(declare-const is_counting_1 Bool)
+(declare-const cnt_1 Int)
+
+(echo &quot;step check, expecting `unsat`&quot;)
+(assert
+    (trans
+        ; State `1` is first?
+        start_stop_1 reset_1 is_counting_1 cnt_1
+        ; State `0` is its successor?
+        start_stop_0 reset_0 is_counting_0 cnt_0
+    )
+)
+(assert (candidate cnt_1))
+; Most unhorthodox. We are reverse-unrolling™.
+; When we checked for base above, we asserted `(not (candidate cnt_0))`
+; **unconditionnaly**. So at this point, we have
+; - candidate(s_1)
+; - trans(s_1, s_0)
+; - ¬candidate(s_0)
+;
+; By unrolling backwards, with `s_0` the *last* state, we can reverse-unroll
+; without changing anything, just adding a state `s_2` and asserting
+; `trans(s_2, s_1)`.
+;
+; This is useful when doing &quot;k-induction&quot;, which requires unrolling more than
+; once in step (and base), and because SMT-solvers work by **learning** facts
+; about the SMT instance they work on. These facts are *kept between checks*.
+; So, Z3 will learn facts from the three assertions above in the `check-sat`
+; below. If we reverse-unroll once more by adding an `s_2` as the predecessor
+; of `s_1`, then Z3 will be able to re-use facts it learnt since we only added
+; to the instance, but did not change anything that was there.
+
+(check-sat)
+
+(echo &quot;induction proof complete&quot;)
+</code></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; z3 test.smt2
+base check, expecting `unsat`
+unsat
+step check, expecting `unsat`
+unsat
+induction proof complete
+</code></pre>
+</details>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../mikino_bmc/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../mikino_induction/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../mikino_bmc/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../mikino_induction/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

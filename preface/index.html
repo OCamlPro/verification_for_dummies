@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Preface - Verification For Dummies: SMT and Induction by OCamlPro</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="../preface/index.html" class="active"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Verification For Dummies: SMT and Induction by OCamlPro</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="preface"><a class="header" href="#preface">Preface</a></h1>
+<blockquote>
+<p>This preface is a high-level introduction to formal verification. It then goes into the details
+of what a formal verification tool looks like, and which aspects of such tools we will discuss in
+later posts.</p>
+</blockquote>
+<p><br />
+</p>
+<p><a href="https://en.wikipedia.org/wiki/Mathematical_logic">Formal logics</a> deal with reasoning in the context of a formal framework. For example, a
+<em>type system</em> is a formal framework. <a href="https://en.wikipedia.org/wiki/Strong_and_weak_typing">Strongly-typed</a> programming languages rely on
+type systems to (dis)prove that programs are well-typed. For example, consider the following Rust
+function.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn demo(n: usize) -&gt; usize {
+    let mut res = n;
+    if n % 2 == 0 {
+        res = 2*n;
+    } else {
+        res = 2*n + 1;
+    }
+    return res;
+}
+println!(&quot;demo(7): {}&quot;, demo(7))
+<span class="boring">}
+</span></code></pre></pre>
+<p>When the Rust compiler type-checks this function, it goes through its body and aggregates some
+<em>constraints</em>. These constraints are an abstraction of the definition that the type system can
+reason about to (dis)prove that the program respects some type-related properties. For instance,
+<code>let mut res = n;</code> is abstracted as <em>&quot;<code>res</code> has the same type as <code>n</code>&quot;</em>. The fact that, at this
+point, <code>res</code> is equal to <code>n</code> is not relevant for type-checking.</p>
+<p><br />
+</p>
+<p>Rust's most peculiar feature is the notion of <em>ownership</em> and the associated
+<a href="https://doc.rust-lang.org/1.8.0/book/references-and-borrowing.html"><em>borrow-checker</em></a>. Similar to type-checking, borrow-checking abstracts the actual
+code to encode it in a framework so that it can reason about the program. Type-checking's core
+notion is that of types, and the equivalent for borrow-checking is <em>lifetimes</em>, <em>i.e.</em> the length
+of time for which some data exists and can be used.</p>
+<blockquote>
+<p>Understanding lifetimes and the borrow-checker is not required for the next chapters. It is
+presented here as an example of encoding a problem in a framework where constraints can be
+constructed. Looking at these constraints, a tool (the borrow-checker here) can draw conclusion
+regarding the (un)safety of the program.</p>
+</blockquote>
+<p>Consider the following Rust function, where <code>'a</code> is a lifetime parameter.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// DOES NOT COMPILE
+fn demo&lt;'a&gt;(n: &amp;'a mut usize) -&gt; &amp;'a mut usize {
+    let mut res = *n;
+    res += 1;
+    // error[E0515]: cannot return reference to local variable `res`
+    return &amp;mut res;
+    //     ^^^^^^^^ returns a reference to data owned by the current function
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Now, this code does not compile because of the notion of <em>ownership</em>. Here, the function's body
+<em>owns</em> <code>res</code> since it created (allocated) it and, since it does not transfer <code>res</code> itself to the
+caller (only <code>&amp;mut res</code>), <code>res</code> is freed when we exit the body of the function (<code>res</code>'s owner):</p>
+<ul>
+<li><em>i)</em> <code>res</code> only lives for the lifetime <code>'demo</code> (lifetime of the body of <code>demo</code>)</li>
+<li><em>ii)</em> <code>demo</code> returns a mutable reference to <code>res</code></li>
+<li><em>iii)</em> the output of <code>demo</code> is a mutable reference of the same lifetime <code>'a</code> as its input</li>
+</ul>
+<p>The compiler can then infer that <code>demo</code>'s output has lifetime <code>'demo</code> from <em>i)</em> and <em>ii)</em>, and thus
+<code>'a</code> must be equal to <code>'demo</code> from <em>iii)</em>. However, it follows from <em>iii)</em> that <code>'a</code> must, in
+general, live strictly longer (be valid for longer) than <code>'demo</code>. So, we have <code>'a &gt; 'demo</code> and
+since <code>'a = 'demo</code>, we reach a contradiction: <code>'demo &gt; 'demo</code>. This means that there is no solution
+to the constraints, and the compiler proceeds to reject the program by telling us that <code>res</code> does
+not live long enough.</p>
+<p><br />
+</p>
+<p>Type-checking and borrow-checking are examples of verification processes. In both cases, the
+semantics of the program is encoded in a proof system. The encoding of the program and the rules of
+the proof system let the compiler build a set of <em>constraints</em>.</p>
+<p>It is interesting to note that <em>formal verification</em>, at its core, really consists in <strong>searching
+for a proof</strong> of correctness. As we saw, the borrow-checker aggregates constraints and then looks
+for a solution. In the paragraph above, we were looking for an interpretation of the different
+lifetimes of the program that verifies, or <em>&quot;satisfies&quot;</em> all the constraint.</p>
+<p><br />
+</p>
+<p>Searching for a proof, which consists in trying to <em>solve</em> some constraints is done by a <em>solver</em>.
+From our point of view, the solver is our main building block. It is the block responsible for producing an actual answer from the encoding of the verification problem.</p>
+<p>Now, the real question is <em>&quot;what does it mean for the constraints to have a solution, or to have
+none?&quot;</em>. In the case of type-checking, the type constraints have a solution <em>if and only if</em> the
+program is well-typed. It says very little about memory-safety and thread-safety on its own, which
+is why type-checking is followed by borrow-checking in the Rust compiler.</p>
+<p>The borrow-checker on the other hand builds constraints such that the existence of a solution
+implies the absence of <strong>U</strong>ndefined <strong>B</strong>ehavior (UB) in the program. At least as long as there
+are no <code>unsafe</code> blocks in it.</p>
+<h2 id="properties-and-specification"><a class="header" href="#properties-and-specification">Properties and Specification</a></h2>
+<p>The main point of the discussion above is to highlight a well-known fact in formal verification.
+There is no such thing as <em>verifying a program</em>: all we can do is verify that <em>some properties</em>
+hold for a program. This might seem like a trivial distinction, but it has consequences that
+verification novices tend to overlook.</p>
+<p>Type-checking and borrow-checking verify <em>built-in</em> properties: the program is well-typed and
+cannot exhibit UB. We do not need to write a <em>specification</em> to tell them to verify these
+properties. (Arguably, the type/ownership information we write throughout the program acts as a
+partial/local specification.)</p>
+<p><br />
+</p>
+<p>As a consequence, if we want to verify something the compiler is not able to do, we need two
+things. First, we need some kind of <em>specification</em>, <em>i.e.</em> the properties we want to prove. We
+might want to prove relatively general properties, for instance that no division by zero can occur.
+Similar to type-checking and borrow-checking, this kind of property is built-in: whatever the
+program to verify is, the property stays the same.</p>
+<p>But our properties might depend on the exact program that goes through the verification process.
+For example, we might want to prove input/output <em>contracts</em> on the functions of the programs we
+analyze: the output of <code>fun_1</code> is positive, the output of <code>fun_2</code> is strictly greater than its
+second input... In this case, programs will need some kind of annotation to <em>specify</em> these
+contracts. Contrary to built-in properties, these program-specific properties are an input of the
+verification tool.</p>
+<h2 id="solvers-and-encoding"><a class="header" href="#solvers-and-encoding">Solvers and Encoding</a></h2>
+<p>The second thing we need is a solver in which we can reason about the properties we are interested
+in, on the programs we are interested in. In general, the solver will not accept the programs we
+want to solve directly: we need to perform some encoding to generate the constraints for the solver.</p>
+<p>The endgame is to build a verification tool that looks something like this:</p>
+<pre><code class="language-text">
+                              ┌───────────────────────┐
+                              │   Verification Tool   │
+                              ├───────────────────────┤
+ ┌─────────────────────┐      │                       │
+ │   Program to check  │      │     ┌──────────┐      │
+ │and properties if not├──────┼─────► Encoding │      │
+ │      built-in       │      │     └────┬─────┘      │
+ └─────────────────────┘      │          │constraints │
+                              │          │            │
+                              │      ┌───▼─────┐      │
+                              │      │ Solving │      │
+                              │      └───┬─────┘      │
+                              │          │success     │
+                              │          │or failure  │
+ ┌──────────────────────┐     │  ┌───────▼─────────┐  │
+ │ User-friendly output ◄─────┼──┤ Post-processing │  │
+ └──────────────────────┘     │  └─────────────────┘  │
+                              │                       │
+                              └───────────────────────┘
+
+</code></pre>
+<h3 id="expressiveness"><a class="header" href="#expressiveness">Expressiveness</a></h3>
+<p>An important thing we have to consider is the <em>expressiveness</em> of the solver: it must be able to
+represent and reason about our programs well enough that it is able to check our properties.</p>
+<p><strong>Spoiler alert</strong>: verification is expensive. Usable, practical formal verification requires quite
+a lot of clever engineering at every level. Also, generally speaking, the more expressive a solver
+is the more expensive using it will be. Roughly speaking, ideally, a good/efficient solver for a
+verification process is a solver that can handle exactly what we need and nothing else.</p>
+<p>This is in fact how verification projects start, usually. Verification experts will take a very
+long look at the kind of programs and properties targeted by the project and establish a list of
+suitable solvers. Crucial aspects to look for in this process include</p>
+<ul>
+<li><strong>types</strong> of the values manipulated: booleans, integers, floats, hash sets, lists, user-defined
+types...</li>
+<li><strong>operations</strong> over these values: linear multiplication, non-linear multiplication, modulo...</li>
+<li><strong>control flow</strong>: recursion, iterators, loops, pattern-matching, switch-case...</li>
+</ul>
+<p>Delimiting some kind of <em>expressiveness perimeter</em> to describe what we want the solver to support
+is crucial and quite technical. The immediate danger is to get this perimeter wrong, and later
+realize that aspects we missed make the solver we selected useless. This is why it tends to be
+difficult to extend the expressiveness of a verification framework in directions not identified in
+early stages.</p>
+<p>If, when we chose the solver, all we had were booleans and integers with the usual operations over
+them, it is for example very unlikely that we will be able to handle hash sets without huge changes
+in the verification framework such as changing the solver.</p>
+<h3 id="soundness-of-the-encoding"><a class="header" href="#soundness-of-the-encoding">Soundness (of the Encoding)</a></h3>
+<p>Solvers have a notion of <em>soundness</em>. Roughly, a solver is <em>sound</em> if it can only prove <em>valid</em>
+results (meaning it cannot prove things that are <em>&quot;wrong&quot;</em>). Since we are interested in <em>using</em>
+(not <em>designing</em>) solvers, let's not go into more details on the notion of solver soundness and
+only consider sound solvers.</p>
+<p><br />
+</p>
+<p>There is a second notion of <em>soundness</em> however, which concerns the <em>encoding</em>. The <em>encoding</em> is
+the process of going from an input program (and specification) to whatever kind of system the
+solver can work on. This step will typically abstract the semantics of the program, as generally
+speaking we cannot represent its exact semantics in the solver's input language.</p>
+<p>The process of encoding is <em>sound</em> if whenever we prove that the encoded program verifies some
+property <code>Prop</code>, then necessarily the original program verifies <code>Prop</code> as well. In case it is not
+clear, if the goal is formal verification then <strong>we need the encoding to be sound</strong>. Otherwise, a
+proof on the encoded program tells us nothing of the real program, <em>i.e.</em> the one we want to verify
+in the first place.</p>
+<blockquote>
+<p>This is not to say that unsound encodings are necessarily useless. They can be useful if we are
+interested solely in finding bugs for instance. Since we will not try to prove anything, it is
+fine for the encoding to be unsound as long as it allows us to find actual/potential bugs.</p>
+</blockquote>
+<h2 id="outro"><a class="header" href="#outro">Outro</a></h2>
+<p>I hope I got across the point that setting up a verification process in a (semi-)industrial context
+requires a great deal of inspection. It requires assessing very precisely what kind of program we
+want to analyze, and what kind of property we want to check. Widening the perimeter of
+programs/properties supported can be arbitrarily complex.</p>
+<p><br />
+</p>
+<p>Another important point is that the actual verification framework should be written very carefully.
+While the solver is usually very trustworthy, any issue in the steps between the input program and
+specification and the solving (parsing, pre-processing and encoding) potentially voids any
+successful proof attempt. The solver <strong>must</strong> work on a correct encoding of the problem for the
+result to mean anything.</p>
+<p>Note that the problem is less severe for failed proof attempts that produce a <em>counterexample</em> (an
+<em>executable</em> witness of a falsification of the property). Checking that the counterexample makes
+sense for the original program is easy and fast. But a proof of correctness relies on the encoding
+being sound and correctly implemented.</p>
+<blockquote>
+<p>There are ways to mitigate this kind of problem. Soundness can be formally proved. The frontend
+can be made redundant by implementing it twice by two different teams in two different languages
+(two or more), and checking they produce exactly the same constraints. Solver-side, <em>proof
+logging</em> consists in having the solver log the logical steps of the actual proof it found so that
+they can be checked by one or more separate tools.</p>
+</blockquote>
+<h2 id="next"><a class="header" href="#next">Next</a></h2>
+<p>The following posts dive into SMT-based transition system induction, with some property
+strengthening at the end. We will first get to know <em>SMT solvers</em>, which are powerful, flexible and
+generally quite amazing tools. Next are <em>(declarative) transition systems</em>, which are the kind of
+programs we will analyze. They are relatively simple to understand and require little encoding to
+analyze them, meaning the encoding will be understandable when we look at it.</p>
+<p>Next let's discuss <em>bounded model checking</em>, which on its own cannot (usually) prove anything: it
+<em>just</em> finds counterexamples (bugs). The three posts after that discuss basic and more advanced
+induction techniques.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../smt/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../smt/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

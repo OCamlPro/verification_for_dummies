@@ -3,8 +3,9 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Introduction - Verification For Dummies: SMT and Induction by OCamlPro</title>
-                
+        <title></title>
+                        <base href="/">
+        
 
         <!-- Custom HTML head -->
         
@@ -82,7 +83,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>            </div>
+                <ol class="chapter"><li class="chapter-item "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>            </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
@@ -143,126 +144,14 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="verification-for-dummies-smt-and-induction"><a class="header" href="#verification-for-dummies-smt-and-induction">Verification for Dummies: SMT and Induction</a></h1>
-<p>By <a href="https://www.ocamlpro.com" title="OCamlPro's official website">OCamlPro</a>.</p>
-<ul>
-<li>
-<p>Adrien Champion</p>
-<p><a href="mailto:adrien.champion@ocamlpro.com">adrien.champion@ocamlpro.com</a></p>
-</li>
-<li><a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
-      <img
-          alt="Creative Commons License"
-          style="border-width:0"
-          src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png"
-      />
-  </a>
-<p>This work is licensed under a <a
-        rel="license"
-        href="http://creativecommons.org/licenses/by-sa/4.0/"
-    >Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
-</li>
-</ul>
-<p><br />
-</p>
-<p>This book broadly discusses <em>induction</em> as a <em>formal verification</em> technique, which here really
-means <em>formal program verification</em>. I will use concrete, runnable examples whenever possible.
-Some of them can run directly in a browser, while others require to run small easy-to-retrieve
-tools locally. Such is the case for pretty much all examples dealing directly with induction.</p>
-<p>The next chapters discuss the following notions:</p>
-<ul>
-<li>formal logics and formal frameworks;</li>
-<li>SMT-solving: modern, <em>low-level</em> verification building blocks;</li>
-<li>declarative transition systems;</li>
-<li>transition system unrolling;</li>
-<li>BMC and induction proofs over transition systems;</li>
-<li>candidate strengthening.</li>
-</ul>
-<p><br />
-</p>
-<p>The approach presented here is far from being the only one when it comes to program verification.
-It happens to be relatively simple to understand, and I believe that familiarity with the notions
-discussed here makes understanding other approaches significantly easier.</p>
-<p>This book thus hopes to serve both as a relatively deep dive into the specific technique of
-SMT-based induction, as well as an example of the technical challenges inherent to both developing
-and using automated proof engines.</p>
-<p><br />
-</p>
-<p>Some chapters contain a few pieces of Rust code. Usually to provide a runnable version of a system
-under discussion, or to serve as example of actual code that we want to encode and verify. Some
-notions of Rust could definitely help in places, but this is not mandatory (probably).</p>
-<p><br />
-</p>
-<h2 id="table-of-contents"><a class="header" href="#table-of-contents">Table of Contents</a></h2>
-<ul>
-<li>
-<p><a href="./preface">Preface</a></p>
-<p>High-level presentation of (formal) verification as a formal method.</p>
-</li>
-<li>
-<p><a href="./smt">SMT Solvers</a></p>
-<p>SMT solvers are the basic building blocks for many modern verification tools.</p>
-</li>
-<li>
-<p><a href="./trans">Transition Systems</a></p>
-<p>Transition systems are <em>one way</em> to encode a wide variety of programs in a framework suited for
-formal verification. Following sections will discuss all notions in the context of transition
-systems as they are fairly easy to understand. They definitely have downsides, but one can get a
-surprising mileage out of them if careful.</p>
-</li>
-<li>
-<p><a href="./trans_smt">SMT and Transition Systems</a></p>
-<p>Transition systems are represented by formulas that SMT solver can work on. This chapter lays
-out the foundation for more complex SMT-based analyses.</p>
-</li>
-<li>
-<p><a href="./bmc">Unrolling and BMC</a></p>
-<p><strong>B</strong>ounded <strong>M</strong>odel-<strong>C</strong>hecking is, <em>in general</em>, not a verification technique. Still, it is
-quite useful for finding <em>concrete counterexample</em>, <em>i.e.</em> a concrete behavior of the system
-that illustrates a problem. It is also a good context to showcase what one can do with a
-transition system using an SMT solver.</p>
-</li>
-<li>
-<p><a href="./mikino_bmc">BMC: Mikino</a></p>
-<p><a href="https://github.com/OCamlPro/mikino_bin" title="Mikino on github">Mikino</a> is a small proof engine that can perform BMC. While it requires getting
-familiar with its simple input format, it abstracts SMT solvers for us so that we can focus on
-higher-level concepts.</p>
-</li>
-<li>
-<p><a href="./induction">Induction</a></p>
-<p>Induction is a natural step from BMC: it requires a simple BMC-like <em>base</em> check but also a
-<em>step</em> check which is simple to encode with SMT solvers. Since induction <em>is</em> a verification
-technique contrary to BMC, this is where we finally start proving things.</p>
-</li>
-<li>
-<p><a href="./mikino_induction">Induction: Mikino and Step Cex-s</a></p>
-<p>In addition to BMC, <a href="https://github.com/OCamlPro/mikino_bin" title="Mikino on github">mikino</a> can also perform induction. It can thus prove <em>inductive</em>
-properties of a system. Once again, mikino abstracts the SMT solver for us. Mikino is designed
-with user experience in mind, so by the end of this chapter you will probably be able to
-experiment by modifying systems introduced so far, or write your own.</p>
-</li>
-<li>
-<p><a href="./strength">Candidate Strengthening</a></p>
-<p>This chapter is quite technical and a bit theoretical. Make sure you are comfortable with all
-the notions discussed so far before diving in.</p>
-<p>An invariant for a system is not necessarily inductive. This last part of the series focuses on
-candidate strengthening, which is really about <em>discovering</em> useful, powerful facts about the
-system's behavior. Such facts can make non-inductive invariants inductive, which is why most
-modern induction-based verification engines focus heavily on candidate strengthening.</p>
-<p>This chapter, unlike previous ones, aims at proving an actual piece of code by encoding it as a
-transition system. It also touches on the complexity of verification and the notion of
-undecidability.</p>
-</li>
-</ul>
+                        <h1 id="document-not-found-404"><a class="header" href="#document-not-found-404">Document not found (404)</a></h1>
+<p>This URL is invalid, sorry. Please use the navigation bar or search to continue.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                                                    <a rel="next" href="preface/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                            </a>
                         
                         <div style="clear: both"></div>
                     </nav>
@@ -271,9 +160,6 @@ undecidability.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                                    <a rel="next" href="preface/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
                             </nav>
 
         </div>

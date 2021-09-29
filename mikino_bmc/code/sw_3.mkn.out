@@ -1,0 +1,36 @@
+running BMC, looking for falsifications for 3 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+found a falsification at depth 1:
+- `is_counting implies cnt > 0` = (=> (and is_counting (not start_stop)) (> cnt 0))
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 1
+  |         cnt = 0
+  | is_counting = true
+  |       reset = true
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 2
+checking for falsifications at depth 3
+checking for falsifications at depth 4
+checking for falsifications at depth 5
+checking for falsifications at depth 6
+checking for falsifications at depth 7
+checking for falsifications at depth 8
+checking for falsifications at depth 9
+checking for falsifications at depth 10
+
+|===| Bmc result
+| - could not find falsifications for the following candidate(s)
+|   `cnt is positive`
+|   `reset works`
+|
+| - found a falsification for the following candidate(s)
+|   `is_counting implies cnt > 0`
+|
+| - system is unsafe
+|===|

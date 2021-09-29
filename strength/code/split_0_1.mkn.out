@@ -1,0 +1,43 @@
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `done then i = len` = (=> done (= i len))
+  |=| Step k
+  |     done = false
+  | grouping = 2
+  |        i = 0
+  |      len = 1
+  |=| Step k + 1
+  |     done = true
+  | grouping = 2
+  |        i = 2
+  |      len = 1
+  |=|
+- `i ≥ 0` = (>= i 0)
+  |=| Step k
+  |     done = false
+  | grouping = (- 1)
+  |        i = 0
+  |      len = 1
+  |=| Step k + 1
+  |     done = false
+  | grouping = (- 1)
+  |        i = (- 1)
+  |      len = 1
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `done then i = len`
+|   `i ≥ 0`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `not done then i < len`
+|===|

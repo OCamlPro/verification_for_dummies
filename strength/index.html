@@ -1,0 +1,1695 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Candidate Strengthening - Verification For Dummies: SMT and Induction by OCamlPro</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item expanded "><a href="../strength/index.html" class="active"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Verification For Dummies: SMT and Induction by OCamlPro</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="candidate-strengthening"><a class="header" href="#candidate-strengthening">Candidate Strengthening</a></h1>
+<blockquote>
+<p>Candidate strengthening is about making non-inductive candidates inductive (when possible). It is
+somewhat difficult to come up with an example that is</p>
+<ul>
+<li>interesting for strengthening,</li>
+<li>not too artificial, <em>i.e.</em> is relatively realistic for a developer, and</li>
+<li>is accessible without too much explanation.</li>
+</ul>
+<p>While not extremely complex, the central example of this chapter and the manipulations in general
+are going to be more involved than what we have discussed so far.</p>
+<p>This chapter also touches on the very high complexity and potential undecidability of
+verification.</p>
+<p>This chapter is quite technical, and a bit theoretical. It is recommended that you understand all
+the concepts introduced so far before diving into this chapter. Some understanding of Rust could
+help in places, although it is by no means mandatory.</p>
+</blockquote>
+<p><br />
+</p>
+<p>We have seen two kinds of candidate up to this point:</p>
+<ul>
+<li>inductive candidates, meaning induction can prove they are invariants, and</li>
+<li>falsifiable candidates, which can be falsified by running BMC for long enough.</li>
+</ul>
+<p>Not all invariants are inductive. Meaning it is possible to get a <em>step</em> counterexample, <em>i.e.</em> the
+transition relation does not preserve the candidate, even though the candidate is an invariant and
+no legal trace of states can falsify it.</p>
+<p><br />
+</p>
+<h2 id="array-value-grouping"><a class="header" href="#array-value-grouping">Array Value Grouping</a></h2>
+<p>Let's switch gears and look at an actual piece of (Rust) code. Assume we have an array <code>arr</code> of
+statically-known size <code>len</code> of elements of type <code>T</code> (<code>arr</code> has type <code>[T; len]</code>. Say we also have an
+integer (<code>usize</code>) value <code>grouping</code>. What we want to do is <a href="https://en.wikipedia.org/wiki/Fold_(higher-order_function)" title="The fold function on wikipedia">fold</a> over successive groups
+(sub-arrays) of length <code>grouping</code> of the elements of <code>arr</code>.</p>
+<p>In practice, we want to have a type <code>Wrap</code> that stores <code>arr</code> and <code>grouping</code>, and exposes a <code>fold</code>
+function over values of type <code>&amp;[T]</code> which is <strong>guaranteed</strong> to store exactly <code>grouping</code> elements.
+Fold implements an sliding, non-overlapping window of length <code>grouping</code> over <code>arr</code>. Here is what
+using it would look like.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">fn main() {
+    // `len` ~~~~~~v
+    let arr: [f64; 6] = [0., 1., 2., 3., 4., 5.];
+    // `grouping` ~~~~~~~~~~~~v
+    let wrap = Wrap::new(arr, 3);
+    let value_1 = wrap.fold(0., |acc, arr| {
+        println!(
+            &quot;len: {} | arr[0]: {}, arr[1]: {}, arr[2]: {}&quot;,
+            arr.len(),
+            arr[0],
+            arr[1],
+            arr[2]
+        );
+        assert_eq!(arr.len(), 3);
+        let new_acc = acc + arr[0] * arr[1] * arr[2];
+        println!(&quot;acc: {}, new_acc: {}&quot;, acc, new_acc);
+        new_acc
+    });
+    println!(&quot;fold result: {}&quot;, value_1);
+
+    println!(&quot;\n---------------------\n&quot;);
+
+    // `len` ~~~~~~v
+    let arr: [f64; 6] = [0., 1., 2., 3., 4., 5.];
+    // `grouping` ~~~~~~~~~~~~v
+    let wrap = Wrap::new(arr, 2);
+    let value_2 = wrap.fold(0., |acc, arr| {
+        println!(
+            &quot;len: {} | arr[0]: {}, arr[1]: {}&quot;,
+            arr.len(),
+            arr[0],
+            arr[1]
+        );
+        assert_eq!(arr.len(), 2);
+        let new_acc = acc + arr[0] * arr[1];
+        println!(&quot;acc: {}, new_acc: {}&quot;, acc, new_acc);
+        new_acc
+    });
+    println!(&quot;fold result: {}&quot;, value_2);
+}
+</code></pre></pre>
+<p>Which produces</p>
+<pre><code class="language-text">len: 3 | arr[0]: 0, arr[1]: 1, arr[2]: 2
+acc: 0, new_acc: 0
+len: 3 | arr[0]: 3, arr[1]: 4, arr[2]: 5
+acc: 0, new_acc: 60
+fold result: 60
+
+---------------------
+
+len: 2 | arr[0]: 0, arr[1]: 1
+acc: 0, new_acc: 0
+len: 2 | arr[0]: 2, arr[1]: 3
+acc: 0, new_acc: 6
+len: 2 | arr[0]: 4, arr[1]: 5
+acc: 6, new_acc: 26
+fold result: 26
+</code></pre>
+<p><br />
+</p>
+<p>Full code available below. For now let's turn to how the <code>fold</code> function would be implemented. Say
+<code>init</code> and <code>next</code> are <code>fold</code>'s two arguments (initial value and fold function respectively). Then
+the body of <code>fold</code> could look something like</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>        let mut acc = init;
+        let mut i = 0;
+        while i &lt; len {
+            let next_i = i + grouping;
+            acc = next(acc, &amp;arr[i..next_i]);
+            i = next_i
+        }
+        acc
+<span class="boring">}
+</span></code></pre></pre>
+<ul>
+<li>local variable <code>acc</code> is initially <code>init</code>, and the loop updates its value with the result of the
+call to <code>next</code>;</li>
+<li>the <code>while</code> loop increments an <code>i</code> index until it goes over <code>len</code> (length of <code>arr</code>);</li>
+<li>at the end of each iteration, the new value of <code>i</code> is <code>i + grouping</code>;</li>
+<li>the call to <code>next</code> gives it the current value of the accumulator, and a slice from <code>i</code> to <code>i + grouping</code> ---remember that <code>n..m</code> is the interval <code>[n, m[</code>: <code>m</code> is not included in the interval;</li>
+<li>when we exit the loop, we return the final value of <code>acc</code>.</li>
+</ul>
+<details>
+	<summary>Full code for this example, requires some Rust knowledge.</summary>
+<pre><pre class="playground"><code class="language-rust">#![allow(non_upper_case_globals)]
+
+pub struct Wrap&lt;T, const len: usize&gt; {
+    arr: [T; len],
+    grouping: usize,
+}
+impl&lt;T, const len: usize&gt; Wrap&lt;T, len&gt; {
+    /// Constructor.
+    pub fn new(arr: [T; len], grouping: usize) -&gt; Self {
+        if len % grouping != 0 {
+            panic!(
+                &quot;grouping value {} is not a multiple of array length ({})&quot;,
+                grouping, len,
+            );
+        }
+        if grouping &lt; 1 {
+            panic!(&quot;illegal grouping value {}, must be &gt; 0&quot;, grouping)
+        }
+        Self { arr, grouping }
+    }
+    /// Grouped fold.
+    pub fn fold&lt;Acc&gt;(&amp;self, init: Acc, mut next: impl FnMut(Acc, &amp;[T]) -&gt; Acc) -&gt; Acc {
+        let (arr, grouping) = (&amp;self.arr, self.grouping);
+        let mut acc = init;
+        let mut i = 0;
+        while i &lt; len {
+            let next_i = i + grouping;
+            acc = next(acc, &amp;arr[i..next_i]);
+            i = next_i
+        }
+        acc
+    }
+}
+
+fn main() {
+    // `len` ~~~~~~v
+    let arr: [f64; 6] = [0., 1., 2., 3., 4., 5.];
+    // `grouping` ~~~~~~~~~~~~v
+    let wrap = Wrap::new(arr, 3);
+    let value_1 = wrap.fold(0., |acc, arr| {
+        println!(
+            &quot;len: {} | arr[0]: {}, arr[1]: {}, arr[2]: {}&quot;,
+            arr.len(),
+            arr[0],
+            arr[1],
+            arr[2]
+        );
+        assert_eq!(arr.len(), 3);
+        let new_acc = acc + arr[0] * arr[1] * arr[2];
+        println!(&quot;acc: {}, new_acc: {}&quot;, acc, new_acc);
+        new_acc
+    });
+    println!(&quot;fold result: {}&quot;, value_1);
+
+    println!(&quot;\n---------------------\n&quot;);
+
+    // `len` ~~~~~~v
+    let arr: [f64; 6] = [0., 1., 2., 3., 4., 5.];
+    // `grouping` ~~~~~~~~~~~~v
+    let wrap = Wrap::new(arr, 2);
+    let value_2 = wrap.fold(0., |acc, arr| {
+        println!(
+            &quot;len: {} | arr[0]: {}, arr[1]: {}&quot;,
+            arr.len(),
+            arr[0],
+            arr[1]
+        );
+        assert_eq!(arr.len(), 2);
+        let new_acc = acc + arr[0] * arr[1];
+        println!(&quot;acc: {}, new_acc: {}&quot;, acc, new_acc);
+        new_acc
+    });
+    println!(&quot;fold result: {}&quot;, value_2);
+}
+</code></pre></pre>
+</details>
+<p><br />
+</p>
+<p>Now let's think about this a little bit. The value <code>&amp;arr[i..next_i]</code>, where <code>next_i</code> is <code>i + grouping</code>, does not always <em>make sense</em>: <code>i + grouping</code> might strictly superior to <code>len</code> (<code>arr</code>'s
+length). This cannot happen if <code>len</code> is a multiple of <code>grouping</code> however, and actually <code>Wrap</code>'s
+constructor checks for this.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    /// Constructor.
+    pub fn new(arr: [T; len], grouping: usize) -&gt; Self {
+        if len % grouping != 0 {
+            panic!(
+                &quot;grouping value {} is not a multiple of array length ({})&quot;,
+                grouping, len,
+            );
+        }
+        if grouping &lt; 1 {
+            panic!(&quot;illegal grouping value {}, must be &gt; 0&quot;, grouping)
+        }
+<span class="boring">}
+</span></code></pre></pre>
+<p>There is also a check that <code>grouping &gt; 0</code>, otherwise <code>fold</code> would not terminate when <code>len &gt; 0</code>. So
+everything should be fine, right? Humans do not make very good proof engines, let's just prove it
+to make sure.</p>
+<p><br />
+</p>
+<h2 id="encoding"><a class="header" href="#encoding">Encoding</a></h2>
+<blockquote>
+<p>You are encouraged to think about how you would encode this verification problem so that mikino
+can handle it. You will probably not going to succeed unless you are already very familiar with
+this kind of encoding. May read a paragraph below or two, think about it some more, read some
+more, <em>etc.</em></p>
+</blockquote>
+<p>Mikino does not accept Rust code, we need to encode what we want to check. Writing an encoder for
+(a subset of) of programming language is a very challenging task. It requires an exact
+understanding of the semantics of the language and the ability to design encoding rules that
+<em>are guaranteed</em> to preserve it, or at least preserve the part relevant for the analysis.
+So let's not do that and encode it by hand.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>        let mut acc = init;
+        let mut i = 0;
+        while i &lt; len {
+            let next_i = i + grouping;
+            acc = next(acc, &amp;arr[i..next_i]);
+            i = next_i
+        }
+        acc
+<span class="boring">}
+</span></code></pre></pre>
+<p>What do we want to check, <em>i.e.</em> what does it mean for this code to <em>make sense</em>? It's really a
+matter of how <code>i</code> is related to <code>len</code>. Each iteration <em>makes sense</em> if the interval we use on <code>arr</code>
+is legal, meaning <code>i &lt; len</code> and <code>next_i = i + grouping ≤ len</code> (interval is exclusive on its upper
+bound). We actually don't care about what's in <code>arr</code>, just that its length is <code>len</code>. Our encoding
+can safely ignore <code>arr</code> completely. Same for <code>acc</code>, its value is not relevant for <code>fold</code> to make
+sense in how it accesses <code>arr</code>. The only real state variable of interest in this loop is thus <code>i</code>.</p>
+<blockquote>
+<p>There a whole bunch of additional properties we might want to prove. For instance, that <code>arr</code>
+slices do not overlap. The point is that, whatever we are interested in proving, we should remove
+everything that is not necessary as we encode the program. However, the encoding should at least
+be <em>sound</em>: proving an invariant in the encoding must entail it is an invariant for the original
+program.</p>
+<p>Here, we are doing the encoding by hand and we can pick and choose what is encoded or left out.
+In an actual verification tool, the encoding process would be automatic. Such an automatic
+encoder might encode the whole semantics of the program (meaning dealing with arrays at SMT-level
+here) and hope for the best, or be clever enough to realize it can excise array-related things
+for this particular verification challenge. Writing a clever, automatic encoder is difficult and
+challenging, and can void all results if it is not <em>sound</em>.</p>
+</blockquote>
+<p><br />
+</p>
+<p>Note that we have a few constants here: <code>len</code> and <code>grouping</code> do not change as the loop runs.
+Unfortunately mikino does not have a notion of constant <strong>yet</strong> (contributions are welcome), so we
+have to encode them as state variables along with <code>i</code>.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>svars {
+	len grouping: int,
+	i: int,
+	done: bool,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The surprise state variable <code>done</code> is a flag we are going to use to indicate whether the loop is
+done or not. This allows our system to never end, which is a useful property for technical reasons
+beyond the scope of this chapter.</p>
+<p>We initialize the transition system encoding <code>fold</code>'s loop, as follows.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>init {
+    len ≥ 0,
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The first two simply constrain the values for <code>len</code> (<code>usize</code>, thus <code>≥ 0</code>) and <code>grouping</code> (checked
+to be <code>≥ 1</code> by the constructor). Then <code>i</code> is constrained to be equal to its initial value, <code>0</code>. The
+<code>done</code> flag is initially true if and only if <code>i ≥ len</code>, which basically means <code>len</code> is <code>0</code> ---<code>arr</code>
+is empty, the loop never starts.</p>
+<p>Last, we have the assumption we need for the whole thing to work: <code>len</code> is a multiple of
+<code>grouping</code>, which <code>Wrap</code>'s constructor checks.</p>
+<p><br />
+</p>
+<p>The transition relation needs to do a few things. Our constants (encoded as state variables) need
+to keep their value, since if we left them unconstrained they could take any value. We also need to
+update the value of <code>done</code>, and finally that of <code>i</code>.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
+// iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
+trans {
+	'grouping = grouping,
+	'len = len,
+	// NEW value of the `done` flag, if `true` there will be no further iteration.
+    'done = ¬('i &lt; 'len),
+	if done {
+		// just maintain the value;
+		'i = i
+	} else {
+		// otherwise, `i` is incremented by `grouping`.
+		'i = i + grouping
+	},
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><br />
+</p>
+<h2 id="testing-the-encoding"><a class="header" href="#testing-the-encoding">Testing the Encoding</a></h2>
+<p>Before we do anything else, let's think of what happens if <code>len = 8</code> and <code>grouping = 4</code>. Initially
+<code>i = 0</code>, then it should increase to <code>i = 4</code>, then to <code>i = 8</code> at which point <code>done = i ≥ len</code>
+becomes <code>true</code> and the system stutters (its state variables stay the same forever).</p>
+<p>We should make sure our encoding behaves like this. So, what we should ask mikino is <em>&quot;with <code>len = 8</code> and <code>grouping = 4</code>, is it possible to reach a state such that <code>i = len</code>?&quot;</em>. We can do this with
+BMC: since we want to reach <code>len = 8 ∧ grouping = 4 ∧ i = len</code>, we can just need ask BMC to try to
+falsify <code>¬(len = 8 ∧ grouping = 4 ∧ i = len)</code>.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;candidate&quot;: ¬(len = 8 ⋀ grouping = 4 ⋀ i = len),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Mikino yields</p>
+<pre><code class="language-text">&gt; mikino bmc test.mkn
+running BMC, looking for falsifications for 1 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+checking for falsifications at depth 2
+found a falsification at depth 2:
+- `candidate` = (not (and (= len 8) (= grouping 4) (= i len)))
+  |=| Step 0
+  |     done = false
+  | grouping = 4
+  |        i = 0
+  |      len = 8
+  |=| Step 1
+  |     done = false
+  | grouping = 4
+  |        i = 4
+  |      len = 8
+  |=| Step 2
+  |     done = true
+  | grouping = 4
+  |        i = 8
+  |      len = 8
+  |=| Z3 produced the following unexpected values
+  | div0 ((x!0 int) (x!1 int)) int = 2
+  | mod0 ((x!0 int) (x!1 int)) int = 0
+  |=|
+
+|===| Bmc result
+| - found a falsification for the following candidate(s)
+|   `candidate`
+|
+| - system is unsafe
+|===|
+</code></pre>
+<p>We got exactly what we expected, that's encouraging. Also, remember that <a href="../induction" title="Induction chapter">we proved that BMC
+produces counterexamples of minimal length</a>. Hence, no shorter trace of states can lead
+the system to falsify our property.</p>
+<p>Full code available in the <a href="#version-1">Version 1</a> section. You are encouraged to mess around with
+the example to get a better understanding of the encoding.</p>
+<blockquote>
+<p>Mikino reports that Z3 produced unexpected values. This is not relevant for our discussion, but
+these <em>functions</em> are part of the model. Z3 is letting us know how it decided to handle division
+(modulo) by <code>0</code>. I won't go into deeper details here for space constraints, but this is a
+consequence of the fact that our system uses <em>non-linear arithmetic</em>, and non-linear division in
+particular. A (system made of) formula(s) <em>uses non-linear arithmetic</em> if it uses
+multiplication/division involving more than one variable (<code>x * y</code>, <code>x / y</code>). As opposed to
+<em>linear arithmetic</em> which only allows one variable to be used (<code>3 * x</code>, <code>x / 7</code>, <code>0 / x</code>).</p>
+<p>SMT is <em>not decidable</em> when non-linear arithmetic is involved, but we will have more to say on
+that shortly as we will run into this exact problem.</p>
+</blockquote>
+<p><br />
+</p>
+<h2 id="diving-head-first"><a class="header" href="#diving-head-first">Diving Head First</a></h2>
+<p>We start with trying to prove that the lower bound of the interval <code>i..(i + grouping)</code> used on
+<code>arr</code> is legal, meaning to prove that <code>i &lt; len</code>. More precisely, <code>¬done ⇒ i &lt; len</code> since on exit
+(when <code>done</code> is <code>true</code>) we actually should have <code>i = len</code>; let's prove <code>done ⇒ i = len</code> as well.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Full code in the <a href="#version-2">Version 2</a> section. Running mikino in <code>check</code> mode, we get:</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `done then i = len` = (=&gt; done (= i len))
+  |=| Step k
+  |     done = false
+  | grouping = 2
+  |        i = (- 1)
+  |      len = 0
+  |=| Step k + 1
+  |     done = true
+  | grouping = 2
+  |        i = 1
+  |      len = 0
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `done then i = len`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `not done then i &lt; len`
+|===|
+</code></pre>
+<p>Well, the good news is that the lower bound of our interval is always legal: mikino proved it. We
+get a counterexample (cex) for the second candidate though. A stupid cex too, as <code>i</code> is <em>obviously</em>
+positive. At least, it is obviously positive if you take into account the initial states (<code>i</code> = 0),
+which the <em>step</em> check of the induction proof does not do by definition. As far as the transition
+relation is concerned, there is no reason for <code>i</code> to be positive at some step <code>k</code>.</p>
+<p><br />
+</p>
+<p>Your first reflex might be to add this constraint to the transition relation (<code>(pre i) ≥ 0</code>), which
+is a terrible idea. That's the encoding of the original code, you should not touch it as this would
+actively mask cex-s. Spurious cex-s in this case, but if you make any mistake when augmenting
+<code>trans</code> then you might block actual cex-s and safety proofs you might get would not say anything
+about the original system.</p>
+<p>The reason why, in this case, it <strong>would</strong> be safe to add <code>(pre i) ≥ 0</code> (don't do it though) is
+that it is an invariant, <em>i.e.</em> a <em>consequence</em> of the system's behavior. So there's no reason to
+force it on <code>trans</code>, we can just ask mikino to prove it instead.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Full code in the <a href="#version-2">Version 3</a> section. Mikino tells us</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `done then i = len` = (=&gt; done (= i len))
+  |=| Step k
+  |     done = false
+  | grouping = 2
+  |        i = 0
+  |      len = 1
+  |=| Step k + 1
+  |     done = true
+  | grouping = 2
+  |        i = 2
+  |      len = 1
+  |=|
+- `i ≥ 0` = (&gt;= i 0)
+  |=| Step k
+  |     done = false
+  | grouping = (- 1)
+  |        i = 0
+  |      len = 1
+  |=| Step k + 1
+  |     done = false
+  | grouping = (- 1)
+  |        i = (- 1)
+  |      len = 1
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `done then i = len`
+|   `i ≥ 0`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `not done then i &lt; len`
+|===|
+</code></pre>
+<p><br />
+</p>
+<p>Okay, now <code>grouping</code> is negative. There is a pattern emerging: mikino (<em>induction</em>, really) is
+stupid and needs to be told everything.</p>
+<p><br />
+</p>
+<h2 id="strengthening-"><a class="header" href="#strengthening-">Strengthening 💪</a></h2>
+<p>When we add <code>i ≥ 0</code> as a candidate, we are <em>strengthening</em> candidate <code>done ⇒ i = len</code>. That is,
+this candidate is <em>not</em> inductive on the <em>raw system</em> (made of <code>init</code> and <code>trans</code>). If we hope to
+prove it by induction, we have to try to prove a <em>stronger</em> version <code>(done ⇒ i = len) ∧ lemma</code>, for
+example with <code>lemma ≝ i ≥ 0</code> in the previous example. We added the lemma as a separate candidate,
+but morally <code>lemma</code> was not really what we wanted to prove, it was just a <em>lemma</em> we added to help
+prove the main candidate (which failed). It did not work, but if we can find a <code>lemma</code> for which
+the proof goes through, then we won since the fact that <code>(done ⇒ i = len) ∧ lemma</code> is an invariant
+implies that <code>done ⇒ i = len</code> is an invariant.</p>
+<blockquote>
+<p>We are about to strengthen this candidate manually, but maybe you can see why many
+induction-based proof engine have some form of <em>invariant discovery</em>. Such techniques aim at
+discovering potentially complex lemmas about the system that strengthen the candidates when
+they are not inductive.</p>
+</blockquote>
+<p><br />
+</p>
+<p>We could keep on asking mikino for <em>step</em> cex-s and come up with a candidate that will hopefully
+block them. But we have been doing this whole thing wrong.</p>
+<p>The first thing we should do is write everything we expect to be an invariant. For instance we know
+that <code>len ≥ 0</code>, and that <code>grouping ≥ 1</code> and <code>len % grouping = 0</code> (both checked in the constructor).
+Our first move should have been to write these candidates down (in addition to <code>i ≥ 0</code>) and make
+sure they are actually (inductive) invariants. Besides hopefully strengthening our original
+candidates (<code>done ⇒ i = len</code> and <code>¬done ⇒ i &lt; len</code>), we must check that they are invariants since
+if they are not something is very wrong ---the system, our encoding, our overall understanding, or
+all of the above.</p>
+<p>Note that, if the encoding process was automatic, these candidates could have been generated
+automatically: <code>len: usize</code> implies <code>len ≥ 0</code>, same for <code>i</code>, and the checks in the constructor
+guarantee <code>grouping ≥ 1</code> and <code>len % grouping = 0</code> since neither <code>len</code> nor <code>grouping</code> ever change.
+As we will see, this is not enough, and we will need to add another (candidate) invariant that is
+less trivial to strengthen our real candidate successfully.</p>
+<p><br />
+</p>
+<p>For now let's just add these new candidates</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	// new
+	&quot;len ≥ 0&quot;: len ≥ 0,
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>and run mikino. Full code in the <a href="#version-4">Version 4</a> section.</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `done then i = len` = (=&gt; done (= i len))
+  |=| Step k
+  |     done = false
+  | grouping = 2
+  |        i = 3
+  |      len = 4
+  |=| Step k + 1
+  |     done = true
+  | grouping = 2
+  |        i = 5
+  |      len = 4
+  |=| Z3 produced the following unexpected values
+  | div0 ((x!0 int) (x!1 int)) int = 2
+  | mod0 ((x!0 int) (x!1 int)) int = 0
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `done then i = len`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `grouping &gt; 0`
+|   `i ≥ 0`
+|   `len grouping related`
+|   `len ≥ 0`
+|   `not done then i &lt; len`
+|===|
+</code></pre>
+<p>At least the new candidates are actual (inductive) invariants. It was not enough to strengthen our
+real candidate, but the cex we got is interesting. With <code>len = 4</code> and <code>grouping = 2</code>, the step
+check is able to go from <code>i = 3</code> to <code>i = 5</code> and falsify the main candidate.</p>
+<p>The problem here, as you might have guessed, is currently <code>i</code> can really take any value as long as
+its positive: no (candidate) invariant constrain it besides <code>i ≥ 0</code>. Looking at the code for the
+loop again</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>        let mut acc = init;
+        let mut i = 0;
+        while i &lt; len {
+            let next_i = i + grouping;
+            acc = next(acc, &amp;arr[i..next_i]);
+            i = next_i
+        }
+        acc
+<span class="boring">}
+</span></code></pre></pre>
+<p>we see that <code>i</code> can only be a multiple of <code>grouping</code>. But we cannot know until we try to prove it.
+Also, will it strengthen our main candidate enough to make it inductive?</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;len ≥ 0&quot;: len ≥ 0,
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+	// new
+    &quot;i % grouping = 0&quot;: i % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>We run mikino but, inconspicuously, we change the command used to run Z3 slightly (change <code>z3</code> in
+the string to whatever the path to your Z3 binary is). Full code in the <a href="#version-5">Version 5</a>
+section.</p>
+<pre><code class="language-bash">&gt; mikino --z3_cmd &quot;z3 -T:5&quot; check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+|===| Error
+| smt-level error:
+| - smt solver reported `timeout`
+| during step check
+|===|
+</code></pre>
+<p>Adding <code>-T:5</code> to the Z3 command tells Z3 to timeout after five seconds. Feel free to increase the
+timeout, unless you are from the future and using a version Z3 that performs better on non-linear
+arithmetic, the <em>step</em> check will never end. Because of...</p>
+<p><br />
+</p>
+<h2 id="undecidability"><a class="header" href="#undecidability">Undecidability</a></h2>
+<p>This small aside illustrates the importance of delimiting precisely the <em>logical fragment</em> in which
+your encoding takes place. That is, what the formulas mention: strings, arrays, non-linear
+arithmetic?</p>
+<p>Verification is expensive; very expensive. SMT checks themselves are at least exp-time, meaning
+that if <code>n</code> is <em>&quot;the size of the problem&quot;</em>, the complexity of SMT checks is at least <code>2ⁿ</code>. Most
+SMT-based verification techniques end up being at least <code>k</code>-exp-time, also informally called <em>tower
+of exponential</em>, which is even worse than it sounds:</p>
+<pre><code class="language-text">2^(2^(2^(2^(.....2ⁿ))))
+^^^^^^^^^^^^^^^^^^
+    `k` times
+</code></pre>
+<p>where <code>k</code> is some arbitrarily large constant specific to a given problem.</p>
+<p>So that's not great. As it turns out, the hardware is now so efficient and the tools so carefully
+implemented and optimized that despite being <code>k</code>-exp-time, we can actually verify very interesting
+and complex systems. Still, given the complexity, we can only go so far.</p>
+<p>One way around this high complexity is to analyze complex systems <em>compositionally</em>, which is akin
+to type-checking. When proving function <code>f</code>, which calls <code>g</code>, we can abstract <code>g</code> away if we have
+some specification for it, effectively replacing <code>g</code>'s implementation by what the specification
+says it does. Then we prove <code>g</code> respects its specification, recursively.</p>
+<p>This assumes we have a specification for sub-functions (<code>g</code>), and not just a single specification
+at the top-most level (<code>f</code>). <em>Refining</em> a top-level specification to generate specifications for
+the sub-functions is very difficult to do automatically (also <em>manually</em>).</p>
+<p><br />
+</p>
+<p>To sum up, verification has at best a very high complexity. Still, in theory, if you had enough
+time and memory you could just wait for an arbitrary long time and actually get an answer. Unless
+you are in an <em>undecidable</em> logic fragment: you cannot know in advance if you will get an answer,
+even if you wait for an infinite amount of time and memory.</p>
+<p>That's not great either, and in fact this is (probably) what happened to us on</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;len ≥ 0&quot;: len ≥ 0,
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+	// new
+    &quot;i % grouping = 0&quot;: i % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>when we got</p>
+<pre><code class="language-bash">&gt; mikino --z3_cmd &quot;z3 -T:5&quot; check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+|===| Error
+| smt-level error:
+| - smt solver reported `timeout`
+| during step check
+|===|
+</code></pre>
+<p>We have been in an undecidable fragment all along (since we use non-linear arithmetic). But so far,
+we managed to only send Z3 checks it could handle. The last candidate we added, <code>i % grouping = 0</code>,
+apparently made our checks escape Z3's abilities.</p>
+<p>And that's pretty much it, we will not prove <code>done ⇒ i = len</code> and probably not other interesting
+properties such as <em>&quot;the upper bound of the interval <code>i..(i + grouping)</code> must be <code>≤ len</code> (interval
+exclusive on the upper bound)&quot;</em> (or simply <code>i + grouping ≤ len</code>) either.</p>
+<p>Or maybe what we could do is...</p>
+<p><br />
+</p>
+<h2 id="settling-for-the-next-best-thing"><a class="header" href="#settling-for-the-next-best-thing">Settling For The Next Best Thing</a></h2>
+<p>Our current system is very loose on what <code>len</code> and <code>grouping</code> could be. We cannot say much on
+<code>grouping</code> as it is given to the code at runtime. It can be anything (module the constructor's
+checks) and we have no control over it at compile-time (verification-time). But <code>len</code> is different.</p>
+<p>It is actually not unknown at compile-time since it is a <code>const</code>, <em>i.e.</em> a value that can be
+computed when compiling ---at least when compiling a binary using this code, but not necessarily
+when compiling a library. See section <a href="#rust-system">Rust System</a> for the full Rust code of the
+system. More precisely, different version of our case-study might be used: with <code>len = 3</code>, <code>len = 7</code>... But the point is that, due to how Rust works (<em>monomorphization</em> in particular), there is a
+finite number of actual <code>len</code> values and we know all of them. (Again, at least when compiling a
+binary.)</p>
+<p><br />
+</p>
+<p>So, maybe, instead the loose constraint <code>len ≥ 0</code> and trying to conduct a proof for any value of
+<code>len</code> (which does not work, as we have seen), we could check each possible value of <code>len</code>
+separately. Notice that <code>len</code> is used in a non-linear <code>mod</code> application, <code>len % grouping</code>:</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;len ≥ 0&quot;: len ≥ 0,
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+	// new
+    &quot;i % grouping = 0&quot;: i % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Checking for the concrete possible values of <code>len</code> instead would remove this non-linear <code>mod</code> and,
+maybe, simplify our checks enough that Z3 can handle them. Let's try with <code>len = 8</code>; we could
+remove the <code>len</code> state variable altogether, but we can try simply forcing it to be <code>8</code>. To do this,
+first we need to change <code>init</code> slightly:</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>init {
+    len = 8, // new
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Nothing to do on <code>trans</code>, it does not mention <code>len</code> anyway. The candidate <code>len ≥ 0</code> changes to
+become more precise though:</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;len is 8&quot;: len = 8, // changed
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+    &quot;i % grouping = 0&quot;: i % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>While we still have the non-linear <code>len % grouping</code>, the (candidate) invariant <code>len = 8</code> might
+actually be enough for Z3 to handle the checks on this system. We shall see.</p>
+<p>Full code in the <a href="#version-6">Version 6</a> section. Crossing our fingers, we nervously run mikino:</p>
+<pre><code class="language-text">&gt; mikino --z3_cmd &quot;z3 -T:5&quot; check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+success: all candidate(s) are inductive
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - all candidates are inductive (preserved by the transition relation)
+|
+| - system is safe, all reachable states verify the candidate(s)
+|===|
+</code></pre>
+<p>🎊 🎉 👏 🎊</p>
+<p><br />
+</p>
+<h2 id="wrapping-up"><a class="header" href="#wrapping-up">Wrapping Up</a></h2>
+<p>We proved the lower bound of the interval in <code>&amp;arr[i..(i + grouping)]</code> is legal 🎉. But that's not
+enough for the program to be safe, since we have not proved that the upper bound is legal. That is,
+prove that <code>i + grouping ≤ len</code> (interval <em>still exclusive</em> on the upper bound 😔).</p>
+<p>By now you might be familiar enough with induction's <em>step</em> checks to be able to anticipate whether
+this candidate is going to be inductive or not.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;not done then i + grouping ≤ len&quot;: // new
+		¬done ⇒ i + grouping ≤ len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;len is 8&quot;: len = 8, // changed
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+    &quot;i % grouping = 0&quot;: i % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Full code in the <a href="#version-7">Version 7</a> section.</p>
+<p>🥁🥁🥁🥁🥁🥁</p>
+<pre><code class="language-text">&gt; mikino --z3_cmd &quot;z3 -T:5&quot; check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+success: all candidate(s) are inductive
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - all candidates are inductive (preserved by the transition relation)
+|
+| - system is safe, all reachable states verify the candidate(s)
+|===|
+</code></pre>
+<p>🎉</p>
+<p><br />
+</p>
+<p>It might be disappointing that we had to choose a value for the length, <em>i.e.</em> that we did not
+prove that <code>fold</code>'s array accesses are legal when <code>len</code> is <code>8</code>. Unfortunately, in its current
+state, Z3 cannot handle to have <code>len</code> as an unknown value because of the non-linear applications of
+modulo.</p>
+<p>This means that, assuming we are verifying a binary, we can conduct the same proof for all <code>len</code>
+values actually used by the program. It would be much better to verify <code>fold</code> for any length, but
+this illustrates the kind of trade-offs that are often necessary in a verification process due to
+the very high complexity (and sometimes undecidability) of the checks intrinsic to the verification
+approach.</p>
+<p><br />
+</p>
+<h2 id="full-code-for-all-examples"><a class="header" href="#full-code-for-all-examples">Full Code for All Examples</a></h2>
+<h3 id="rust-system"><a class="header" href="#rust-system">Rust System</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust">#![allow(non_upper_case_globals)]
+
+pub struct Wrap&lt;T, const len: usize&gt; {
+    arr: [T; len],
+    grouping: usize,
+}
+impl&lt;T, const len: usize&gt; Wrap&lt;T, len&gt; {
+    /// Constructor.
+    pub fn new(arr: [T; len], grouping: usize) -&gt; Self {
+        if len % grouping != 0 {
+            panic!(
+                &quot;grouping value {} is not a multiple of array length ({})&quot;,
+                grouping, len,
+            );
+        }
+        if grouping &lt; 1 {
+            panic!(&quot;illegal grouping value {}, must be &gt; 0&quot;, grouping)
+        }
+        Self { arr, grouping }
+    }
+    /// Grouped fold.
+    pub fn fold&lt;Acc&gt;(&amp;self, init: Acc, mut next: impl FnMut(Acc, &amp;[T]) -&gt; Acc) -&gt; Acc {
+        let (arr, grouping) = (&amp;self.arr, self.grouping);
+        let mut acc = init;
+        let mut i = 0;
+        while i &lt; len {
+            let next_i = i + grouping;
+            acc = next(acc, &amp;arr[i..next_i]);
+            i = next_i
+        }
+        acc
+    }
+}
+
+fn main() {
+    // `len` ~~~~~~v
+    let arr: [f64; 6] = [0., 1., 2., 3., 4., 5.];
+    // `grouping` ~~~~~~~~~~~~v
+    let wrap = Wrap::new(arr, 3);
+    let value_1 = wrap.fold(0., |acc, arr| {
+        println!(
+            &quot;len: {} | arr[0]: {}, arr[1]: {}, arr[2]: {}&quot;,
+            arr.len(),
+            arr[0],
+            arr[1],
+            arr[2]
+        );
+        assert_eq!(arr.len(), 3);
+        let new_acc = acc + arr[0] * arr[1] * arr[2];
+        println!(&quot;acc: {}, new_acc: {}&quot;, acc, new_acc);
+        new_acc
+    });
+    println!(&quot;fold result: {}&quot;, value_1);
+
+    println!(&quot;\n---------------------\n&quot;);
+
+    // `len` ~~~~~~v
+    let arr: [f64; 6] = [0., 1., 2., 3., 4., 5.];
+    // `grouping` ~~~~~~~~~~~~v
+    let wrap = Wrap::new(arr, 2);
+    let value_2 = wrap.fold(0., |acc, arr| {
+        println!(
+            &quot;len: {} | arr[0]: {}, arr[1]: {}&quot;,
+            arr.len(),
+            arr[0],
+            arr[1]
+        );
+        assert_eq!(arr.len(), 2);
+        let new_acc = acc + arr[0] * arr[1];
+        println!(&quot;acc: {}, new_acc: {}&quot;, acc, new_acc);
+        new_acc
+    });
+    println!(&quot;fold result: {}&quot;, value_2);
+}
+</code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">len: 3 | arr[0]: 0, arr[1]: 1, arr[2]: 2
+acc: 0, new_acc: 0
+len: 3 | arr[0]: 3, arr[1]: 4, arr[2]: 5
+acc: 0, new_acc: 60
+fold result: 60
+
+---------------------
+
+len: 2 | arr[0]: 0, arr[1]: 1
+acc: 0, new_acc: 0
+len: 2 | arr[0]: 2, arr[1]: 3
+acc: 0, new_acc: 6
+len: 2 | arr[0]: 4, arr[1]: 5
+acc: 6, new_acc: 26
+fold result: 26
+</code></pre>
+</details>
+<h3 id="version-1"><a class="header" href="#version-1">Version 1</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>svars {
+	len grouping: int,
+	i: int,
+	done: bool,
+}
+
+init {
+    len ≥ 0,
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+
+// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
+// iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
+trans {
+	'grouping = grouping,
+	'len = len,
+	// NEW value of the `done` flag, if `true` there will be no further iteration.
+    'done = ¬('i &lt; 'len),
+	if done {
+		// just maintain the value;
+		'i = i
+	} else {
+		// otherwise, `i` is incremented by `grouping`.
+		'i = i + grouping
+	},
+}
+
+candidates {
+	&quot;candidate&quot;: ¬(len = 8 ⋀ grouping = 4 ⋀ i = len),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+running BMC, looking for falsifications for 1 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+checking for falsifications at depth 2
+found a falsification at depth 2:
+- `candidate` = (not (and (= len 8) (= grouping 4) (= i len)))
+  |=| Step 0
+  |     done = false
+  | grouping = 4
+  |        i = 0
+  |      len = 8
+  |=| Step 1
+  |     done = false
+  | grouping = 4
+  |        i = 4
+  |      len = 8
+  |=| Step 2
+  |     done = true
+  | grouping = 4
+  |        i = 8
+  |      len = 8
+  |=| Z3 produced the following unexpected values
+  | div0 ((x!0 int) (x!1 int)) int = 2
+  | mod0 ((x!0 int) (x!1 int)) int = 0
+  |=|
+
+|===| Bmc result
+| - found a falsification for the following candidate(s)
+|   `candidate`
+|
+| - system is unsafe
+|===|
+</code></pre>
+</details>
+<h3 id="version-2"><a class="header" href="#version-2">Version 2</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>svars {
+	len grouping: int,
+	i: int,
+	done: bool,
+}
+
+init {
+    len ≥ 0,
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+
+// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
+// iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
+trans {
+	'grouping = grouping,
+	'len = len,
+	// NEW value of the `done` flag, if `true` there will be no further iteration.
+    'done = ¬('i &lt; 'len),
+	if done {
+		// just maintain the value;
+		'i = i
+	} else {
+		// otherwise, `i` is incremented by `grouping`.
+		'i = i + grouping
+	},
+}
+
+candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `done then i = len` = (=&gt; done (= i len))
+  |=| Step k
+  |     done = false
+  | grouping = 2
+  |        i = (- 1)
+  |      len = 0
+  |=| Step k + 1
+  |     done = true
+  | grouping = 2
+  |        i = 1
+  |      len = 0
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `done then i = len`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `not done then i &lt; len`
+|===|
+</code></pre>
+</details>
+<h3 id="version-3"><a class="header" href="#version-3">Version 3</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>svars {
+	len grouping: int,
+	i: int,
+	done: bool,
+}
+
+init {
+    len ≥ 0,
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+
+// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
+// iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
+trans {
+	'grouping = grouping,
+	'len = len,
+	// NEW value of the `done` flag, if `true` there will be no further iteration.
+    'done = ¬('i &lt; 'len),
+	if done {
+		// just maintain the value;
+		'i = i
+	} else {
+		// otherwise, `i` is incremented by `grouping`.
+		'i = i + grouping
+	},
+}
+
+candidates {
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `done then i = len` = (=&gt; done (= i len))
+  |=| Step k
+  |     done = false
+  | grouping = 2
+  |        i = 0
+  |      len = 1
+  |=| Step k + 1
+  |     done = true
+  | grouping = 2
+  |        i = 2
+  |      len = 1
+  |=|
+- `i ≥ 0` = (&gt;= i 0)
+  |=| Step k
+  |     done = false
+  | grouping = (- 1)
+  |        i = 0
+  |      len = 1
+  |=| Step k + 1
+  |     done = false
+  | grouping = (- 1)
+  |        i = (- 1)
+  |      len = 1
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `done then i = len`
+|   `i ≥ 0`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `not done then i &lt; len`
+|===|
+</code></pre>
+</details>
+<h3 id="version-4"><a class="header" href="#version-4">Version 4</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>svars {
+	len grouping: int,
+	i: int,
+	done: bool,
+}
+
+init {
+    len ≥ 0,
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+
+// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
+// iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
+trans {
+	'grouping = grouping,
+	'len = len,
+	// NEW value of the `done` flag, if `true` there will be no further iteration.
+    'done = ¬('i &lt; 'len),
+	if done {
+		// just maintain the value;
+		'i = i
+	} else {
+		// otherwise, `i` is incremented by `grouping`.
+		'i = i + grouping
+	},
+}
+
+candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	// new
+	&quot;len ≥ 0&quot;: len ≥ 0,
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `done then i = len` = (=&gt; done (= i len))
+  |=| Step k
+  |     done = false
+  | grouping = 2
+  |        i = 3
+  |      len = 4
+  |=| Step k + 1
+  |     done = true
+  | grouping = 2
+  |        i = 5
+  |      len = 4
+  |=| Z3 produced the following unexpected values
+  | div0 ((x!0 int) (x!1 int)) int = 2
+  | mod0 ((x!0 int) (x!1 int)) int = 0
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `done then i = len`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `grouping &gt; 0`
+|   `i ≥ 0`
+|   `len grouping related`
+|   `len ≥ 0`
+|   `not done then i &lt; len`
+|===|
+</code></pre>
+</details>
+<h3 id="version-5"><a class="header" href="#version-5">Version 5</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>svars {
+	len grouping: int,
+	i: int,
+	done: bool,
+}
+
+init {
+    len ≥ 0,
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+
+// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
+// iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
+trans {
+	'grouping = grouping,
+	'len = len,
+	// NEW value of the `done` flag, if `true` there will be no further iteration.
+    'done = ¬('i &lt; 'len),
+	if done {
+		// just maintain the value;
+		'i = i
+	} else {
+		// otherwise, `i` is incremented by `grouping`.
+		'i = i + grouping
+	},
+}
+
+candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;len ≥ 0&quot;: len ≥ 0,
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+	// new
+    &quot;i % grouping = 0&quot;: i % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino --z3_cmd &quot;z3 -T:5&quot; check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+|===| Error
+| smt-level error:
+| - smt solver reported `timeout`
+| during step check
+|===|
+</code></pre>
+</details>
+<h3 id="version-6"><a class="header" href="#version-6">Version 6</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>svars {
+	len grouping: int,
+	i: int,
+	done: bool,
+}
+
+init {
+    len = 8, // new
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+
+// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
+// iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
+trans {
+	'grouping = grouping,
+	'len = len,
+	// NEW value of the `done` flag, if `true` there will be no further iteration.
+    'done = ¬('i &lt; 'len),
+	if done {
+		// just maintain the value;
+		'i = i
+	} else {
+		// otherwise, `i` is incremented by `grouping`.
+		'i = i + grouping
+	},
+}
+
+candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;len is 8&quot;: len = 8, // changed
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+    &quot;i % grouping = 0&quot;: i % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+success: all candidate(s) are inductive
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - all candidates are inductive (preserved by the transition relation)
+|
+| - system is safe, all reachable states verify the candidate(s)
+|===|
+</code></pre>
+</details>
+<h3 id="version-7"><a class="header" href="#version-7">Version 7</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>svars {
+	len grouping: int,
+	i: int,
+	done: bool,
+}
+
+init {
+    len = 8, // new
+	grouping ≥ 1,
+	i = 0,
+	done = ¬(i &lt; len),
+	len % grouping = 0,
+}
+
+// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
+// iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
+trans {
+	'grouping = grouping,
+	'len = len,
+	// NEW value of the `done` flag, if `true` there will be no further iteration.
+    'done = ¬('i &lt; 'len),
+	if done {
+		// just maintain the value;
+		'i = i
+	} else {
+		// otherwise, `i` is incremented by `grouping`.
+		'i = i + grouping
+	},
+}
+
+candidates {
+	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
+	&quot;not done then i + grouping ≤ len&quot;: // new
+		¬done ⇒ i + grouping ≤ len,
+	&quot;done then i = len&quot;: done ⇒ i = len,
+
+	&quot;i ≥ 0&quot;: i ≥ 0,
+	&quot;len is 8&quot;: len = 8, // changed
+	&quot;grouping &gt; 0&quot;: grouping &gt; 0,
+	&quot;len grouping related&quot;: len % grouping = 0,
+    &quot;i % grouping = 0&quot;: i % grouping = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino check test.mkn
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+success: all candidate(s) are inductive
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - all candidates are inductive (preserved by the transition relation)
+|
+| - system is safe, all reachable states verify the candidate(s)
+|===|
+</code></pre>
+</details>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../mikino_induction/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../conclusion/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../mikino_induction/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../conclusion/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

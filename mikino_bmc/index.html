@@ -1,0 +1,942 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>BMC: Mikino - Verification For Dummies: SMT and Induction by OCamlPro</title>
+                
+
+        <!-- Custom HTML head -->
+        
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+                <link rel="icon" href="../favicon.svg">
+                        <link rel="shortcut icon" href="../favicon.png">
+                <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+                <link rel="stylesheet" href="../css/print.css" media="print">
+        
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+                <link rel="stylesheet" href="../fonts/fonts.css">
+        
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+            </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item expanded "><a href="../mikino_bmc/index.html" class="active"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                                                <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                                            </div>
+
+                    <h1 class="menu-title">Verification For Dummies: SMT and Induction by OCamlPro</h1>
+
+                    <div class="right-buttons">
+                                                <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                                                                        
+                    </div>
+                </div>
+
+                                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="bmc-mikino"><a class="header" href="#bmc-mikino">BMC: Mikino</a></h1>
+<p><a href="https://github.com/OCamlPro/mikino_bin" title="Mikino on github">Mikino</a> is a small transition system verification engine that relies on SMT solvers and
+everything we have seen so far (and will see later). It is designed to be relatively simple with
+user experience front and center: the goal is to have a tool that is gratifying to interact with to
+teach about induction-based verification.</p>
+<p>There are several ways to retrieve a binary for mikino:</p>
+<ul>
+<li>
+<p>if you already have <a href="https://www.rust-lang.org/tools/install" title="Rust website, installation">rust</a> installed, simply run</p>
+<pre><code class="language-text">&gt; cargo install mikino
+</code></pre>
+<p>or</p>
+<pre><code class="language-text">&gt; cargo install --force mikino
+</code></pre>
+<p>to update your mikino install.</p>
+<p>You can also build it from source, which also requires rust:</p>
+<pre><code class="language-text">&gt; git clone https://github.com/OCamlPro/mikino_bin
+&gt; cd mikino_bin
+&gt; cargo build --release
+&gt; ./target/release/mikino help
+</code></pre>
+</li>
+<li>
+<p>if you just want to retrieve a binary, you can do so on <a href="https://github.com/OCamlPro/mikino_bin/releases" title="Mikino's release page on github">mikino's release page</a>.</p>
+</li>
+</ul>
+<p>Make sure you have mikino <code>v0.5.1</code> or above.</p>
+<pre><code class="language-text">&gt; mikino -V
+mikino 0.5.1
+</code></pre>
+<p><br />
+</p>
+<h2 id="input-format"><a class="header" href="#input-format">Input Format</a></h2>
+<p>Mikino takes as input a transition system in a format consistent but slightly different from what
+we have seen up to this point. Systems are written in files organized as follows, illustrated on
+our stopwatch running example.</p>
+<p>First are state variable declarations. It is a list of declarations between braces introduced by
+the <code>svars</code> keyword and of form <code>&lt;var_1&gt; &lt;var_2&gt; ... &lt;var_n&gt;: &lt;type&gt;</code> with <code>n ≥ 1</code>.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// State variables.
+svars {
+	/// Inputs of the system.
+	start_stop reset: bool,
+	/// Keeps track of whether we are counting.
+	is_counting: bool,
+	/// Counts time, output of the system.
+	cnt: int,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Next is the initial predicate, introduced by the <code>init</code> keyword. Mikino does not support
+SMT-LIB-2-like (s-)expressions (anymore), and instead expects Rust-like expressions. Note that
+mikino supports common unicode operators such as <code>∧</code>, <code>⋀</code>, <code>∨</code>, <code>⋁</code>, <code>≥</code> and <code>⇒</code>.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Initial predicate.
+init {
+	is_counting = start_stop,
+	cnt ≥ 0,
+	(reset ⇒ cnt = 0),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p>Here, we gave <code>init</code> a list of three comma-separated (with optional trailing comma) expressions.
+This list is understood as a conjunction <code>⋀</code>, meaning the list above is equivalent to writing
+<code>is_counting = start_stop ⋀ cnt ≥ 0 ⋀ (reset ⇒ cnt = 0)</code>.</p>
+</blockquote>
+<p><br />
+</p>
+<p>The transition relation definition, introduced by the <code>trans</code> keyword, differs slightly. Remember
+that the transition relation relates two states: the <em>previous</em> one and the <em>next</em> one. In mikino,
+we refer to the <em>previous</em> version of a state variable <code>svar</code> by simply writing <code>svar</code>. If we want
+to refer to its <em>next</em> version, we must use the <code>'</code> (prime) prefix operator: <code>'svar</code>.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Transition relation.
+trans {
+	// The *next* value of `is_counting` is equal to...
+	'is_counting = if 'start_stop {
+		// ...if `'start_stop` is true, then the negation of
+		// its *previous* value...
+		¬is_counting
+	} else {
+		// ...otherwise, it is equal to its previous value.
+		is_counting
+	},
+	'cnt = if 'reset {
+		0
+	} else if 'is_counting {
+		cnt + 1
+	} else {
+		cnt
+	},
+}
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p><code>trans</code> also accepts a comma-separated list of expressions understood as a <em>conjunction</em> <code>⋀</code>.</p>
+</blockquote>
+<p><br />
+</p>
+<p>Last are the candidate invariants, sometimes called <strong>P</strong>roof <strong>O</strong>bjective<strong>s</strong>, introduced by the
+<code>candidates</code> keyword. They are given as a comma-separated list of named candidates of shape
+<code>&quot;string describing the candidate&quot;: &lt;expr&gt;</code>. The name of a candidate is what mikino will use to
+refer to that candidate in its output.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Candidate invariants.
+candidates {
+	&quot;cnt is positive&quot;: cnt ≥ 0,
+	&quot;cnt ≤ 2&quot;: cnt ≤ 2,
+	&quot;cnt ≤ 4&quot;: cnt ≤ 4,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<blockquote>
+<p>Mikino's input format is designed to look relatively pretty with Rust syntax highlighting (which
+is used in the snippets above). It is definitely not legal Rust syntax though, so make sure
+<code>rustfmt</code> does not run on it as it will fail.</p>
+</blockquote>
+<p><br />
+</p>
+<h2 id="run-bmc"><a class="header" href="#run-bmc">Run BMC</a></h2>
+<p>Mikino is a proof engine, meaning that it can prove invariants over transition systems as we will
+see very soon. For now, let's just use its BMC mode. As discussed previously, BMC is not a proof
+technique (at least in infinite reachable state spaces), it is a <em>refutation</em> technique: the point
+of BMC is to produce counterexamples to candidate invariants thus disproving them.</p>
+<p>Let's try mikino on the stopwatch system described above. The full code is available in the
+<a href="#version-1">Version 1</a> section, the following assumes that code is in a <code>test.mkn</code> file. Notice
+that the candidates</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Candidate invariants.
+candidates {
+	&quot;cnt is positive&quot;: cnt ≥ 0,
+	&quot;cnt ≤ 2&quot;: cnt ≤ 2,
+	&quot;cnt ≤ 4&quot;: cnt ≤ 4,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>feature <code>&quot;cnt is positive&quot;</code>, which we will soon prove is an invariant of the system. Hence,
+mikino's BMC will not be able to find a counterexample for this candidate. We are thus going to run
+BMC with a <em>maximum depth</em>, <em>i.e.</em> we will give mikino a maximum number of unrollings to perform:
+<code>10</code>. The remaining candidates however are falsifiable.</p>
+<p><br />
+</p>
+<p>To put mikino in BMC mode, we need to pass it the <code>bmc</code> sub-command when we run it. We will also
+use the <code>--bmc_max &lt;int&gt;</code> flag that specifies a maximum BMC unrolling depth <code>≥ 0</code>. If no maximum is
+given, mikino will run BMC until either all candidates are falsified or you end (<code>Ctrl+C</code>) the
+process manually (or it exhausts memory/time).</p>
+<p><br />
+</p>
+<blockquote>
+<p>Mikino requires <a href="https://github.com/Z3Prover/z3" title="Z3 on github">Z3</a> to run, you can retrieve a binary for your operating system on
+<a href="https://github.com/Z3Prover/z3/releases" title="Z3's releases on github">Z3's release page</a>. Mikino, by default, assumes a Z3 binary is in your <code>PATH</code> with
+name <code>z3</code>. You can override this with the <code>--z3_cmd</code> command-line argument: <code>mikino --z3_cmd &quot;my_z3&quot; ...</code> or <code>mikino --z3_cmd &quot;./my_z3&quot; ...</code> if Z3 is not in your <code>PATH</code> but is in the current
+directory.</p>
+</blockquote>
+<p>Let's try it. Mikino tries to improve its output's readability by using colors: unfortunately, this
+will not show in this plain text rendition. (As discussed when I introduced SMT, different versions
+of Z3 or even different operating system might produce different models. The same applies to mikino
+as its counterexamples are Z3 models.)</p>
+<pre><code class="language-text">&gt; mikino bmc --bmc_max 10 test.mkn
+running BMC, looking for falsifications for 3 candidate(s)...
+checking for falsifications at depth 0
+found a falsification at depth 0:
+- `cnt ≤ 2` = (&lt;= cnt 2)
+  |=| Step 0
+  |         cnt = 3
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=|
+found a falsification at depth 0:
+- `cnt ≤ 4` = (&lt;= cnt 4)
+  |=| Step 0
+  |         cnt = 5
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 1
+checking for falsifications at depth 2
+checking for falsifications at depth 3
+checking for falsifications at depth 4
+checking for falsifications at depth 5
+checking for falsifications at depth 6
+checking for falsifications at depth 7
+checking for falsifications at depth 8
+checking for falsifications at depth 9
+checking for falsifications at depth 10
+
+|===| Bmc result
+| - could not find falsifications for the following candidate(s)
+|   `cnt is positive`
+|
+| - found a falsification for the following candidate(s)
+|   `cnt ≤ 2`
+|   `cnt ≤ 4`
+|
+| - system is unsafe
+|===|
+</code></pre>
+<blockquote>
+<p><strong>Pro tip:</strong> use the <code>--smt_log &lt;DIR&gt;</code> flag to specify a directory where mikino will create an
+SMT-LIB 2 file per solver it uses, and log all the commands issued to that solver. For instance,</p>
+<pre><code class="language-text">&gt; mikino bmc --smt_log smt_traces --bmc_max 10 test.mkn
+&gt; tree smt_traces/
+smt_traces
+└── bmc.smt2
+</code></pre>
+<p>This can be useful to inspect the exact checks mikino is performing and modify/relaunch them.</p>
+</blockquote>
+<p>Mikino incrementally unrolls BMC just like we discussed in the previous chapter. It starts at depth
+<code>0</code>, which means <em><code>0</code> transitions away from the initial states</em>, which really means <em>the initial
+states</em>. Right away, it falsifies all our candidates but the first one. This is because of our
+initial predicate:</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Initial predicate.
+init {
+	is_counting = start_stop,
+	cnt ≥ 0,
+	(reset ⇒ cnt = 0),
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>The system can start with any value for <code>cnt</code> as long as <em>i)</em> it is positive and <em>ii)</em> <code>reset</code> is
+not pressed. Mikino's output makes sense, but can we modify the system so that falsifiable
+candidates can only be falsified by unrolling more than <code>0</code> times?</p>
+<p>We sure can, by changing <code>init</code> so that <code>cnt</code> always starts at <code>0</code>.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Initial predicate.
+init {
+	is_counting = start_stop,
+	cnt = 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>We do not need to look at <code>reset</code> anymore since <code>cnt</code> will be <code>0</code> regardless. The full code for
+this new version is available in the <a href="#version-2">Version 2</a> section. We run mikino in BMC mode
+again, and this time we get</p>
+<pre><code class="language-text">&gt; mikino bmc --bmc_max 10 test.mkn
+running BMC, looking for falsifications for 3 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+checking for falsifications at depth 2
+checking for falsifications at depth 3
+found a falsification at depth 3:
+- `cnt ≤ 2` = (&lt;= cnt 2)
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=| Step 1
+  |         cnt = 1
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 2
+  |         cnt = 2
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 3
+  |         cnt = 3
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 4
+checking for falsifications at depth 5
+found a falsification at depth 5:
+- `cnt ≤ 4` = (&lt;= cnt 4)
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=| Step 1
+  |         cnt = 1
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 2
+  |         cnt = 2
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 3
+  |         cnt = 3
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 4
+  |         cnt = 4
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 5
+  |         cnt = 5
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 6
+checking for falsifications at depth 7
+checking for falsifications at depth 8
+checking for falsifications at depth 9
+checking for falsifications at depth 10
+
+|===| Bmc result
+| - could not find falsifications for the following candidate(s)
+|   `cnt is positive`
+|
+| - found a falsification for the following candidate(s)
+|   `cnt ≤ 2`
+|   `cnt ≤ 4`
+|
+| - system is unsafe
+|===|
+</code></pre>
+<p>Mikino is not able to falsify the falsifiable candidates in the initial states (depth <code>0</code>, <em>i.e.</em>
+zero unrollings of the transition relation) anymore, which was the whole point of the modification
+to <code>init</code> we just made. Mikino proceeds to check for falsifications at increasing depth. Once it
+reaches depth <code>3</code>, a falsification for <code>cnt ≤ 2</code> is found and a counterexample is produced. The
+counterexample shows the whole trace, from an initial state to a state falsifying the candidate
+because <code>cnt = 3</code> and <code>3 ≤ 2</code> is not <code>true</code>.</p>
+<p>Mikino keeps going with the remaining candidates. Although it does not appear in the output, after
+finding a counterexample at depth <code>3</code> mikino checks the remaining candidates (without <code>cnt ≤ 2</code>) at
+depth <code>3</code>. We got one counterexample for one candidate, but there might be a different
+counterexample for another candidate at the same depth.</p>
+<p>This is not the case here, and mikino proceeds to unroll the transition relation some more. It
+finds another counterexample at depth <code>5</code> for <code>cnt ≤ 4</code> and displays the whole trace, as expected.</p>
+<p><br />
+</p>
+<p>Let's modify our candidates, full code available in the <a href="#version-3">Version 3</a> section.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// Candidate invariants, or &quot;Proof Objectives&quot; (`po_s`).
+candidates {
+	&quot;cnt is positive&quot;: cnt ≥ 0,
+	&quot;reset works&quot;: reset ⇒ cnt = 0,
+	&quot;is_counting implies cnt &gt; 0&quot;: (is_counting ⋀ ¬start_stop) ⇒ cnt &gt; 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>You can place your bets as to which of these candidates are actual invariants. The third candidate
+is a bit strange, we will discuss why it is written that way shortly. Again, BMC cannot prove that
+any of them are indeed invariants, but it can disprove some of them if it finds a counterexample at
+some depth.</p>
+<pre><code class="language-text">&gt; mikino bmc --bmc_max 10 test.mkn
+running BMC, looking for falsifications for 3 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+found a falsification at depth 1:
+- `is_counting implies cnt &gt; 0` = (=&gt; (and is_counting (not start_stop)) (&gt; cnt 0))
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 1
+  |         cnt = 0
+  | is_counting = true
+  |       reset = true
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 2
+checking for falsifications at depth 3
+checking for falsifications at depth 4
+checking for falsifications at depth 5
+checking for falsifications at depth 6
+checking for falsifications at depth 7
+checking for falsifications at depth 8
+checking for falsifications at depth 9
+checking for falsifications at depth 10
+
+|===| Bmc result
+| - could not find falsifications for the following candidate(s)
+|   `cnt is positive`
+|   `reset works`
+|
+| - found a falsification for the following candidate(s)
+|   `is_counting implies cnt &gt; 0`
+|
+| - system is unsafe
+|===|
+</code></pre>
+<p>Candidate <code>is_counting implies cnt &gt; 0</code> was falsified. The idea of this candidate is that, when the
+system <code>is_counting</code>, <code>cnt</code> should increase and thus be strictly positive (more on that in the note
+below). Mikino shows us this is not true however, because <code>reset</code> has higher priority in our
+transition relation and causes <code>cnt</code> to be <code>0</code> regardless of <code>is_counting</code>'s value.</p>
+<p><br />
+</p>
+<blockquote>
+<p>We had to somewhat artificially write the candidate as <code>(is_counting ⋀ ¬start_stop) ⇒ cnt &gt; 0</code>.
+Based on the paragraph above, the <code>is_counting ⋀ ¬start_stop</code> part should really be
+<code>is_counting</code>. The problem with this is that we actually ignore <code>is_counting</code> in the initial
+state.</p>
+<p>Hence, we would get a initial state counterexample where <code>start_stop</code> is <code>true</code>, meaning
+<code>is_counting</code> is <code>true</code>, but <code>cnt</code> ignores it and is just <code>0</code>. As authors, we wanted to show a
+counterexample where <code>reset</code> prevents <code>cnt</code> from increasing despite <code>start_stop</code> being <code>true</code>,
+and thus had to distort the candidate a little bit.</p>
+<p>A better way to write this candidate is <code>is_counting ⇒ 'cnt &gt; cnt</code>. It would still be
+falsifiable, for the same reason and with the same counterexample, but it would make more sense.
+Sadly, mikino does not <strong>currently</strong> support <em>&quot;two-state candidates&quot;</em>, <em>i.e.</em> candidates that
+refer to a <em>previous</em> state.</p>
+<p>Checking two-state candidates differs slightly from regular (one-state) candidates in that they
+make no sense in the initial states (depth <code>0</code>) because there is no previous state there. Hence,
+a two states invariant defined as <code>two_state_expr</code> is understood as being the expression <code>true</code>
+in the initial states (which holds, obviously), and <code>two_state_expr</code> at depth <code>&gt; 0</code> since there
+is a previous state to refer to.</p>
+</blockquote>
+<p><br />
+</p>
+<h2 id="full-code-for-all-examples"><a class="header" href="#full-code-for-all-examples">Full Code for All Examples</a></h2>
+<h3 id="version-1"><a class="header" href="#version-1">Version 1</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// State variables.
+svars {
+	/// Inputs of the system.
+	start_stop reset: bool,
+	/// Keeps track of whether we are counting.
+	is_counting: bool,
+	/// Counts time, output of the system.
+	cnt: int,
+}
+
+/// Initial predicate.
+init {
+	is_counting = start_stop,
+	cnt ≥ 0,
+	(reset ⇒ cnt = 0),
+}
+
+/// Transition relation.
+trans {
+	// The *next* value of `is_counting` is equal to...
+	'is_counting = if 'start_stop {
+		// ...if `'start_stop` is true, then the negation of
+		// its *previous* value...
+		¬is_counting
+	} else {
+		// ...otherwise, it is equal to its previous value.
+		is_counting
+	},
+	'cnt = if 'reset {
+		0
+	} else if 'is_counting {
+		cnt + 1
+	} else {
+		cnt
+	},
+}
+
+/// Candidate invariants.
+candidates {
+	&quot;cnt is positive&quot;: cnt ≥ 0,
+	&quot;cnt ≤ 2&quot;: cnt ≤ 2,
+	&quot;cnt ≤ 4&quot;: cnt ≤ 4,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino bmc --bmc_max 10 test.mkn
+running BMC, looking for falsifications for 3 candidate(s)...
+checking for falsifications at depth 0
+found a falsification at depth 0:
+- `cnt ≤ 2` = (&lt;= cnt 2)
+  |=| Step 0
+  |         cnt = 3
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=|
+found a falsification at depth 0:
+- `cnt ≤ 4` = (&lt;= cnt 4)
+  |=| Step 0
+  |         cnt = 5
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 1
+checking for falsifications at depth 2
+checking for falsifications at depth 3
+checking for falsifications at depth 4
+checking for falsifications at depth 5
+checking for falsifications at depth 6
+checking for falsifications at depth 7
+checking for falsifications at depth 8
+checking for falsifications at depth 9
+checking for falsifications at depth 10
+
+|===| Bmc result
+| - could not find falsifications for the following candidate(s)
+|   `cnt is positive`
+|
+| - found a falsification for the following candidate(s)
+|   `cnt ≤ 2`
+|   `cnt ≤ 4`
+|
+| - system is unsafe
+|===|
+</code></pre>
+</details>
+<h3 id="version-2"><a class="header" href="#version-2">Version 2</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// State variables.
+svars {
+	/// Inputs of the system.
+	start_stop reset: bool,
+	/// Keeps track of whether we are counting.
+	is_counting: bool,
+	/// Counts time, output of the system.
+	cnt: int,
+}
+
+/// Initial predicate.
+init {
+	is_counting = start_stop,
+	cnt = 0,
+}
+
+/// Transition relation.
+trans {
+	// The *next* value of `is_counting` is equal to...
+	'is_counting = if 'start_stop {
+		// ...if `'start_stop` is true, then the negation of
+		// its *previous* value...
+		¬is_counting
+	} else {
+		// ...otherwise, it is equal to its previous value.
+		is_counting
+	},
+	'cnt = if 'reset {
+		0
+	} else if 'is_counting {
+		cnt + 1
+	} else {
+		cnt
+	},
+}
+
+/// Candidate invariants.
+candidates {
+	&quot;cnt is positive&quot;: cnt ≥ 0,
+	&quot;cnt ≤ 2&quot;: cnt ≤ 2,
+	&quot;cnt ≤ 4&quot;: cnt ≤ 4,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino bmc --bmc_max 10 test.mkn
+running BMC, looking for falsifications for 3 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+checking for falsifications at depth 2
+checking for falsifications at depth 3
+found a falsification at depth 3:
+- `cnt ≤ 2` = (&lt;= cnt 2)
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=| Step 1
+  |         cnt = 1
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 2
+  |         cnt = 2
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 3
+  |         cnt = 3
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 4
+checking for falsifications at depth 5
+found a falsification at depth 5:
+- `cnt ≤ 4` = (&lt;= cnt 4)
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=| Step 1
+  |         cnt = 1
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 2
+  |         cnt = 2
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 3
+  |         cnt = 3
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 4
+  |         cnt = 4
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step 5
+  |         cnt = 5
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 6
+checking for falsifications at depth 7
+checking for falsifications at depth 8
+checking for falsifications at depth 9
+checking for falsifications at depth 10
+
+|===| Bmc result
+| - could not find falsifications for the following candidate(s)
+|   `cnt is positive`
+|
+| - found a falsification for the following candidate(s)
+|   `cnt ≤ 2`
+|   `cnt ≤ 4`
+|
+| - system is unsafe
+|===|
+</code></pre>
+</details>
+<h3 id="version-3"><a class="header" href="#version-3">Version 3</a></h3>
+<details>
+	<summary>Expand this for the full code.</summary>
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>/// State variables.
+svars {
+	/// Inputs of the system.
+	start_stop reset: bool,
+	/// Keeps track of whether we are counting.
+	is_counting: bool,
+	/// Counts time, output of the system.
+	cnt: int,
+}
+
+/// Initial predicate.
+init {
+	is_counting = start_stop,
+	cnt = 0,
+}
+
+/// Transition relation.
+trans {
+	// The *next* value of `is_counting` is equal to...
+	'is_counting = if 'start_stop {
+		// ...if `'start_stop` is true, then the negation of
+		// its *previous* value...
+		¬is_counting
+	} else {
+		// ...otherwise, it is equal to its previous value.
+		is_counting
+	},
+	'cnt = if 'reset {
+		0
+	} else if 'is_counting {
+		cnt + 1
+	} else {
+		cnt
+	},
+}
+
+/// Candidate invariants, or &quot;Proof Objectives&quot; (`po_s`).
+candidates {
+	&quot;cnt is positive&quot;: cnt ≥ 0,
+	&quot;reset works&quot;: reset ⇒ cnt = 0,
+	&quot;is_counting implies cnt &gt; 0&quot;: (is_counting ⋀ ¬start_stop) ⇒ cnt &gt; 0,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Output:</p>
+<pre><code class="language-text">&gt; mikino bmc --bmc_max 10 test.mkn
+running BMC, looking for falsifications for 3 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+found a falsification at depth 1:
+- `is_counting implies cnt &gt; 0` = (=&gt; (and is_counting (not start_stop)) (&gt; cnt 0))
+  |=| Step 0
+  |         cnt = 0
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=| Step 1
+  |         cnt = 0
+  | is_counting = true
+  |       reset = true
+  |  start_stop = false
+  |=|
+checking for falsifications at depth 2
+checking for falsifications at depth 3
+checking for falsifications at depth 4
+checking for falsifications at depth 5
+checking for falsifications at depth 6
+checking for falsifications at depth 7
+checking for falsifications at depth 8
+checking for falsifications at depth 9
+checking for falsifications at depth 10
+
+|===| Bmc result
+| - could not find falsifications for the following candidate(s)
+|   `cnt is positive`
+|   `reset works`
+|
+| - found a falsification for the following candidate(s)
+|   `is_counting implies cnt &gt; 0`
+|
+| - system is unsafe
+|===|
+</code></pre>
+</details>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                                                    <a rel="prev" href="../bmc/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+                                                    <a rel="next" href="../induction/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                                    <a rel="prev" href="../bmc/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+                                    <a rel="next" href="../induction/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                            </nav>
+
+        </div>
+
+        
+        
+        
+                <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+        
+                <script src="../elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+        <script src="../clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        
+    </body>
+</html>

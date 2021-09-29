@@ -1,0 +1,36 @@
+name: test
+
+on: [push, pull_request]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup mdBook
+        uses: peaceiris/actions-mdbook@v1
+        with:
+          mdbook-version: 'latest'
+
+      - name: linkcheck setup
+        run: cargo install mdbook-linkcheck
+
+      - name: Get Z3
+        run: |
+          mkdir tmp_z3
+          wget https://github.com/Z3Prover/z3/releases/download/z3-4.8.12/z3-4.8.12-x64-glibc-2.31.zip -P tmp_z3
+          unzip tmp_z3/*.zip -d tmp_z3
+          mv tmp_z3/z3-*x64-glibc*/bin/z3 .
+          rm -rf tmp_z3
+
+      - name: Get Mikino
+        run: cargo install mikino
+
+      - name: Test All Examples
+        run: cargo run -- -vv --z3_cmd "./z3"
+
+      - name: Build
+        run: mdbook build

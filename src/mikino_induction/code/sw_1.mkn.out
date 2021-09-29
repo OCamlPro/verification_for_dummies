@@ -1,0 +1,43 @@
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `cnt ≤ 2` = (<= cnt 2)
+  |=| Step k
+  |         cnt = 2
+  | is_counting = false
+  |       reset = false
+  |  start_stop = false
+  |=| Step k + 1
+  |         cnt = 3
+  | is_counting = true
+  |       reset = false
+  |  start_stop = true
+  |=|
+- `cnt ≤ 4` = (<= cnt 4)
+  |=| Step k
+  |         cnt = 4
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=| Step k + 1
+  |         cnt = 5
+  | is_counting = true
+  |       reset = false
+  |  start_stop = false
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `cnt ≤ 2`
+|   `cnt ≤ 4`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `cnt is positive`
+|===|

@@ -1,0 +1,32 @@
+running BMC, looking for falsifications for 1 candidate(s)...
+checking for falsifications at depth 0
+checking for falsifications at depth 1
+checking for falsifications at depth 2
+found a falsification at depth 2:
+- `candidate` = (not (and (= len 8) (= grouping 4) (= i len)))
+  |=| Step 0
+  |     done = false
+  | grouping = 4
+  |        i = 0
+  |      len = 8
+  |=| Step 1
+  |     done = false
+  | grouping = 4
+  |        i = 4
+  |      len = 8
+  |=| Step 2
+  |     done = true
+  | grouping = 4
+  |        i = 8
+  |      len = 8
+  |=| Z3 produced the following unexpected values
+  | div0 ((x!0 int) (x!1 int)) int = 2
+  | mod0 ((x!0 int) (x!1 int)) int = 0
+  |=|
+
+|===| Bmc result
+| - found a falsification for the following candidate(s)
+|   `candidate`
+|
+| - system is unsafe
+|===|

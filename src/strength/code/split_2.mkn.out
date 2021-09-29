@@ -1,0 +1,13 @@
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+success: all candidate(s) are inductive
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - all candidates are inductive (preserved by the transition relation)
+|
+| - system is safe, all reachable states verify the candidate(s)
+|===|

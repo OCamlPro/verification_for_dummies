@@ -1,0 +1,5 @@
+base check, expecting `unsat`
+unsat
+step check, expecting `unsat`
+unsat
+induction proof complete

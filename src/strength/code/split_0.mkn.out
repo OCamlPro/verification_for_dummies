@@ -1,0 +1,37 @@
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+failed: the following candidate(s) are not inductive:
+- `done then i = len` = (=> done (= i len))
+  |=| Step k
+  |     done = false
+  | grouping = 2
+  |        i = 3
+  |      len = 4
+  |=| Step k + 1
+  |     done = true
+  | grouping = 2
+  |        i = 5
+  |      len = 4
+  |=| Z3 produced the following unexpected values
+  | div0 ((x!0 int) (x!1 int)) int = 2
+  | mod0 ((x!0 int) (x!1 int)) int = 0
+  |=|
+
+|===| Induction attempt result
+| - all candidates hold in the initial state(s)
+|
+| - the following candidate(s) are not inductive (not preserved by the transition relation)
+|   `done then i = len`
+|
+| - system might be unsafe, some candidate(s) are not inductive
+|
+| - the following candidate(s) hold in the initial state(s) and are inductive
+|   and thus hold in all reachable states of the system:
+|   `grouping > 0`
+|   `i ≥ 0`
+|   `len grouping related`
+|   `len ≥ 0`
+|   `not done then i < len`
+|===|

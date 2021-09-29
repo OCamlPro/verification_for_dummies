@@ -1,0 +1,54 @@
+// CMD: mikino check --bmc_max 5 <file>
+// ANCHOR: all
+// ANCHOR: var_decls
+/// State variables.
+svars {
+	/// Inputs of the system.
+	start_stop reset: bool,
+	/// Keeps track of whether we are counting.
+	is_counting: bool,
+	/// Counts time, output of the system.
+	cnt: int,
+}
+// ANCHOR_END: var_decls
+
+// ANCHOR: init
+/// Initial predicate.
+init {
+	is_counting = start_stop,
+	cnt = 0,
+}
+// ANCHOR_END: init
+
+// ANCHOR: trans
+/// Transition relation.
+trans {
+	// The *next* value of `is_counting` is equal to...
+	'is_counting = if 'start_stop {
+		// ...if `start_stop` is true, then the negation of
+		// its *previous* value...
+		¬is_counting
+	} else {
+		// ...otherwise, it is equal to its previous value.
+		is_counting
+	},
+
+	'cnt = if 'reset {
+		0
+	} else if 'is_counting {
+		cnt + 1
+	} else {
+		cnt
+	}
+}
+// ANCHOR_END: trans
+
+// ANCHOR: candidates
+/// Candidate invariants, or "Proof Objectives" (`po_s`).
+candidates {
+	"cnt is positive": cnt ≥ 0,
+	"cnt ≤ 2": cnt ≤ 2,
+	"cnt ≤ 4": cnt ≤ 4,
+}
+// ANCHOR_END: candidates
+// ANCHOR_END: all

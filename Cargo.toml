@@ -1,0 +1,7 @@
+[workspace]
+members = [
+	"manage",
+]
+default-members = [
+	"manage",
+]

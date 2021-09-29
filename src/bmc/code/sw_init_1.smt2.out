@@ -1,0 +1,11 @@
+sat
+(
+  (define-fun reset_0 () Bool
+    false)
+  (define-fun cnt_0 () Int
+    (- 1))
+  (define-fun start_stop_0 () Bool
+    false)
+  (define-fun is_counting_0 () Bool
+    false)
+)

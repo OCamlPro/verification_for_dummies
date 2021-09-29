@@ -1,0 +1,17 @@
+[book]
+authors = ["Adrien Champion"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Verification For Dummies: SMT and Induction by OCamlPro"
+
+[output.html.fold]
+enable = true
+
+[output.linkcheck]
+follow-web-links = true
+traverse-parent-directories = true
+exclude = [ 'ocamlpro\.com', 'play\.rust-lang\.org', './' ]
+
+[output.linkcheck.http-headers]
+'crates\.io' = ["Accept: text/html"]

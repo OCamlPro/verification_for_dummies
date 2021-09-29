@@ -1,0 +1,9 @@
+checking base case...
+success: all candidate(s) hold in the base state
+
+checking step case...
+|===| Error
+| smt-level error:
+| - smt solver reported `timeout`
+| during step check
+|===|

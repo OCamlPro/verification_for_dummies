@@ -32,11 +32,11 @@ There are several ways to retrieve a binary for mikino:
 
 - if you just want to retrieve a binary, you can do so on [mikino's release page][release page].
 
-Make sure you have mikino `v0.5.1` or above.
+Make sure you have mikino `v0.5.2` or above.
 
 ```text
 > mikino -V
-mikino 0.5.1
+mikino 0.5.2
 ```
 
 \

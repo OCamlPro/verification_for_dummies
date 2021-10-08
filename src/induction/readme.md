@@ -66,11 +66,11 @@ then we cannot have `cnt_1 = 0` without ..."
 \
 \
 
-Instead of checking if `candidate` is a *consequence* of `trans` (which it is not as we just saw)
-we could check `trans` *preserves* `candidate`. Since `trans` relates succeeding states `k-1` and
-`k`, we say that `trans` *preserves* `candidate` if `candidate(k) ∧ trans(k-1, k) ⇒ candidate(k)`.
-That is, *"states verifying `candidate` cannot, in one application of `trans`, reach a state
-falsifying `candidate`"*.
+Instead of checking if `candidate` is a *consequence* of `trans` (which it is not as we just saw) we
+could check `trans` *preserves* `candidate`. Since `trans` relates succeeding states `k-1` and `k`,
+we say that `trans` *preserves* `candidate` if `candidate(k-1) ∧ trans(k-1, k) ⇒ candidate(k)`. That
+is, *"states verifying `candidate` cannot, in one application of `trans`, reach a state falsifying
+`candidate`"*.
 
 Is it the case though? We take the same assumptions as above, when we looked at a transition from
 `k-1` to `k`, and also assume `candidate` at `k-1`: *"no cex of length `i < k-1` exists"*. By

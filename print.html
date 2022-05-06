@@ -76,7 +76,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="smt/mikino.html"><strong aria-hidden="true">3.1.</strong> SMT Scripts: Mikino</a></li></ol></li><li class="chapter-item "><a href="trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li><li class="chapter-item "><a href="mikino_install/index.html"><strong aria-hidden="true">12.</strong> Appendix: Mikino</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -150,9 +150,9 @@
       />
   </a>
 <p>This work is licensed under a <a
-        rel="license"
-        href="http://creativecommons.org/licenses/by-sa/4.0/"
-    >Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+      rel="license"
+      href="http://creativecommons.org/licenses/by-sa/4.0/"
+  >Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
 </li>
 </ul>
 <p><br />
@@ -518,6 +518,8 @@ and discard solver instances that are still running.</p>
 <!-- Last, while we recommend having Z3 available locally, you can run the examples in this section
 using only the [Z3 online playground][z3 online]. Beware that all following chapters about induction
 require to have Z3 in your path. -->
+<p><br />
+</p>
 <h2 id="satisfiability"><a class="header" href="#satisfiability">Satisfiability</a></h2>
 <p>Formula satisfiability is concerned about whether it is possible to make some formula evaluate to
 <code>true</code>. More precisely, is it possible to find a valuation for the variables appearing in the
@@ -529,6 +531,8 @@ models for purely boolean formulas. <em>&quot;SMT&quot;</em> adds <em>&quot;Modu
 specify that atoms of the formula can mention theories different from booleans (integers, reals,
 arrays, <em>etc.</em>) in its atoms, and that models must respect the rules of these theories.</p>
 </blockquote>
+<p><br />
+</p>
 <h2 id="smt-lib-2"><a class="header" href="#smt-lib-2">SMT-LIB 2</a></h2>
 <p>For simplicity's sake, let's only allow atoms to mention integers. Consider the following formula.</p>
 <pre><code class="language-text">(declare-const x Int)
@@ -543,8 +547,8 @@ arrays, <em>etc.</em>) in its atoms, and that models must respect the rules of t
 </code></pre>
 <p>The first two lines declare <em>&quot;constants&quot;</em> <code>x</code> and <code>y</code>. As programmers, we can see them as
 <em>&quot;variables&quot;</em> in the sense that they represent an unknown value of type <code>Int</code>. This syntax comes
-from the <a href="http://smtlib.cs.uiowa.edu" title="SMT-LIB homepage">SMT-LIB 2 standard</a>, which is the standard language for interacting with SMT
-solvers. Most, if not all, SMT solvers support SMT-LIB 2 input.</p>
+from the <a href="http://smtlib.cs.uiowa.edu" title="SMT-LIB homepage">SMT-LIB 2 standard</a>, which is the standard <em>scripting</em> language for interacting
+with SMT solvers. Most, if not all, SMT solvers support SMT-LIB 2 input.</p>
 <p>Of course, the ASCII art tree representing the formula is <em>not</em> legal SMT-LIB 2. An SMT-LIB 2 script
 declares constants (and more) and uses these constants to <em>assert</em> formulas, <em>i.e.</em> specify to the
 solver what the constraints are.</p>
@@ -693,6 +697,289 @@ satisfiable? Then, <a href="smt/index.html#playing-with-z3-sat">as we saw in the
 <em>counterexample</em>, which shows how it is possible to verify the whole context but still falsify the
 program assertion (<em>i.e</em> satisfy the SMT-LIB-level <code>(assert (not &lt;program_assertion&gt;))</code>).</p>
 <h2 id="outro-1"><a class="header" href="#outro-1">Outro</a></h2>
+<p>SMT solvers are extremely powerful, flexible and expressive tools. <em>Powerful</em> because they are
+highly optimized tools constantly improved by ongoing theoretical and practical research.
+<em>Flexible</em> because many different theories are available, allowing to manipulate integers, strings,
+arrays, algebraic data types, <em>etc.</em> And <em>expressive</em> because a great deal of verification problems
+are amenable to SMT without too much trouble.</p>
+<p>One such verification problem is <em>declarative transition system (induction-based) verification</em>, as
+we will see in the following chapters.</p>
+<p><br />
+</p>
+<p>The next section is optional, it is a repetition of the present section using <a href="https://github.com/OCamlPro/mikino_bin" title="Mikino binary repository">mikino</a>'s version of SMT-LIB 2: <em>hsmt</em>. Hsmt is a Rust-flavored syntax for (a subset of) the SMT-LIB
+2 scripting language. As we will see, mikino's primary functionality is performing SMT-based
+induction checks; hsmt is just a by-product feature that I thought could be useful for teaching
+what SMT is and how to interact with SMT solvers. Note that while mikino only supports a subset of
+SMT-LIB 2 (function definitions are not supported for example), it also adds new features such as
+conditional branching (if-then-else) over check-sat results.</p>
+<p>If that's not interesting for you right now, feel free to move on directly to <a href="smt/../trans">the next
+chapter</a>.</p>
+<!-- [z3 online]: https://rise4fun.com/z3 (Z3's online interface) -->
+<div style="break-before: page; page-break-before: always;"></div><h1 id="smt-scripts-mikino"><a class="header" href="#smt-scripts-mikino">SMT Scripts: Mikino</a></h1>
+<p>This section as well as most following ones rely on <a href="https://github.com/OCamlPro/mikino_bin" title="Mikino binary repository">mikino</a>, a nice tool I wrote for
+interacting with SMT solvers and perform induction-based analyses (which we will do soon). If you
+want to follow along just make sure <a href="smt/../mikino_install">you have mikino set up</a>. Be careful that
+mikino requires Z3 to actually run, as discussed in the <a href="smt/../mikino_install">setup instructions</a>.</p>
+<p></p>
+<p>Mikino has its own scripting language for interacting with SMT solvers. It is basically a
+Rust-flavored version of <a href="http://smtlib.cs.uiowa.edu" title="SMT-LIB homepage">SMT-LIB 2</a> called <em>hsmt</em> (Human SMT). While readable, SMT-LIB 2
+is designed to be written and parsed by programs, not humans. You probably noticed this yourself
+reading the previous section.</p>
+<p>We want to emphasize that mikino is <strong>not</strong> an SMT solver: when running hsmt scripts, mikino acts
+as a thin layer between the hsmt code and Z3. Mikino translates your commands, passes them to Z3,
+and handles/prettifies the result of the command if any. Whenever we say <em>mikino does something</em> in
+this section, it's really Z3 doing through mikino.</p>
+<p></p>
+<p>We're going to go through what hsmt is shortly, but before we do know that you can run <code>mikino demo --script demo.rs</code> to generate a demo script file <code>demo.rs</code> which discusses more details about hsmt
+that we can cover here. For instance, the demo discusses conditional branching (if-then-else) over
+check-sat results (which SMT-LIB 2 does not have) which will not be mentioned here.</p>
+<h2 id="basics"><a class="header" href="#basics">Basics</a></h2>
+<p>Consider the following formula.</p>
+<pre><code class="language-text">vars {
+   x y : int
+}
+
+   ┌───∧─────┐
+   │         │
+ x &gt; 7    ┌──∨──────┐
+          │         │
+          │         │
+        y = 2*x   x = 11
+</code></pre>
+<p>Of course, the ASCII art tree representing the formula is <em>not</em> legal hsmt. An hsmt script declares
+variables and uses them to <em>assert</em> formulas, <em>i.e.</em> specify to the solver what the constraints on
+these variables are.</p>
+<p>As you already guessed the first lines in the snippet above declare integer variables <code>x</code> and <code>y</code>.
+<code>vars</code> block let you declare variables of type <code>int</code>, <code>bool</code> or <code>rat</code>(ional) as a comma-separated
+(with optional trailing comma) list:</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>vars {
+   x y : int,
+   flag1 : bool,
+   flag2 : bool,
+   z1 z2 z3 : rat,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Anyway, an hsmt assertion of our running example would look like this:</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>vars {
+	x y : int
+}
+
+assert {
+	(x &gt; 7) ∧ (
+		y = 2*x ∨ x = 11
+	)
+}
+
+check_sat!()
+<span class="boring">}
+</span></code></pre></pre>
+<p>All hsmt commands (<code>vars</code>, <code>assert</code>, <code>check_sat</code>, ...) accept their input either in a block <code>{ ... }</code> or between parens <code>( ... )</code>.</p>
+<p>The <code>assert</code> command feeds a constraint to the solver as a constraint. Next, we can ask the solver
+to check the satisfiability of all the constraints (of which there is just one here) with
+<code>check-sat</code>.</p>
+<h2 id="playing-with-mikino-sat"><a class="header" href="#playing-with-mikino-sat">Playing with mikino: <code>sat</code></a></h2>
+<p>Let's now run mikino on this tiny example. Create a file <code>test.rs</code> and copy the content of the
+SMT-LIB script above. No special option is needed and you should get the following output.</p>
+<pre><code class="language-text">&gt; mikino script test.rs
+sat
+success
+</code></pre>
+<p>Mikino answered <code>sat</code>, indicating that the formula is <em>&quot;satisfiable&quot;</em>: there exists a model (a
+valuation of the variables) that make our constraints (just one in this case) <code>true</code>. This is nice,
+but it would be better if mikino could give us a model to make sure it is not lying to us (it's
+not). We can do so by adding a <code>get_model!()</code> command after the <code>check_sat!()</code>. (Note that
+<code>get_model!()</code> is <strong>only</strong> legal after a <code>check_sat!()</code> yielded <code>sat</code>.)</p>
+<pre><code class="language-rs">vars {
+	x y : int
+}
+
+assert {
+	(x &gt; 7) ∧ (
+		y = 2*x ∨ x = 11
+	)
+}
+
+check_sat!()
+get_model!()
+</code></pre>
+<p>After updating <code>test.rs</code>, running mikino again will produce a model. You might not get exactly the
+same model as the one reported here depending on the precise version of mikino/Z3 you are using and
+possibly other factors (such as your operating system).</p>
+<pre><code class="language-text">&gt; mikino script test.rs
+sat
+model {
+    x: 8,
+    y: 16,
+}
+success
+</code></pre>
+<p>This valuation is a model because <code>(&gt; x 7) ≡ (&gt; 8 7)</code> holds (&quot;is true&quot;) and so does <code>(= y (* 2 x)) ≡ (= 16 (* 2 8))</code>: all constraints are verified.</p>
+<blockquote>
+<p>By the way, you might see a pattern here with the use of <code>!</code> after some commands' name. It is not
+mandatory, but all commands that either <em>i)</em> can produce an output like <code>check_sat</code>, <code>get_model</code>,
+<code>echo</code>, <code>println</code>, or <em>ii)</em> exit/crash the script (<code>exit</code>, <code>panic</code>) can be written with a <code>!</code> at
+the end like <code>assert!()</code>, <code>println!(&quot;my message&quot;)</code>... to make them stand out visually.</p>
+</blockquote>
+<p><br />
+</p>
+<p>Now, we can assert more than one constraint. Mikino works on the conjunction of all constraints
+---or at least Z3, behind the scene, does. In our running example, our only constraint is a
+conjunction, meaning we could write it as two constraints.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>vars {
+	x y : int
+}
+
+assert(x &gt; 7)
+assert(y = 2*x ∨ x = 11)
+
+check_sat!()
+get_model!()
+<span class="boring">}
+</span></code></pre></pre>
+<pre><code class="language-text">&gt; mikino script test.rs
+sat
+model {
+    x: 8,
+    y: 16,
+}
+success
+</code></pre>
+<p>Alternatively, <code>assert</code> actually takes as input a comma-separated list (with optional trailing
+comma) of expressions, understood as a conjunction. So this also works:</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>vars {
+	x y : int
+}
+
+assert {
+	x &gt; 7,
+	y = 2*x ∨ x = 11,
+}
+
+check_sat!()
+get_model!()
+<span class="boring">}
+</span></code></pre></pre>
+<pre><code class="language-text">&gt; mikino script test.rs
+sat
+model {
+    x: 8,
+    y: 16,
+}
+success
+</code></pre>
+<p><br />
+</p>
+<p>Let's now add the constraint that <code>y</code> is an odd number: <code>y % 2 = 1</code>. This should void the previous
+model, and more generally any model that relies on making <code>y = 2*x</code> true to satisfy the constraints
+since <code>y</code> would need to be both even and odd.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>vars {
+	x y : int
+}
+
+assert {
+	x &gt; 7,
+	y = 2*x ∨ x = 11,
+	y % 2 = 1,
+}
+
+check_sat!()
+get_model!()
+<span class="boring">}
+</span></code></pre></pre>
+<p>We now get</p>
+<pre><code class="language-text">&gt; mikino script test.rs
+sat
+model {
+    x: 11,
+    y: 1,
+}
+success
+</code></pre>
+<p>As expected, the solver now has to make the second constraint <code>true</code> through <code>x = 11</code>.</p>
+<h2 id="playing-with-mikino-unsat"><a class="header" href="#playing-with-mikino-unsat">Playing with mikino: <code>unsat</code></a></h2>
+<p>Let's add another constraint to make our problem <code>unsat</code>isfiable. In the latest version of our
+example, the solver has no choice but to have <code>x</code> be <code>11</code> since it is the only way to verify the
+second constraint (because the third constraint prevents <code>y</code> from being even).</p>
+<p>We can simply constrain <code>x</code> to be even (which prevents <code>x</code> from being <code>11</code>), which we will write as
+&quot;<code>x</code> cannot be odd&quot;.</p>
+<pre><pre class="playground"><code class="language-rust  compile_fail">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>vars {
+	x y : int
+}
+
+assert {
+	x &gt; 7,
+	y = 2*x ∨ x = 11,
+	y % 2 = 1,
+}
+
+assert {
+	¬(x % 2 = 1),
+}
+
+check_sat!()
+get_model!()
+<span class="boring">}
+</span></code></pre></pre>
+<p>Z3 knows exactly what we are doing and replies that the formula is unsatisfiable.</p>
+<pre><code class="language-text">❯ z3 test.rs
+unsat
+|===| Error
+| parse error at 18:1
+|    | check_sat!()
+| 18 | get_model!()&lt;EOI&gt;
+|    | ^~~~ here
+| - while requesting a model
+| - smt-level error:
+|   - solver error: &quot;line 18 column 10: model is not available&quot;
+| - performing script step for file `./src/smt/code/ex_5.hsmt`
+| - running `./src/smt/code/ex_5.hsmt` script
+|===|
+</code></pre>
+<p>We get an error though, because it does not make sense to ask for a model if the formula is
+unsatisfiable. <em>&quot;Unsatisfiable&quot;</em>, or <em>unsat</em>, means <em>&quot;has no model&quot;</em>, <em>i.e.</em> no valuation of the
+variables can make all constraints true.</p>
+<p><br />
+</p>
+<p>Now, what does this unsatisfiability result tell us? One way to see it is to consider the first
+three constraints as some form of context. That is, the first three constraints correspond to some
+point in a program where there are two unknown values <code>x</code> and <code>y</code>, and the first three constraints
+encode what we know to be true about these values.</p>
+<p>The last constraint can be seen as a question. Say that at that point in the program, there is an
+assertion that <code>x</code> must be odd. We want to verify that it can never fail. From this point of view,
+then the latest version of our running example amounts to asking &quot;given the context (first three
+constraints), is it possible for <code>x</code> to <strong>not</strong> be odd?&quot;. In other words, we are asking the solver
+to find some values that both verify our context and <strong>falsify</strong> the program's assertion.</p>
+<p>The solver answers <em>&quot;no&quot;</em>: in this context, it is not possible for <code>x</code> not to be odd. This means
+that we proved for us that the program's assertion can never fail (and can be compiled away). More
+precisely, we proved that <strong>our encoding of the program's assertion</strong> can never fail. Whatever we
+then do with this information depends on how much trust we have in the encoding.</p>
+<p><br />
+</p>
+<p>What if, with different constraints, the negation of the program's assert statement was
+satisfiable? Then, <a href="smt/mikino.html#playing-with-z3-sat">as we saw in the previous section</a>, solvers can give us a
+<em>model</em>: a valuation of all the (relevant) variables involved in the check. this constitutes a
+<em>counterexample</em>, which shows how it is possible to verify the whole context but still falsify the
+program assertion, <em>i.e</em> satisfy <code>assert { ¬ &lt;program_assertion&gt; }</code>.</p>
+<h2 id="outro-2"><a class="header" href="#outro-2">Outro</a></h2>
 <p>SMT solvers are extremely powerful, flexible and expressive tools. <em>Powerful</em> because they are
 highly optimized tools constantly improved by ongoing theoretical and practical research.
 <em>Flexible</em> because many different theories are available, allowing to manipulate integers, strings,
@@ -930,11 +1217,11 @@ two other states variables <code>'s.start_stop</code> and <code>'s.reset</code> 
 <em>inputs</em>. Since they are not constrained, they can take any (boolean) value at all.</p>
 <p>Notice also that, if we fix some values for <code>'s.start_stop</code> and <code>'s.reset</code>, then <code>trans</code> is
 <em>deterministic</em>: <code>s</code>, whatever it is, can only have one successor.</p>
-<table><thead><tr><th align="center"><code>'s.start_stop</code></th><th align="center"><code>'s.reset</code></th><th align="center"><code>'s.is_counting</code></th><th align="center"><code>'s.cnt</code></th></tr></thead><tbody>
-<tr><td align="center"><code>false</code></td><td align="center"><code>false</code></td><td align="center"><code>s.is_counting</code></td><td align="center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
-<tr><td align="center"><code>true</code></td><td align="center"><code>false</code></td><td align="center"><code>¬s.is_counting</code></td><td align="center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
-<tr><td align="center"><code>false</code></td><td align="center"><code>true</code></td><td align="center"><code>s.is_counting</code></td><td align="center"><code>0</code></td></tr>
-<tr><td align="center"><code>true</code></td><td align="center"><code>true</code></td><td align="center"><code>¬s.is_counting</code></td><td align="center"><code>0</code></td></tr>
+<table><thead><tr><th style="text-align: center"><code>'s.start_stop</code></th><th style="text-align: center"><code>'s.reset</code></th><th style="text-align: center"><code>'s.is_counting</code></th><th style="text-align: center"><code>'s.cnt</code></th></tr></thead><tbody>
+<tr><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>s.is_counting</code></td><td style="text-align: center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
+<tr><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>¬s.is_counting</code></td><td style="text-align: center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
+<tr><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>s.is_counting</code></td><td style="text-align: center"><code>0</code></td></tr>
+<tr><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>¬s.is_counting</code></td><td style="text-align: center"><code>0</code></td></tr>
 </tbody></table>
 <p>So, there are <strong>at most</strong> four potential successors to any state <code>s</code>, depending on the
 (unconstrained) values of the two inputs.</p>
@@ -953,7 +1240,7 @@ shape is</p>
 	&lt;expression&gt;
 )
 </code></pre>
-<p>where <code>&lt;args&gt;</code> is zero or more whitespace-separated arguments <code>(&lt;ident&gt; &lt;type&gt;)</code>. For example:</p>
+<p>where <code>&lt;args&gt;</code> is zero or more arguments <code>(&lt;ident&gt; &lt;type&gt;)</code>. For example:</p>
 <pre><code class="language-text">(define-fun add_1 ( (n Int) ) Int
 	(+ n 1)
 )
@@ -2390,31 +2677,9 @@ sat
 everything we have seen so far (and will see later). It is designed to be relatively simple with
 user experience front and center: the goal is to have a tool that is gratifying to interact with to
 teach about induction-based verification.</p>
-<p>There are several ways to retrieve a binary for mikino:</p>
-<ul>
-<li>
-<p>if you already have <a href="https://www.rust-lang.org/tools/install" title="Rust website, installation">rust</a> installed, simply run</p>
-<pre><code class="language-text">&gt; cargo install mikino
-</code></pre>
-<p>or</p>
-<pre><code class="language-text">&gt; cargo install --force mikino
-</code></pre>
-<p>to update your mikino install.</p>
-<p>You can also build it from source, which also requires rust:</p>
-<pre><code class="language-text">&gt; git clone https://github.com/OCamlPro/mikino_bin
-&gt; cd mikino_bin
-&gt; cargo build --release
-&gt; ./target/release/mikino help
-</code></pre>
-</li>
-<li>
-<p>if you just want to retrieve a binary, you can do so on <a href="https://github.com/OCamlPro/mikino_bin/releases" title="Mikino's release page on github">mikino's release page</a>.</p>
-</li>
-</ul>
-<p>Make sure you have mikino <code>v0.5.2</code> or above.</p>
-<pre><code class="language-text">&gt; mikino -V
-mikino 0.5.2
-</code></pre>
+<p>Most examples from this point will rely on mikino, so I encourage you to install it so that you can
+mess around with my examples and get a better understanding. See the <a href="mikino_bmc/../mikino_install">mikino
+appendix</a> for setup instructions.</p>
 <p><br />
 </p>
 <h2 id="input-format"><a class="header" href="#input-format">Input Format</a></h2>
@@ -4629,7 +4894,7 @@ checking step case...
 |===| Error
 | smt-level error:
 | - smt solver reported `timeout`
-| during step check
+| - during step check
 |===|
 </code></pre>
 <p>Adding <code>-T:5</code> to the Z3 command tells Z3 to timeout after five seconds. Feel free to increase the
@@ -4692,7 +4957,7 @@ checking step case...
 |===| Error
 | smt-level error:
 | - smt solver reported `timeout`
-| during step check
+| - during step check
 |===|
 </code></pre>
 <p>We have been in an undecidable fragment all along (since we use non-linear arithmetic). But so far,
@@ -5330,7 +5595,7 @@ checking step case...
 |===| Error
 | smt-level error:
 | - smt solver reported `timeout`
-| during step check
+| - during step check
 |===|
 </code></pre>
 </details>
@@ -5495,6 +5760,73 @@ for systems that can be expressed using nothing but booleans. Systems using arit
 strings... are more difficult to handle because of one of the necessary PDR steps (pre-image
 computation), as well as certain crucial optimization that only apply on purely propositional
 formulas.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="appendix-mikino"><a class="header" href="#appendix-mikino">Appendix: Mikino</a></h1>
+<p>Mikino is written in <a href="https://www.rust-lang.org">Rust</a> and is available as a Rust library</p>
+<ul>
+<li>https://crates.io/crates/mikino_api</li>
+<li>https://docs.rs/mikino_api/0.9.1/mikino_api</li>
+</ul>
+<p>and a Rust birany</p>
+<ul>
+<li>https://crates.io/crates/mikino</li>
+</ul>
+<p>So, if you already have Rust installed on your system (or don't mind <a href="https://www.rust-lang.org/tools/install">installing it</a>)
+just make sure it is up-to-date and ask <code>cargo</code> to install mikino for you.</p>
+<pre><code class="language-bash"># update rust
+&gt; rustup self update
+&gt; rustup update
+
+# install mikino, `-f` allows overwriting (updating)
+# the previous mikino install if any
+&gt; cargo install -f mikino
+</code></pre>
+<p><br />
+</p>
+<p>Otherwise, head to <a href="https://github.com/OCamlPro/mikino_bin/releases">mikino's release page</a> and download the latest release for your
+operating system. The only other alternative is to <a href="mikino_install/index.html#build">build mikino from scratch</a>.</p>
+<p></p>
+<h2 id="z3-1"><a class="header" href="#z3-1">Z3</a></h2>
+<p>Mikino requires <a href="https://github.com/Z3Prover/z3">the Z3 SMT solver</a>. You can build it from source or recover a binary from the
+<a href="https://github.com/Z3Prover/z3/releases">release page</a>.</p>
+<p>From this point forward I assume readers have a Z3 binary called <code>z3</code> in their path. That is,
+running the command <code>z3 -version</code> should not fail and produce an output similar to</p>
+<pre><code class="language-text">Z3 version 4.8.13 - 64 bit
+</code></pre>
+<p>Mikino, by default, assumes a Z3 binary is in your <code>PATH</code> with name <code>z3</code>. You can override this
+with the <code>--z3_cmd</code> command-line argument: <code>mikino --z3_cmd &quot;my_z3&quot; ...</code>, or <code>mikino --z3_cmd &quot;path/to/my_z3&quot; ...</code> if Z3 is not in your <code>PATH</code>.</p>
+<p></p>
+<p>Note that other efficient solvers exist such as <a href="https://alt-ergo.ocamlpro.com" title="Alt-Ergo homepage">Alt-Ergo</a>, <a href="https://cvc4.github.io/" title="CVC4 homepage">CVC4</a> and <a href="https://yices.csl.sri.com" title="Yices 2 homepage">Yices 2</a>.
+Solvers tend to be perform well on different kinds of problem, and verification frameworks
+routinely run several of them in parallel, wait for the quickest answer, and discard solver
+instances that are still running.</p>
+<p></p>
+<h2 id="build"><a class="header" href="#build">Build</a></h2>
+<p>You can also build mikino, it's actually quite easy. <a href="https://www.rust-lang.org/tools/install">Install Rust</a> or make sure it
+is up-to-date if it is installed already.</p>
+<pre><code class="language-bash"># update rust
+&gt; rustup self update
+&gt; rustup update
+</code></pre>
+<p>Clone <a href="https://github.com/OCamlPro/mikino_bin">mikino's (binary) repo</a>, and <code>cargo build</code> it:</p>
+<pre><code class="language-bash">&gt; clone https://github.com/OCamlPro/mikino_bin
+&gt; cd mikino_bin
+
+# debug, unoptimized build
+&gt; cargo build
+&gt; ./target/debug/mikino -V
+mikino 0.9.1
+
+# release, optimized build
+&gt; cargo build --release
+&gt; ./target/release/mikino -V
+mikino 0.9.1
+</code></pre>
+<p>Alternatively, you can ask <code>cargo</code> to install your local clone of the repo:</p>
+<pre><code class="language-bash">&gt; clone https://github.com/OCamlPro/mikino_bin
+&gt; cargo install --path mikino_bin
+&gt; mikino -V
+mikino 0.9.1
+</code></pre>
 
                     </main>
 

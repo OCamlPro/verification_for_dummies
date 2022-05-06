@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item expanded "><a href="../trans/index.html" class="active"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../smt/mikino.html"><strong aria-hidden="true">3.1.</strong> SMT Scripts: Mikino</a></li></ol></li><li class="chapter-item expanded "><a href="../trans/index.html" class="active"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li><li class="chapter-item "><a href="../mikino_install/index.html"><strong aria-hidden="true">12.</strong> Appendix: Mikino</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -363,11 +363,11 @@ two other states variables <code>'s.start_stop</code> and <code>'s.reset</code> 
 <em>inputs</em>. Since they are not constrained, they can take any (boolean) value at all.</p>
 <p>Notice also that, if we fix some values for <code>'s.start_stop</code> and <code>'s.reset</code>, then <code>trans</code> is
 <em>deterministic</em>: <code>s</code>, whatever it is, can only have one successor.</p>
-<table><thead><tr><th align="center"><code>'s.start_stop</code></th><th align="center"><code>'s.reset</code></th><th align="center"><code>'s.is_counting</code></th><th align="center"><code>'s.cnt</code></th></tr></thead><tbody>
-<tr><td align="center"><code>false</code></td><td align="center"><code>false</code></td><td align="center"><code>s.is_counting</code></td><td align="center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
-<tr><td align="center"><code>true</code></td><td align="center"><code>false</code></td><td align="center"><code>¬s.is_counting</code></td><td align="center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
-<tr><td align="center"><code>false</code></td><td align="center"><code>true</code></td><td align="center"><code>s.is_counting</code></td><td align="center"><code>0</code></td></tr>
-<tr><td align="center"><code>true</code></td><td align="center"><code>true</code></td><td align="center"><code>¬s.is_counting</code></td><td align="center"><code>0</code></td></tr>
+<table><thead><tr><th style="text-align: center"><code>'s.start_stop</code></th><th style="text-align: center"><code>'s.reset</code></th><th style="text-align: center"><code>'s.is_counting</code></th><th style="text-align: center"><code>'s.cnt</code></th></tr></thead><tbody>
+<tr><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>s.is_counting</code></td><td style="text-align: center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
+<tr><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>¬s.is_counting</code></td><td style="text-align: center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
+<tr><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>s.is_counting</code></td><td style="text-align: center"><code>0</code></td></tr>
+<tr><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>¬s.is_counting</code></td><td style="text-align: center"><code>0</code></td></tr>
 </tbody></table>
 <p>So, there are <strong>at most</strong> four potential successors to any state <code>s</code>, depending on the
 (unconstrained) values of the two inputs.</p>
@@ -376,7 +376,7 @@ two other states variables <code>'s.start_stop</code> and <code>'s.reset</code> 
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../smt/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../smt/mikino.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                             <a rel="next" href="../trans_smt/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
@@ -388,7 +388,7 @@ two other states variables <code>'s.start_stop</code> and <code>'s.reset</code> 
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../smt/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../smt/mikino.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                     <a rel="next" href="../trans_smt/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">

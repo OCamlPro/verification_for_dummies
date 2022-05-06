@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item expanded "><a href="../mikino_bmc/index.html" class="active"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../smt/mikino.html"><strong aria-hidden="true">3.1.</strong> SMT Scripts: Mikino</a></li></ol></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item expanded "><a href="../mikino_bmc/index.html" class="active"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li><li class="chapter-item "><a href="../mikino_install/index.html"><strong aria-hidden="true">12.</strong> Appendix: Mikino</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -139,31 +139,9 @@
 everything we have seen so far (and will see later). It is designed to be relatively simple with
 user experience front and center: the goal is to have a tool that is gratifying to interact with to
 teach about induction-based verification.</p>
-<p>There are several ways to retrieve a binary for mikino:</p>
-<ul>
-<li>
-<p>if you already have <a href="https://www.rust-lang.org/tools/install" title="Rust website, installation">rust</a> installed, simply run</p>
-<pre><code class="language-text">&gt; cargo install mikino
-</code></pre>
-<p>or</p>
-<pre><code class="language-text">&gt; cargo install --force mikino
-</code></pre>
-<p>to update your mikino install.</p>
-<p>You can also build it from source, which also requires rust:</p>
-<pre><code class="language-text">&gt; git clone https://github.com/OCamlPro/mikino_bin
-&gt; cd mikino_bin
-&gt; cargo build --release
-&gt; ./target/release/mikino help
-</code></pre>
-</li>
-<li>
-<p>if you just want to retrieve a binary, you can do so on <a href="https://github.com/OCamlPro/mikino_bin/releases" title="Mikino's release page on github">mikino's release page</a>.</p>
-</li>
-</ul>
-<p>Make sure you have mikino <code>v0.5.2</code> or above.</p>
-<pre><code class="language-text">&gt; mikino -V
-mikino 0.5.2
-</code></pre>
+<p>Most examples from this point will rely on mikino, so I encourage you to install it so that you can
+mess around with my examples and get a better understanding. See the <a href="../mikino_install">mikino
+appendix</a> for setup instructions.</p>
 <p><br />
 </p>
 <h2 id="input-format"><a class="header" href="#input-format">Input Format</a></h2>

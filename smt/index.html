@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item expanded "><a href="../smt/index.html" class="active"><strong aria-hidden="true">3.</strong> SMT Solvers</a></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item expanded "><a href="../smt/index.html" class="active"><strong aria-hidden="true">3.</strong> SMT Solvers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../smt/mikino.html"><strong aria-hidden="true">3.1.</strong> SMT Scripts: Mikino</a></li></ol></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li><li class="chapter-item "><a href="../mikino_install/index.html"><strong aria-hidden="true">12.</strong> Appendix: Mikino</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -187,6 +187,8 @@ and discard solver instances that are still running.</p>
 <!-- Last, while we recommend having Z3 available locally, you can run the examples in this section
 using only the [Z3 online playground][z3 online]. Beware that all following chapters about induction
 require to have Z3 in your path. -->
+<p><br />
+</p>
 <h2 id="satisfiability"><a class="header" href="#satisfiability">Satisfiability</a></h2>
 <p>Formula satisfiability is concerned about whether it is possible to make some formula evaluate to
 <code>true</code>. More precisely, is it possible to find a valuation for the variables appearing in the
@@ -198,6 +200,8 @@ models for purely boolean formulas. <em>&quot;SMT&quot;</em> adds <em>&quot;Modu
 specify that atoms of the formula can mention theories different from booleans (integers, reals,
 arrays, <em>etc.</em>) in its atoms, and that models must respect the rules of these theories.</p>
 </blockquote>
+<p><br />
+</p>
 <h2 id="smt-lib-2"><a class="header" href="#smt-lib-2">SMT-LIB 2</a></h2>
 <p>For simplicity's sake, let's only allow atoms to mention integers. Consider the following formula.</p>
 <pre><code class="language-text">(declare-const x Int)
@@ -212,8 +216,8 @@ arrays, <em>etc.</em>) in its atoms, and that models must respect the rules of t
 </code></pre>
 <p>The first two lines declare <em>&quot;constants&quot;</em> <code>x</code> and <code>y</code>. As programmers, we can see them as
 <em>&quot;variables&quot;</em> in the sense that they represent an unknown value of type <code>Int</code>. This syntax comes
-from the <a href="http://smtlib.cs.uiowa.edu" title="SMT-LIB homepage">SMT-LIB 2 standard</a>, which is the standard language for interacting with SMT
-solvers. Most, if not all, SMT solvers support SMT-LIB 2 input.</p>
+from the <a href="http://smtlib.cs.uiowa.edu" title="SMT-LIB homepage">SMT-LIB 2 standard</a>, which is the standard <em>scripting</em> language for interacting
+with SMT solvers. Most, if not all, SMT solvers support SMT-LIB 2 input.</p>
 <p>Of course, the ASCII art tree representing the formula is <em>not</em> legal SMT-LIB 2. An SMT-LIB 2 script
 declares constants (and more) and uses these constants to <em>assert</em> formulas, <em>i.e.</em> specify to the
 solver what the constraints are.</p>
@@ -369,6 +373,16 @@ arrays, algebraic data types, <em>etc.</em> And <em>expressive</em> because a gr
 are amenable to SMT without too much trouble.</p>
 <p>One such verification problem is <em>declarative transition system (induction-based) verification</em>, as
 we will see in the following chapters.</p>
+<p><br />
+</p>
+<p>The next section is optional, it is a repetition of the present section using <a href="https://github.com/OCamlPro/mikino_bin" title="Mikino binary repository">mikino</a>'s version of SMT-LIB 2: <em>hsmt</em>. Hsmt is a Rust-flavored syntax for (a subset of) the SMT-LIB
+2 scripting language. As we will see, mikino's primary functionality is performing SMT-based
+induction checks; hsmt is just a by-product feature that I thought could be useful for teaching
+what SMT is and how to interact with SMT solvers. Note that while mikino only supports a subset of
+SMT-LIB 2 (function definitions are not supported for example), it also adds new features such as
+conditional branching (if-then-else) over check-sat results.</p>
+<p>If that's not interesting for you right now, feel free to move on directly to <a href="../trans">the next
+chapter</a>.</p>
 <!-- [z3 online]: https://rise4fun.com/z3 (Z3's online interface) -->
 
                     </main>
@@ -378,7 +392,7 @@ we will see in the following chapters.</p>
                             <a rel="prev" href="../preface/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
-                            <a rel="next" href="../trans/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="../smt/mikino.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
@@ -390,7 +404,7 @@ we will see in the following chapters.</p>
                     <a rel="prev" href="../preface/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
-                    <a rel="next" href="../trans/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="../smt/mikino.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

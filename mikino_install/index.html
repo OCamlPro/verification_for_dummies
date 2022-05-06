@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Conclusion - Verification For Dummies: SMT and Induction by OCamlPro</title>
+        <title>Appendix: Mikino - Verification For Dummies: SMT and Induction by OCamlPro</title>
         <!-- Custom HTML head -->
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../smt/mikino.html"><strong aria-hidden="true">3.1.</strong> SMT Scripts: Mikino</a></li></ol></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item expanded "><a href="../conclusion/index.html" class="active"><strong aria-hidden="true">11.</strong> Conclusion</a></li><li class="chapter-item "><a href="../mikino_install/index.html"><strong aria-hidden="true">12.</strong> Appendix: Mikino</a></li></ol>
+                <ol class="chapter"><li class="chapter-item "><a href="../index.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item "><a href="../preface/index.html"><strong aria-hidden="true">2.</strong> Preface</a></li><li class="chapter-item "><a href="../smt/index.html"><strong aria-hidden="true">3.</strong> SMT Solvers</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../smt/mikino.html"><strong aria-hidden="true">3.1.</strong> SMT Scripts: Mikino</a></li></ol></li><li class="chapter-item "><a href="../trans/index.html"><strong aria-hidden="true">4.</strong> Transition Systems</a></li><li class="chapter-item "><a href="../trans_smt/index.html"><strong aria-hidden="true">5.</strong> SMT and Transition Systems</a></li><li class="chapter-item "><a href="../bmc/index.html"><strong aria-hidden="true">6.</strong> Unrolling and BMC</a></li><li class="chapter-item "><a href="../mikino_bmc/index.html"><strong aria-hidden="true">7.</strong> BMC: Mikino</a></li><li class="chapter-item "><a href="../induction/index.html"><strong aria-hidden="true">8.</strong> Induction</a></li><li class="chapter-item "><a href="../mikino_induction/index.html"><strong aria-hidden="true">9.</strong> Induction: Mikino and Step Cex-s</a></li><li class="chapter-item "><a href="../strength/index.html"><strong aria-hidden="true">10.</strong> Candidate Strengthening</a></li><li class="chapter-item "><a href="../conclusion/index.html"><strong aria-hidden="true">11.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="../mikino_install/index.html" class="active"><strong aria-hidden="true">12.</strong> Appendix: Mikino</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -134,45 +134,80 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h1>
-<p>If you have understood (most of) what we have discussed, congratulations 🎉. I hope some readers
-might be encouraged to develop cool verification tools, while others got enough of an understanding
-on the topic of verification to have a more expert usage of verification tools, <em>if</em> (and most
-likely <em>when</em>) they start using such tools as developers.</p>
-<h2 id="related-things"><a class="header" href="#related-things">Related Things</a></h2>
-<p>Transition systems are not the only way to encode program verification problems. <a href="https://en.wikipedia.org/wiki/Horn_clause" title="Horn Clauses on wikipedia">Constrained Horn
-Clauses</a> (CHC-s) are very popular at the time of writing, and for good reasons. Basically,
-CHC-s represent a program (or program-like structure) in a more fragmented way than transition
-systems. Techniques based on a CHC representation tend to have a fine-grain vision of the notion of
-<em>transition</em>, which allows for more precision (efficiency) in the verification approach built on
-top of it.</p>
-<p>Besides pure induction, there are many other techniques that are worth looking into. A pretty
-important one is <strong>P</strong>roperty <strong>D</strong>irected <strong>R</strong>eachability (PDR), also known as <strong>I</strong>ncremental
-<strong>C</strong>onstruction of <strong>I</strong>nductive <strong>C</strong>lauses for <strong>I</strong>ndubitable <strong>C</strong>orrectness (IC3).
-Unfortunately, PDR/IC3 is mostly discussed in academic papers and I could not find a presentation
-understandable without a serious background in formal logics. This is partially due to the fact
-that PDR is still quite recent, but also to its complex and intricate nature. Here are a few links
-though, all of them are <strong>PDF</strong>:</p>
+                        <h1 id="appendix-mikino"><a class="header" href="#appendix-mikino">Appendix: Mikino</a></h1>
+<p>Mikino is written in <a href="https://www.rust-lang.org">Rust</a> and is available as a Rust library</p>
 <ul>
-<li><a href="http://alcom.ee.ntu.edu.tw/system/privatezone/meetingfile/201010222258251.pdf">original paper</a></li>
-<li><a href="https://www.cs.utexas.edu/%7Eragerdl/fmcad11/papers/7.pdf">efficient PDR</a></li>
-<li><a href="https://www.cs.utexas.edu/users/hunt/FMCAD/FMCAD17/preprints/s6p3.pdf">IC3 + k-induction</a></li>
+<li>https://crates.io/crates/mikino_api</li>
+<li>https://docs.rs/mikino_api/0.9.1/mikino_api</li>
 </ul>
-<p>It should be noted that PDR is particularly interesting in the purely propositional case. That is,
-for systems that can be expressed using nothing but booleans. Systems using arithmetic, arrays,
-strings... are more difficult to handle because of one of the necessary PDR steps (pre-image
-computation), as well as certain crucial optimization that only apply on purely propositional
-formulas.</p>
+<p>and a Rust birany</p>
+<ul>
+<li>https://crates.io/crates/mikino</li>
+</ul>
+<p>So, if you already have Rust installed on your system (or don't mind <a href="https://www.rust-lang.org/tools/install">installing it</a>)
+just make sure it is up-to-date and ask <code>cargo</code> to install mikino for you.</p>
+<pre><code class="language-bash"># update rust
+&gt; rustup self update
+&gt; rustup update
+
+# install mikino, `-f` allows overwriting (updating)
+# the previous mikino install if any
+&gt; cargo install -f mikino
+</code></pre>
+<p><br />
+</p>
+<p>Otherwise, head to <a href="https://github.com/OCamlPro/mikino_bin/releases">mikino's release page</a> and download the latest release for your
+operating system. The only other alternative is to <a href="#build">build mikino from scratch</a>.</p>
+<p></p>
+<h2 id="z3"><a class="header" href="#z3">Z3</a></h2>
+<p>Mikino requires <a href="https://github.com/Z3Prover/z3">the Z3 SMT solver</a>. You can build it from source or recover a binary from the
+<a href="https://github.com/Z3Prover/z3/releases">release page</a>.</p>
+<p>From this point forward I assume readers have a Z3 binary called <code>z3</code> in their path. That is,
+running the command <code>z3 -version</code> should not fail and produce an output similar to</p>
+<pre><code class="language-text">Z3 version 4.8.13 - 64 bit
+</code></pre>
+<p>Mikino, by default, assumes a Z3 binary is in your <code>PATH</code> with name <code>z3</code>. You can override this
+with the <code>--z3_cmd</code> command-line argument: <code>mikino --z3_cmd &quot;my_z3&quot; ...</code>, or <code>mikino --z3_cmd &quot;path/to/my_z3&quot; ...</code> if Z3 is not in your <code>PATH</code>.</p>
+<p></p>
+<p>Note that other efficient solvers exist such as <a href="https://alt-ergo.ocamlpro.com" title="Alt-Ergo homepage">Alt-Ergo</a>, <a href="https://cvc4.github.io/" title="CVC4 homepage">CVC4</a> and <a href="https://yices.csl.sri.com" title="Yices 2 homepage">Yices 2</a>.
+Solvers tend to be perform well on different kinds of problem, and verification frameworks
+routinely run several of them in parallel, wait for the quickest answer, and discard solver
+instances that are still running.</p>
+<p></p>
+<h2 id="build"><a class="header" href="#build">Build</a></h2>
+<p>You can also build mikino, it's actually quite easy. <a href="https://www.rust-lang.org/tools/install">Install Rust</a> or make sure it
+is up-to-date if it is installed already.</p>
+<pre><code class="language-bash"># update rust
+&gt; rustup self update
+&gt; rustup update
+</code></pre>
+<p>Clone <a href="https://github.com/OCamlPro/mikino_bin">mikino's (binary) repo</a>, and <code>cargo build</code> it:</p>
+<pre><code class="language-bash">&gt; clone https://github.com/OCamlPro/mikino_bin
+&gt; cd mikino_bin
+
+# debug, unoptimized build
+&gt; cargo build
+&gt; ./target/debug/mikino -V
+mikino 0.9.1
+
+# release, optimized build
+&gt; cargo build --release
+&gt; ./target/release/mikino -V
+mikino 0.9.1
+</code></pre>
+<p>Alternatively, you can ask <code>cargo</code> to install your local clone of the repo:</p>
+<pre><code class="language-bash">&gt; clone https://github.com/OCamlPro/mikino_bin
+&gt; cargo install --path mikino_bin
+&gt; mikino -V
+mikino 0.9.1
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="../strength/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="../conclusion/index.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
-                            </a>
-                            <a rel="next" href="../mikino_install/index.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
                             </a>
                         <div style="clear: both"></div>
                     </nav>
@@ -180,11 +215,8 @@ formulas.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="../strength/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="../conclusion/index.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a rel="next" href="../mikino_install/index.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
 

@@ -1,0 +1,12 @@
+unsat
+|===| Error
+| parse error at 18:1
+|    | check_sat!()
+| 18 | get_model!()<EOI>
+|    | ^~~~ here
+| - while requesting a model
+| - smt-level error:
+|   - solver error: "line 18 column 10: model is not available"
+| - performing script step for file `./src/smt/code/ex_5.hsmt`
+| - running `./src/smt/code/ex_5.hsmt` script
+|===|

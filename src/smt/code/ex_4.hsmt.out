@@ -1,0 +1,6 @@
+sat
+model {
+    x: 11,
+    y: 1,
+}
+success

@@ -5,5 +5,5 @@ checking step case...
 |===| Error
 | smt-level error:
 | - smt solver reported `timeout`
-| during step check
+| - during step check
 |===|

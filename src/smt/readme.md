@@ -68,6 +68,10 @@ and discard solver instances that are still running.
 using only the [Z3 online playground][z3 online]. Beware that all following chapters about induction
 require to have Z3 in your path. -->
 
+\
+\
+
+
 
 ## Satisfiability
 
@@ -80,6 +84,10 @@ us write a tiny example and start running Z3 to play with satisfiability directl
 > models for purely boolean formulas. *"SMT"* adds *"Modulo Theory"* to *"Satisfiability"* to
 > specify that atoms of the formula can mention theories different from booleans (integers, reals,
 > arrays, *etc.*) in its atoms, and that models must respect the rules of these theories.
+
+\
+\
+
 
 
 ## SMT-LIB 2
@@ -100,8 +108,8 @@ For simplicity's sake, let's only allow atoms to mention integers. Consider the 
 
 The first two lines declare *"constants"* `x` and `y`. As programmers, we can see them as
 *"variables"* in the sense that they represent an unknown value of type `Int`. This syntax comes
-from the [SMT-LIB 2 standard][smt lib], which is the standard language for interacting with SMT
-solvers. Most, if not all, SMT solvers support SMT-LIB 2 input.
+from the [SMT-LIB 2 standard][smt lib], which is the standard *scripting* language for interacting
+with SMT solvers. Most, if not all, SMT solvers support SMT-LIB 2 input.
 
 Of course, the ASCII art tree representing the formula is *not* legal SMT-LIB 2. An SMT-LIB 2 script
 declares constants (and more) and uses these constants to *assert* formulas, *i.e.* specify to the
@@ -254,6 +262,19 @@ are amenable to SMT without too much trouble.
 One such verification problem is *declarative transition system (induction-based) verification*, as
 we will see in the following chapters.
 
+\
+\
+
+The next section is optional, it is a repetition of the present section using [mikino][mikino
+repo]'s version of SMT-LIB 2: *hsmt*. Hsmt is a Rust-flavored syntax for (a subset of) the SMT-LIB
+2 scripting language. As we will see, mikino's primary functionality is performing SMT-based
+induction checks; hsmt is just a by-product feature that I thought could be useful for teaching
+what SMT is and how to interact with SMT solvers. Note that while mikino only supports a subset of
+SMT-LIB 2 (function definitions are not supported for example), it also adds new features such as
+conditional branching (if-then-else) over check-sat results.
+
+If that's not interesting for you right now, feel free to move on directly to [the next
+chapter](../trans).
 
 
 
@@ -265,3 +286,4 @@ we will see in the following chapters.
 [yices]: https://yices.csl.sri.com (Yices 2 homepage)
 [smt lib]: http://smtlib.cs.uiowa.edu (SMT-LIB homepage)
 [VS Code]: https://code.visualstudio.com (VS Code homepage)
+[mikino repo]: https://github.com/OCamlPro/mikino_bin (Mikino binary repository)

@@ -21,7 +21,7 @@ shape is
 )
 ```
 
-where `<args>` is zero or more whitespace-separated arguments `(<ident> <type>)`. For example:
+where `<args>` is zero or more arguments `(<ident> <type>)`. For example:
 
 ```text
 {{ #include code/def_fun_demo.smt2 }}

@@ -306,6 +306,8 @@ pub mod test {
 
             let actually_okay = if ext == "smt2" {
                 code_out_check_smt2(conf, &out_path, &snippet_path).chain_err(err)?
+            } else if ext == "hsmt" {
+                code_out_check_hsmt(conf, &out_path, &snippet_path).chain_err(err)?
             } else if ext == "mkn" {
                 code_out_check_mkn(conf, &out_path, &snippet_path).chain_err(err)?
             } else if ext == "rs" {
@@ -398,6 +400,15 @@ pub mod test {
             buf
         };
         if stdout != expected {
+            eprintln!("|===| expected");
+            for line in expected.lines() {
+                eprintln!("| `{}`", line);
+            }
+            eprintln!("|===| got");
+            for line in stdout.lines() {
+                eprintln!("| `{}`", line);
+            }
+            eprintln!("|===|");
             bail!("unexpected output for `{:?}`", cmd)
         } else {
             Ok(())
@@ -423,6 +434,30 @@ pub mod test {
         let mut cmd = std::process::Command::new(z3_cmd);
         cmd.arg("-T:5").arg(snippet_path);
         let () = cmd_output_same_as_file_content(&mut cmd, out_path)?;
+
+        Ok(true)
+    }
+
+    /// Checks a single `.hsmt` file `snippet_path` against its output file `out_path`.
+    fn code_out_check_hsmt(
+        conf: &Conf,
+        out_path: impl AsRef<Path>,
+        snippet_path: impl AsRef<Path>,
+    ) -> Res<bool> {
+        let (out_path, snippet_path) = (out_path.as_ref(), snippet_path.as_ref());
+        let (check_mikino, mikino_cmd) = conf.get_mikino()?;
+        if !check_mikino {
+            log::warn!(
+                "mikino checking deactivated, skipping `{}` (`{}`)",
+                snippet_path.display(),
+                out_path.display()
+            );
+            return Ok(false);
+        }
+
+        let (_, z3_cmd) = conf.get_smt2()?;
+        let mut cmd = retrieve_mkn_cmd(mikino_cmd, z3_cmd, snippet_path, "//")?;
+        cmd_output_same_as_file_content(&mut cmd, out_path)?;
 
         Ok(true)
     }

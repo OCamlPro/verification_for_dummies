@@ -5,42 +5,13 @@ everything we have seen so far (and will see later). It is designed to be relati
 user experience front and center: the goal is to have a tool that is gratifying to interact with to
 teach about induction-based verification.
 
-There are several ways to retrieve a binary for mikino:
-
-- if you already have [rust] installed, simply run
-
-	```text
-	> cargo install mikino
-	```
-
-	or
-
-	```text
-	> cargo install --force mikino
-	```
-
-	to update your mikino install.
-
-	You can also build it from source, which also requires rust:
-
-	```text
-	> git clone https://github.com/OCamlPro/mikino_bin
-	> cd mikino_bin
-	> cargo build --release
-	> ./target/release/mikino help
-	```
-
-- if you just want to retrieve a binary, you can do so on [mikino's release page][release page].
-
-Make sure you have mikino `v0.5.2` or above.
-
-```text
-> mikino -V
-mikino 0.5.2
-```
+Most examples from this point will rely on mikino, so I encourage you to install it so that you can
+mess around with my examples and get a better understanding. See the [mikino
+appendix](../mikino_install) for setup instructions.
 
 \
 \
+
 
 
 ## Input Format

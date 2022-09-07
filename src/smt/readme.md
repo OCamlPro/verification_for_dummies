@@ -45,6 +45,25 @@ Note that the last atom, `arr[y] = x + 1`, mixes array selection `arr[y]` with a
 integers `x + 1`.
 
 
+## A brief discussion on notation and model theory
+
+> TL;DR: `=` is an operator over terms allowing to build formulas. We need a different symbol to
+> express *equivalence* between terms: `≡`. This operator is *meta* in the sense that it does not
+> build MSFOL formulas, it just allows us humans to discuss term equivalence outside/above the MSFOL
+> framework.
+
+Notice that our formulas can mention the equality relation `=`. This relation lives the world of
+*terms* that we construct formulas with, for instance `arr[y] = x + 1`. Hence, we need a meta-notion
+of equality/equivalence to express the fact that two terms should be *the same*.
+
+We use the `≡` relation over terms for this. For instance, `(x + 1) ≡ (1 + x)` or *"`x + 1` is
+equivalent to `1 + x`"* is not a formula, it is a (valid or invalid) statement that both terms are
+equivalent. In *model theory*, which we will not discuss much here, `t₁ ≡ t₂` means *"whatever the
+valuation **of the variables** in `t₁` and `t₂`, both terms evaluate to the same value"*. This means
+that `(x + 1) ≡ (1 + x)` can be thought of as `∀ x, x + 1 = 1 + x`, which is a valid (true)
+statement.
+
+
 ## Z3
 
 Examples in the next sections (and the next chapter) will rely on the [Z3 SMT solver][z3] to
@@ -172,8 +191,8 @@ produce one value, and is therefore the same as a constant. In fact, `(define-fu
 <type>)` we used in the SMT-LIB script is equivalent to `(declare-fun <ident> () <type>)`. Again,
 in SMT-LIB (and pure functional languages) a constant is just a function that takes no argument.
 
-This valuation is a model because `(> x 7) ≡ (> 8 7)` holds and so does `(= y (* 2 x)) ≡ (= 16 (* 2
-8))`.
+This valuation is a model because since `x` has value `8`, then `(> x 7) ≡ (> 8 7)` holds and so
+does `(= y (* 2 x)) ≡ (= 16 (* 2 8))` as `y` is `16` in the model.
 
 \
 \

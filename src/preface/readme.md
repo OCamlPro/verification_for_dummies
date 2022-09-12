@@ -89,7 +89,8 @@ lifetimes of the program that verifies, or *"satisfies"* all the constraint.
 \
 
 Searching for a proof, which consists in trying to *solve* some constraints is done by a *solver*.
-From our point of view, the solver is our main building block. It is the block responsible for producing an actual answer from the encoding of the verification problem.
+From our point of view, the solver is our main building block. It is the block responsible for
+producing an actual answer from the encoding of the verification problem.
 
 
 Now, the real question is *"what does it mean for the constraints to have a solution, or to have

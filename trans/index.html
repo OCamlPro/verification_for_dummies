@@ -161,8 +161,7 @@ stopwatch's display: it is an output.</p>
 <code>start_stop</code> toggles counting, meaning we need to remember if we were previously counting or not to
 decide what a press of the <code>start_stop</code> button does. Hence, the state variables (<code>svars</code>) of our
 stopwatch are</p>
-<pre><pre class="playground"><code class="language-rust  no_run compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  no_run compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	// inputs, `true` if pressed
@@ -332,8 +331,7 @@ by making the <code>reset</code> behavior preempt the behavior related to <code>
 <li><code>(¬'s.is_counting ∧ ¬'s.reset) ⇒ ('s.cnt = s.cnt)</code>.</li>
 </ul>
 <p>Alternatively, we can rewrite these constraints as</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>'s.cnt =
 	if 's.reset { 0 }
@@ -342,8 +340,7 @@ by making the <code>reset</code> behavior preempt the behavior related to <code>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Our transition relation is thus</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trans(s, 's) =
 	  ( 's.start_stop ⇒ ('s.is_counting = ¬s.is_counting))
@@ -363,12 +360,13 @@ two other states variables <code>'s.start_stop</code> and <code>'s.reset</code> 
 <em>inputs</em>. Since they are not constrained, they can take any (boolean) value at all.</p>
 <p>Notice also that, if we fix some values for <code>'s.start_stop</code> and <code>'s.reset</code>, then <code>trans</code> is
 <em>deterministic</em>: <code>s</code>, whatever it is, can only have one successor.</p>
-<table><thead><tr><th style="text-align: center"><code>'s.start_stop</code></th><th style="text-align: center"><code>'s.reset</code></th><th style="text-align: center"><code>'s.is_counting</code></th><th style="text-align: center"><code>'s.cnt</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center"><code>'s.start_stop</code></th><th style="text-align: center"><code>'s.reset</code></th><th style="text-align: center"><code>'s.is_counting</code></th><th style="text-align: center"><code>'s.cnt</code></th></tr></thead><tbody>
 <tr><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>s.is_counting</code></td><td style="text-align: center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
 <tr><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>¬s.is_counting</code></td><td style="text-align: center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
 <tr><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>s.is_counting</code></td><td style="text-align: center"><code>0</code></td></tr>
 <tr><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>¬s.is_counting</code></td><td style="text-align: center"><code>0</code></td></tr>
 </tbody></table>
+</div>
 <p>So, there are <strong>at most</strong> four potential successors to any state <code>s</code>, depending on the
 (unconstrained) values of the two inputs.</p>
 

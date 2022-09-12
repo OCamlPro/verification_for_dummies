@@ -151,8 +151,7 @@ smt_traces
 </blockquote>
 <p>Let's make sure mikino is able to prove that <code>cnt ≥ 0</code> on the stopwatch system. I am using the
 version of the system that starts at <code>0</code></p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Initial predicate.
 init {
@@ -162,8 +161,7 @@ init {
 <span class="boring">}
 </span></code></pre></pre>
 <p>with a <code>cnt ≥ 0</code> candidate as well as a few falsifiable other candidates:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants, or &quot;Proof Objectives&quot; (`po_s`).
 candidates {
@@ -272,8 +270,7 @@ of transitions. When we do not have this information, it can be a good idea to s
 unrolling depth with <code>--bmc_max &lt;int&gt;</code> just like we did in <code>bmc</code> mode. Note that using the
 <code>--bmc_max</code> flag automatically activates BMC, so we don't need the <code>--bmc</code> flag anymore.</p>
 <p>On our example</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants, or &quot;Proof Objectives&quot; (`po_s`).
 candidates {
@@ -405,8 +402,7 @@ found a falsification at depth 5:
 <h2 id="full-code"><a class="header" href="#full-code">Full Code</a></h2>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {

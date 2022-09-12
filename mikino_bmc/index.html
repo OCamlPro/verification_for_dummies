@@ -150,8 +150,7 @@ we have seen up to this point. Systems are written in files organized as follows
 our stopwatch running example.</p>
 <p>First are state variable declarations. It is a list of declarations between braces introduced by
 the <code>svars</code> keyword and of form <code>&lt;var_1&gt; &lt;var_2&gt; ... &lt;var_n&gt;: &lt;type&gt;</code> with <code>n ≥ 1</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {
@@ -167,8 +166,7 @@ svars {
 <p>Next is the initial predicate, introduced by the <code>init</code> keyword. Mikino does not support
 SMT-LIB-2-like (s-)expressions (anymore), and instead expects Rust-like expressions. Note that
 mikino supports common unicode operators such as <code>∧</code>, <code>⋀</code>, <code>∨</code>, <code>⋁</code>, <code>≥</code> and <code>⇒</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Initial predicate.
 init {
@@ -189,8 +187,7 @@ This list is understood as a conjunction <code>⋀</code>, meaning the list abov
 that the transition relation relates two states: the <em>previous</em> one and the <em>next</em> one. In mikino,
 we refer to the <em>previous</em> version of a state variable <code>svar</code> by simply writing <code>svar</code>. If we want
 to refer to its <em>next</em> version, we must use the <code>'</code> (prime) prefix operator: <code>'svar</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Transition relation.
 trans {
@@ -222,8 +219,7 @@ trans {
 <code>candidates</code> keyword. They are given as a comma-separated list of named candidates of shape
 <code>&quot;string describing the candidate&quot;: &lt;expr&gt;</code>. The name of a candidate is what mikino will use to
 refer to that candidate in its output.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants.
 candidates {
@@ -248,8 +244,7 @@ of BMC is to produce counterexamples to candidate invariants thus disproving the
 <p>Let's try mikino on the stopwatch system described above. The full code is available in the
 <a href="#version-1">Version 1</a> section, the following assumes that code is in a <code>test.mkn</code> file. Notice
 that the candidates</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants.
 candidates {
@@ -336,8 +331,7 @@ smt_traces
 <code>0</code>, which means <em><code>0</code> transitions away from the initial states</em>, which really means <em>the initial
 states</em>. Right away, it falsifies all our candidates but the first one. This is because of our
 initial predicate:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Initial predicate.
 init {
@@ -351,8 +345,7 @@ init {
 not pressed. Mikino's output makes sense, but can we modify the system so that falsifiable
 candidates can only be falsified by unrolling more than <code>0</code> times?</p>
 <p>We sure can, by changing <code>init</code> so that <code>cnt</code> always starts at <code>0</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Initial predicate.
 init {
@@ -460,8 +453,7 @@ finds another counterexample at depth <code>5</code> for <code>cnt ≤ 4</code> 
 <p><br />
 </p>
 <p>Let's modify our candidates, full code available in the <a href="#version-3">Version 3</a> section.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants, or &quot;Proof Objectives&quot; (`po_s`).
 candidates {
@@ -544,8 +536,7 @@ is a previous state to refer to.</p>
 <h3 id="version-1"><a class="header" href="#version-1">Version 1</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {
@@ -638,8 +629,7 @@ checking for falsifications at depth 10
 <h3 id="version-2"><a class="header" href="#version-2">Version 2</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {
@@ -771,8 +761,7 @@ checking for falsifications at depth 10
 <h3 id="version-3"><a class="header" href="#version-3">Version 3</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {

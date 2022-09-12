@@ -235,8 +235,7 @@ fold result: 26
 <p>Full code available below. For now let's turn to how the <code>fold</code> function would be implemented. Say
 <code>init</code> and <code>next</code> are <code>fold</code>'s two arguments (initial value and fold function respectively). Then
 the body of <code>fold</code> could look something like</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>        let mut acc = init;
         let mut i = 0;
@@ -339,8 +338,7 @@ fn main() {
 <p>Now let's think about this a little bit. The value <code>&amp;arr[i..next_i]</code>, where <code>next_i</code> is <code>i + grouping</code>, does not always <em>make sense</em>: <code>i + grouping</code> might strictly superior to <code>len</code> (<code>arr</code>'s
 length). This cannot happen if <code>len</code> is a multiple of <code>grouping</code> however, and actually <code>Wrap</code>'s
 constructor checks for this.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    /// Constructor.
     pub fn new(arr: [T; len], grouping: usize) -&gt; Self {
@@ -372,8 +370,7 @@ more, <em>etc.</em></p>
 understanding of the semantics of the language and the ability to design encoding rules that
 <em>are guaranteed</em> to preserve it, or at least preserve the part relevant for the analysis.
 So let's not do that and encode it by hand.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>        let mut acc = init;
         let mut i = 0;
@@ -409,8 +406,7 @@ challenging, and can void all results if it is not <em>sound</em>.</p>
 <p>Note that we have a few constants here: <code>len</code> and <code>grouping</code> do not change as the loop runs.
 Unfortunately mikino does not have a notion of constant <strong>yet</strong> (contributions are welcome), so we
 have to encode them as state variables along with <code>i</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -423,8 +419,7 @@ have to encode them as state variables along with <code>i</code>.</p>
 done or not. This allows our system to never end, which is a useful property for technical reasons
 beyond the scope of this chapter.</p>
 <p>We initialize the transition system encoding <code>fold</code>'s loop, as follows.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>init {
     len ≥ 0,
@@ -446,8 +441,7 @@ is empty, the loop never starts.</p>
 <p>The transition relation needs to do a few things. Our constants (encoded as state variables) need
 to keep their value, since if we left them unconstrained they could take any value. We also need to
 update the value of <code>done</code>, and finally that of <code>i</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
 // iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
@@ -475,8 +469,7 @@ becomes <code>true</code> and the system stutters (its state variables stay the 
 <p>We should make sure our encoding behaves like this. So, what we should ask mikino is <em>&quot;with <code>len = 8</code> and <code>grouping = 4</code>, is it possible to reach a state such that <code>i = len</code>?&quot;</em>. We can do this with
 BMC: since we want to reach <code>len = 8 ∧ grouping = 4 ∧ i = len</code>, we can just need ask BMC to try to
 falsify <code>¬(len = 8 ∧ grouping = 4 ∧ i = len)</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;candidate&quot;: ¬(len = 8 ⋀ grouping = 4 ⋀ i = len),
@@ -540,8 +533,7 @@ that shortly as we will run into this exact problem.</p>
 <p>We start with trying to prove that the lower bound of the interval <code>i..(i + grouping)</code> used on
 <code>arr</code> is legal, meaning to prove that <code>i &lt; len</code>. More precisely, <code>¬done ⇒ i &lt; len</code> since on exit
 (when <code>done</code> is <code>true</code>) we actually should have <code>i = len</code>; let's prove <code>done ⇒ i = len</code> as well.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -597,8 +589,7 @@ about the original system.</p>
 <p>The reason why, in this case, it <strong>would</strong> be safe to add <code>(pre i) ≥ 0</code> (don't do it though) is
 that it is an invariant, <em>i.e.</em> a <em>consequence</em> of the system's behavior. So there's no reason to
 force it on <code>trans</code>, we can just ask mikino to prove it instead.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;i ≥ 0&quot;: i ≥ 0,
@@ -693,8 +684,7 @@ less trivial to strengthen our real candidate successfully.</p>
 <p><br />
 </p>
 <p>For now let's just add these new candidates</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -754,8 +744,7 @@ check is able to go from <code>i = 3</code> to <code>i = 5</code> and falsify th
 <p>The problem here, as you might have guessed, is currently <code>i</code> can really take any value as long as
 its positive: no (candidate) invariant constrain it besides <code>i ≥ 0</code>. Looking at the code for the
 loop again</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>        let mut acc = init;
         let mut i = 0;
@@ -769,8 +758,7 @@ loop again</p>
 </span></code></pre></pre>
 <p>we see that <code>i</code> can only be a multiple of <code>grouping</code>. But we cannot know until we try to prove it.
 Also, will it strengthen our main candidate enough to make it inductive?</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -834,8 +822,7 @@ time and memory you could just wait for an arbitrary long time and actually get 
 you are in an <em>undecidable</em> logic fragment: you cannot know in advance if you will get an answer,
 even if you wait for an infinite amount of time and memory.</p>
 <p>That's not great either, and in fact this is (probably) what happened to us on</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -886,8 +873,7 @@ binary.)</p>
 <p>So, maybe, instead the loose constraint <code>len ≥ 0</code> and trying to conduct a proof for any value of
 <code>len</code> (which does not work, as we have seen), we could check each possible value of <code>len</code>
 separately. Notice that <code>len</code> is used in a non-linear <code>mod</code> application, <code>len % grouping</code>:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -906,8 +892,7 @@ separately. Notice that <code>len</code> is used in a non-linear <code>mod</code
 maybe, simplify our checks enough that Z3 can handle them. Let's try with <code>len = 8</code>; we could
 remove the <code>len</code> state variable altogether, but we can try simply forcing it to be <code>8</code>. To do this,
 first we need to change <code>init</code> slightly:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>init {
     len = 8, // new
@@ -920,8 +905,7 @@ first we need to change <code>init</code> slightly:</p>
 </span></code></pre></pre>
 <p>Nothing to do on <code>trans</code>, it does not mention <code>len</code> anyway. The candidate <code>len ≥ 0</code> changes to
 become more precise though:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -962,8 +946,7 @@ enough for the program to be safe, since we have not proved that the upper bound
 prove that <code>i + grouping ≤ len</code> (interval <em>still exclusive</em> on the upper bound 😔).</p>
 <p>By now you might be familiar enough with induction's <em>step</em> checks to be able to anticipate whether
 this candidate is going to be inductive or not.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -1110,8 +1093,7 @@ fold result: 26
 <h3 id="version-1"><a class="header" href="#version-1">Version 1</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -1187,8 +1169,7 @@ found a falsification at depth 2:
 <h3 id="version-2"><a class="header" href="#version-2">Version 2</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -1263,8 +1244,7 @@ failed: the following candidate(s) are not inductive:
 <h3 id="version-3"><a class="header" href="#version-3">Version 3</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -1353,8 +1333,7 @@ failed: the following candidate(s) are not inductive:
 <h3 id="version-4"><a class="header" href="#version-4">Version 4</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -1442,8 +1421,7 @@ failed: the following candidate(s) are not inductive:
 <h3 id="version-5"><a class="header" href="#version-5">Version 5</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -1504,8 +1482,7 @@ checking step case...
 <h3 id="version-6"><a class="header" href="#version-6">Version 6</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -1569,8 +1546,7 @@ success: all candidate(s) are inductive
 <h3 id="version-7"><a class="header" href="#version-7">Version 7</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,

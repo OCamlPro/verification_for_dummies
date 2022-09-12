@@ -171,8 +171,7 @@ these variables are.</p>
 <p>As you already guessed the first lines in the snippet above declare integer variables <code>x</code> and <code>y</code>.
 <code>vars</code> block let you declare variables of type <code>int</code>, <code>bool</code> or <code>rat</code>(ional) as a comma-separated
 (with optional trailing comma) list:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
    x y : int,
@@ -183,8 +182,7 @@ these variables are.</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Anyway, an hsmt assertion of our running example would look like this:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -251,8 +249,7 @@ the end like <code>assert!()</code>, <code>println!(&quot;my message&quot;)</cod
 <p>Now, we can assert more than one constraint. Mikino works on the conjunction of all constraints
 ---or at least Z3, behind the scene, does. In our running example, our only constraint is a
 conjunction, meaning we could write it as two constraints.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -275,8 +272,7 @@ success
 </code></pre>
 <p>Alternatively, <code>assert</code> actually takes as input a comma-separated list (with optional trailing
 comma) of expressions, understood as a conjunction. So this also works:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -304,8 +300,7 @@ success
 <p>Let's now add the constraint that <code>y</code> is an odd number: <code>y % 2 = 1</code>. This should void the previous
 model, and more generally any model that relies on making <code>y = 2*x</code> true to satisfy the constraints
 since <code>y</code> would need to be both even and odd.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -337,8 +332,7 @@ example, the solver has no choice but to have <code>x</code> be <code>11</code> 
 second constraint (because the third constraint prevents <code>y</code> from being even).</p>
 <p>We can simply constrain <code>x</code> to be even (which prevents <code>x</code> from being <code>11</code>), which we will write as
 &quot;<code>x</code> cannot be odd&quot;.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int

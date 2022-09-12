@@ -258,8 +258,7 @@ later posts.</p>
 <em>type system</em> is a formal framework. <a href="https://en.wikipedia.org/wiki/Strong_and_weak_typing">Strongly-typed</a> programming languages rely on
 type systems to (dis)prove that programs are well-typed. For example, consider the following Rust
 function.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn demo(n: usize) -&gt; usize {
     let mut res = n;
@@ -292,8 +291,7 @@ constructed. Looking at these constraints, a tool (the borrow-checker here) can 
 regarding the (un)safety of the program.</p>
 </blockquote>
 <p>Consider the following Rust function, where <code>'a</code> is a lifetime parameter.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// DOES NOT COMPILE
 fn demo&lt;'a&gt;(n: &amp;'a mut usize) -&gt; &amp;'a mut usize {
@@ -331,7 +329,8 @@ lifetimes of the program that verifies, or <em>&quot;satisfies&quot;</em> all th
 <p><br />
 </p>
 <p>Searching for a proof, which consists in trying to <em>solve</em> some constraints is done by a <em>solver</em>.
-From our point of view, the solver is our main building block. It is the block responsible for producing an actual answer from the encoding of the verification problem.</p>
+From our point of view, the solver is our main building block. It is the block responsible for
+producing an actual answer from the encoding of the verification problem.</p>
 <p>Now, the real question is <em>&quot;what does it mean for the constraints to have a solution, or to have
 none?&quot;</em>. In the case of type-checking, the type constraints have a solution <em>if and only if</em> the
 program is well-typed. It says very little about memory-safety and thread-safety on its own, which
@@ -502,6 +501,22 @@ and <code>arr</code> an array:</p>
 </code></pre>
 <p>Note that the last atom, <code>arr[y] = x + 1</code>, mixes array selection <code>arr[y]</code> with addition over
 integers <code>x + 1</code>.</p>
+<h2 id="a-brief-discussion-on-notation-and-model-theory"><a class="header" href="#a-brief-discussion-on-notation-and-model-theory">A brief discussion on notation and model theory</a></h2>
+<blockquote>
+<p>TL;DR: <code>=</code> is an operator over terms allowing to build formulas. We need a different symbol to
+express <em>equivalence</em> between terms: <code>≡</code>. This operator is <em>meta</em> in the sense that it does not
+build MSFOL formulas, it just allows us humans to discuss term equivalence outside/above the MSFOL
+framework.</p>
+</blockquote>
+<p>Notice that our formulas can mention the equality relation <code>=</code>. This relation lives the world of
+<em>terms</em> that we construct formulas with, for instance <code>arr[y] = x + 1</code>. Hence, we need a meta-notion
+of equality/equivalence to express the fact that two terms should be <em>the same</em>.</p>
+<p>We use the <code>≡</code> relation over terms for this. For instance, <code>(x + 1) ≡ (1 + x)</code> or <em>&quot;<code>x + 1</code> is
+equivalent to <code>1 + x</code>&quot;</em> is not a formula, it is a (valid or invalid) statement that both terms are
+equivalent. In <em>model theory</em>, which we will not discuss much here, <code>t₁ ≡ t₂</code> means <em>&quot;whatever the
+valuation <strong>of the variables</strong> in <code>t₁</code> and <code>t₂</code>, both terms evaluate to the same value&quot;</em>. This means
+that <code>(x + 1) ≡ (1 + x)</code> can be thought of as <code>∀ x, x + 1 = 1 + x</code>, which is a valid (true)
+statement.</p>
 <h2 id="z3"><a class="header" href="#z3">Z3</a></h2>
 <p>Examples in the next sections (and the next chapter) will rely on the <a href="https://github.com/Z3Prover/z3" title="Z3 on github">Z3 SMT solver</a> to
 actually run. You can build it from source or recover a binary from the <a href="https://github.com/Z3Prover/z3/releases" title="Z3's releases on github">release page</a>.
@@ -613,7 +628,8 @@ that they are constants. This is because all functions are <em>pure</em> in SMT-
 produce the same output when given the same inputs. Hence, a function with no arguments can only
 produce one value, and is therefore the same as a constant. In fact, <code>(define-fun &lt;ident&gt; () &lt;type&gt; &lt;val&gt;)</code> is the same as <code>(define-const &lt;ident&gt; &lt;type&gt; &lt;val&gt;)</code>, and the <code>(declare-const &lt;ident&gt; &lt;type&gt;)</code> we used in the SMT-LIB script is equivalent to <code>(declare-fun &lt;ident&gt; () &lt;type&gt;)</code>. Again,
 in SMT-LIB (and pure functional languages) a constant is just a function that takes no argument.</p>
-<p>This valuation is a model because <code>(&gt; x 7) ≡ (&gt; 8 7)</code> holds and so does <code>(= y (* 2 x)) ≡ (= 16 (* 2 8))</code>.</p>
+<p>This valuation is a model because since <code>x</code> has value <code>8</code>, then <code>(&gt; x 7) ≡ (&gt; 8 7)</code> holds and so
+does <code>(= y (* 2 x)) ≡ (= 16 (* 2 8))</code> as <code>y</code> is <code>16</code> in the model.</p>
 <p><br />
 </p>
 <p>Now, remember that we can assert more than one constraint, and that Z3 works on the conjunction of
@@ -752,8 +768,7 @@ these variables are.</p>
 <p>As you already guessed the first lines in the snippet above declare integer variables <code>x</code> and <code>y</code>.
 <code>vars</code> block let you declare variables of type <code>int</code>, <code>bool</code> or <code>rat</code>(ional) as a comma-separated
 (with optional trailing comma) list:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
    x y : int,
@@ -764,8 +779,7 @@ these variables are.</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Anyway, an hsmt assertion of our running example would look like this:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -832,8 +846,7 @@ the end like <code>assert!()</code>, <code>println!(&quot;my message&quot;)</cod
 <p>Now, we can assert more than one constraint. Mikino works on the conjunction of all constraints
 ---or at least Z3, behind the scene, does. In our running example, our only constraint is a
 conjunction, meaning we could write it as two constraints.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -856,8 +869,7 @@ success
 </code></pre>
 <p>Alternatively, <code>assert</code> actually takes as input a comma-separated list (with optional trailing
 comma) of expressions, understood as a conjunction. So this also works:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -885,8 +897,7 @@ success
 <p>Let's now add the constraint that <code>y</code> is an odd number: <code>y % 2 = 1</code>. This should void the previous
 model, and more generally any model that relies on making <code>y = 2*x</code> true to satisfy the constraints
 since <code>y</code> would need to be both even and odd.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -918,8 +929,7 @@ example, the solver has no choice but to have <code>x</code> be <code>11</code> 
 second constraint (because the third constraint prevents <code>y</code> from being even).</p>
 <p>We can simply constrain <code>x</code> to be even (which prevents <code>x</code> from being <code>11</code>), which we will write as
 &quot;<code>x</code> cannot be odd&quot;.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>vars {
 	x y : int
@@ -1015,8 +1025,7 @@ stopwatch's display: it is an output.</p>
 <code>start_stop</code> toggles counting, meaning we need to remember if we were previously counting or not to
 decide what a press of the <code>start_stop</code> button does. Hence, the state variables (<code>svars</code>) of our
 stopwatch are</p>
-<pre><pre class="playground"><code class="language-rust  no_run compile_fail">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  no_run compile_fail"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	// inputs, `true` if pressed
@@ -1186,8 +1195,7 @@ by making the <code>reset</code> behavior preempt the behavior related to <code>
 <li><code>(¬'s.is_counting ∧ ¬'s.reset) ⇒ ('s.cnt = s.cnt)</code>.</li>
 </ul>
 <p>Alternatively, we can rewrite these constraints as</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>'s.cnt =
 	if 's.reset { 0 }
@@ -1196,8 +1204,7 @@ by making the <code>reset</code> behavior preempt the behavior related to <code>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Our transition relation is thus</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trans(s, 's) =
 	  ( 's.start_stop ⇒ ('s.is_counting = ¬s.is_counting))
@@ -1217,12 +1224,13 @@ two other states variables <code>'s.start_stop</code> and <code>'s.reset</code> 
 <em>inputs</em>. Since they are not constrained, they can take any (boolean) value at all.</p>
 <p>Notice also that, if we fix some values for <code>'s.start_stop</code> and <code>'s.reset</code>, then <code>trans</code> is
 <em>deterministic</em>: <code>s</code>, whatever it is, can only have one successor.</p>
-<table><thead><tr><th style="text-align: center"><code>'s.start_stop</code></th><th style="text-align: center"><code>'s.reset</code></th><th style="text-align: center"><code>'s.is_counting</code></th><th style="text-align: center"><code>'s.cnt</code></th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: center"><code>'s.start_stop</code></th><th style="text-align: center"><code>'s.reset</code></th><th style="text-align: center"><code>'s.is_counting</code></th><th style="text-align: center"><code>'s.cnt</code></th></tr></thead><tbody>
 <tr><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>s.is_counting</code></td><td style="text-align: center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
 <tr><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>¬s.is_counting</code></td><td style="text-align: center"><code>if 's.is_counting { s.cnt + 1 } else { s.cnt }</code></td></tr>
 <tr><td style="text-align: center"><code>false</code></td><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>s.is_counting</code></td><td style="text-align: center"><code>0</code></td></tr>
 <tr><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>true</code></td><td style="text-align: center"><code>¬s.is_counting</code></td><td style="text-align: center"><code>0</code></td></tr>
 </tbody></table>
+</div>
 <p>So, there are <strong>at most</strong> four potential successors to any state <code>s</code>, depending on the
 (unconstrained) values of the two inputs.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="smt-and-transition-systems"><a class="header" href="#smt-and-transition-systems">SMT and Transition Systems</a></h1>
@@ -2688,8 +2696,7 @@ we have seen up to this point. Systems are written in files organized as follows
 our stopwatch running example.</p>
 <p>First are state variable declarations. It is a list of declarations between braces introduced by
 the <code>svars</code> keyword and of form <code>&lt;var_1&gt; &lt;var_2&gt; ... &lt;var_n&gt;: &lt;type&gt;</code> with <code>n ≥ 1</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {
@@ -2705,8 +2712,7 @@ svars {
 <p>Next is the initial predicate, introduced by the <code>init</code> keyword. Mikino does not support
 SMT-LIB-2-like (s-)expressions (anymore), and instead expects Rust-like expressions. Note that
 mikino supports common unicode operators such as <code>∧</code>, <code>⋀</code>, <code>∨</code>, <code>⋁</code>, <code>≥</code> and <code>⇒</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Initial predicate.
 init {
@@ -2727,8 +2733,7 @@ This list is understood as a conjunction <code>⋀</code>, meaning the list abov
 that the transition relation relates two states: the <em>previous</em> one and the <em>next</em> one. In mikino,
 we refer to the <em>previous</em> version of a state variable <code>svar</code> by simply writing <code>svar</code>. If we want
 to refer to its <em>next</em> version, we must use the <code>'</code> (prime) prefix operator: <code>'svar</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Transition relation.
 trans {
@@ -2760,8 +2765,7 @@ trans {
 <code>candidates</code> keyword. They are given as a comma-separated list of named candidates of shape
 <code>&quot;string describing the candidate&quot;: &lt;expr&gt;</code>. The name of a candidate is what mikino will use to
 refer to that candidate in its output.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants.
 candidates {
@@ -2786,8 +2790,7 @@ of BMC is to produce counterexamples to candidate invariants thus disproving the
 <p>Let's try mikino on the stopwatch system described above. The full code is available in the
 <a href="mikino_bmc/index.html#version-1">Version 1</a> section, the following assumes that code is in a <code>test.mkn</code> file. Notice
 that the candidates</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants.
 candidates {
@@ -2874,8 +2877,7 @@ smt_traces
 <code>0</code>, which means <em><code>0</code> transitions away from the initial states</em>, which really means <em>the initial
 states</em>. Right away, it falsifies all our candidates but the first one. This is because of our
 initial predicate:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Initial predicate.
 init {
@@ -2889,8 +2891,7 @@ init {
 not pressed. Mikino's output makes sense, but can we modify the system so that falsifiable
 candidates can only be falsified by unrolling more than <code>0</code> times?</p>
 <p>We sure can, by changing <code>init</code> so that <code>cnt</code> always starts at <code>0</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Initial predicate.
 init {
@@ -2998,8 +2999,7 @@ finds another counterexample at depth <code>5</code> for <code>cnt ≤ 4</code> 
 <p><br />
 </p>
 <p>Let's modify our candidates, full code available in the <a href="mikino_bmc/index.html#version-3">Version 3</a> section.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants, or &quot;Proof Objectives&quot; (`po_s`).
 candidates {
@@ -3082,8 +3082,7 @@ is a previous state to refer to.</p>
 <h3 id="version-1-2"><a class="header" href="#version-1-2">Version 1</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {
@@ -3176,8 +3175,7 @@ checking for falsifications at depth 10
 <h3 id="version-2-2"><a class="header" href="#version-2-2">Version 2</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {
@@ -3309,8 +3307,7 @@ checking for falsifications at depth 10
 <h3 id="version-3-1"><a class="header" href="#version-3-1">Version 3</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {
@@ -3884,8 +3881,7 @@ smt_traces
 </blockquote>
 <p>Let's make sure mikino is able to prove that <code>cnt ≥ 0</code> on the stopwatch system. I am using the
 version of the system that starts at <code>0</code></p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Initial predicate.
 init {
@@ -3895,8 +3891,7 @@ init {
 <span class="boring">}
 </span></code></pre></pre>
 <p>with a <code>cnt ≥ 0</code> candidate as well as a few falsifiable other candidates:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants, or &quot;Proof Objectives&quot; (`po_s`).
 candidates {
@@ -4005,8 +4000,7 @@ of transitions. When we do not have this information, it can be a good idea to s
 unrolling depth with <code>--bmc_max &lt;int&gt;</code> just like we did in <code>bmc</code> mode. Note that using the
 <code>--bmc_max</code> flag automatically activates BMC, so we don't need the <code>--bmc</code> flag anymore.</p>
 <p>On our example</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// Candidate invariants, or &quot;Proof Objectives&quot; (`po_s`).
 candidates {
@@ -4138,8 +4132,7 @@ found a falsification at depth 5:
 <h2 id="full-code"><a class="header" href="#full-code">Full Code</a></h2>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>/// State variables.
 svars {
@@ -4333,8 +4326,7 @@ fold result: 26
 <p>Full code available below. For now let's turn to how the <code>fold</code> function would be implemented. Say
 <code>init</code> and <code>next</code> are <code>fold</code>'s two arguments (initial value and fold function respectively). Then
 the body of <code>fold</code> could look something like</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>        let mut acc = init;
         let mut i = 0;
@@ -4437,8 +4429,7 @@ fn main() {
 <p>Now let's think about this a little bit. The value <code>&amp;arr[i..next_i]</code>, where <code>next_i</code> is <code>i + grouping</code>, does not always <em>make sense</em>: <code>i + grouping</code> might strictly superior to <code>len</code> (<code>arr</code>'s
 length). This cannot happen if <code>len</code> is a multiple of <code>grouping</code> however, and actually <code>Wrap</code>'s
 constructor checks for this.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    /// Constructor.
     pub fn new(arr: [T; len], grouping: usize) -&gt; Self {
@@ -4470,8 +4461,7 @@ more, <em>etc.</em></p>
 understanding of the semantics of the language and the ability to design encoding rules that
 <em>are guaranteed</em> to preserve it, or at least preserve the part relevant for the analysis.
 So let's not do that and encode it by hand.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>        let mut acc = init;
         let mut i = 0;
@@ -4507,8 +4497,7 @@ challenging, and can void all results if it is not <em>sound</em>.</p>
 <p>Note that we have a few constants here: <code>len</code> and <code>grouping</code> do not change as the loop runs.
 Unfortunately mikino does not have a notion of constant <strong>yet</strong> (contributions are welcome), so we
 have to encode them as state variables along with <code>i</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -4521,8 +4510,7 @@ have to encode them as state variables along with <code>i</code>.</p>
 done or not. This allows our system to never end, which is a useful property for technical reasons
 beyond the scope of this chapter.</p>
 <p>We initialize the transition system encoding <code>fold</code>'s loop, as follows.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>init {
     len ≥ 0,
@@ -4544,8 +4532,7 @@ is empty, the loop never starts.</p>
 <p>The transition relation needs to do a few things. Our constants (encoded as state variables) need
 to keep their value, since if we left them unconstrained they could take any value. We also need to
 update the value of <code>done</code>, and finally that of <code>i</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Encodes iteration `(pre i)`, NOT iteration `i`. That is, `trans` encodes the
 // iteration where we access `arr` with the interval `(pre i)..((pre i) + grouping)`.
@@ -4573,8 +4560,7 @@ becomes <code>true</code> and the system stutters (its state variables stay the 
 <p>We should make sure our encoding behaves like this. So, what we should ask mikino is <em>&quot;with <code>len = 8</code> and <code>grouping = 4</code>, is it possible to reach a state such that <code>i = len</code>?&quot;</em>. We can do this with
 BMC: since we want to reach <code>len = 8 ∧ grouping = 4 ∧ i = len</code>, we can just need ask BMC to try to
 falsify <code>¬(len = 8 ∧ grouping = 4 ∧ i = len)</code>.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;candidate&quot;: ¬(len = 8 ⋀ grouping = 4 ⋀ i = len),
@@ -4638,8 +4624,7 @@ that shortly as we will run into this exact problem.</p>
 <p>We start with trying to prove that the lower bound of the interval <code>i..(i + grouping)</code> used on
 <code>arr</code> is legal, meaning to prove that <code>i &lt; len</code>. More precisely, <code>¬done ⇒ i &lt; len</code> since on exit
 (when <code>done</code> is <code>true</code>) we actually should have <code>i = len</code>; let's prove <code>done ⇒ i = len</code> as well.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -4695,8 +4680,7 @@ about the original system.</p>
 <p>The reason why, in this case, it <strong>would</strong> be safe to add <code>(pre i) ≥ 0</code> (don't do it though) is
 that it is an invariant, <em>i.e.</em> a <em>consequence</em> of the system's behavior. So there's no reason to
 force it on <code>trans</code>, we can just ask mikino to prove it instead.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;i ≥ 0&quot;: i ≥ 0,
@@ -4791,8 +4775,7 @@ less trivial to strengthen our real candidate successfully.</p>
 <p><br />
 </p>
 <p>For now let's just add these new candidates</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -4852,8 +4835,7 @@ check is able to go from <code>i = 3</code> to <code>i = 5</code> and falsify th
 <p>The problem here, as you might have guessed, is currently <code>i</code> can really take any value as long as
 its positive: no (candidate) invariant constrain it besides <code>i ≥ 0</code>. Looking at the code for the
 loop again</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>        let mut acc = init;
         let mut i = 0;
@@ -4867,8 +4849,7 @@ loop again</p>
 </span></code></pre></pre>
 <p>we see that <code>i</code> can only be a multiple of <code>grouping</code>. But we cannot know until we try to prove it.
 Also, will it strengthen our main candidate enough to make it inductive?</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -4932,8 +4913,7 @@ time and memory you could just wait for an arbitrary long time and actually get 
 you are in an <em>undecidable</em> logic fragment: you cannot know in advance if you will get an answer,
 even if you wait for an infinite amount of time and memory.</p>
 <p>That's not great either, and in fact this is (probably) what happened to us on</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -4984,8 +4964,7 @@ binary.)</p>
 <p>So, maybe, instead the loose constraint <code>len ≥ 0</code> and trying to conduct a proof for any value of
 <code>len</code> (which does not work, as we have seen), we could check each possible value of <code>len</code>
 separately. Notice that <code>len</code> is used in a non-linear <code>mod</code> application, <code>len % grouping</code>:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -5004,8 +4983,7 @@ separately. Notice that <code>len</code> is used in a non-linear <code>mod</code
 maybe, simplify our checks enough that Z3 can handle them. Let's try with <code>len = 8</code>; we could
 remove the <code>len</code> state variable altogether, but we can try simply forcing it to be <code>8</code>. To do this,
 first we need to change <code>init</code> slightly:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>init {
     len = 8, // new
@@ -5018,8 +4996,7 @@ first we need to change <code>init</code> slightly:</p>
 </span></code></pre></pre>
 <p>Nothing to do on <code>trans</code>, it does not mention <code>len</code> anyway. The candidate <code>len ≥ 0</code> changes to
 become more precise though:</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -5060,8 +5037,7 @@ enough for the program to be safe, since we have not proved that the upper bound
 prove that <code>i + grouping ≤ len</code> (interval <em>still exclusive</em> on the upper bound 😔).</p>
 <p>By now you might be familiar enough with induction's <em>step</em> checks to be able to anticipate whether
 this candidate is going to be inductive or not.</p>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>candidates {
 	&quot;not done then i &lt; len&quot;: ¬done ⇒ i &lt; len,
@@ -5208,8 +5184,7 @@ fold result: 26
 <h3 id="version-1-3"><a class="header" href="#version-1-3">Version 1</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -5285,8 +5260,7 @@ found a falsification at depth 2:
 <h3 id="version-2-3"><a class="header" href="#version-2-3">Version 2</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -5361,8 +5335,7 @@ failed: the following candidate(s) are not inductive:
 <h3 id="version-3-2"><a class="header" href="#version-3-2">Version 3</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -5451,8 +5424,7 @@ failed: the following candidate(s) are not inductive:
 <h3 id="version-4-1"><a class="header" href="#version-4-1">Version 4</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -5540,8 +5512,7 @@ failed: the following candidate(s) are not inductive:
 <h3 id="version-5"><a class="header" href="#version-5">Version 5</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -5602,8 +5573,7 @@ checking step case...
 <h3 id="version-6"><a class="header" href="#version-6">Version 6</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,
@@ -5667,8 +5637,7 @@ success: all candidate(s) are inductive
 <h3 id="version-7"><a class="header" href="#version-7">Version 7</a></h3>
 <details>
 	<summary>Expand this for the full code.</summary>
-<pre><pre class="playground"><code class="language-rust  compile_fail no_run">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust  compile_fail no_run"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>svars {
 	len grouping: int,

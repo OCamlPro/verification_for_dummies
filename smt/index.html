@@ -171,6 +171,22 @@ and <code>arr</code> an array:</p>
 </code></pre>
 <p>Note that the last atom, <code>arr[y] = x + 1</code>, mixes array selection <code>arr[y]</code> with addition over
 integers <code>x + 1</code>.</p>
+<h2 id="a-brief-discussion-on-notation-and-model-theory"><a class="header" href="#a-brief-discussion-on-notation-and-model-theory">A brief discussion on notation and model theory</a></h2>
+<blockquote>
+<p>TL;DR: <code>=</code> is an operator over terms allowing to build formulas. We need a different symbol to
+express <em>equivalence</em> between terms: <code>≡</code>. This operator is <em>meta</em> in the sense that it does not
+build MSFOL formulas, it just allows us humans to discuss term equivalence outside/above the MSFOL
+framework.</p>
+</blockquote>
+<p>Notice that our formulas can mention the equality relation <code>=</code>. This relation lives the world of
+<em>terms</em> that we construct formulas with, for instance <code>arr[y] = x + 1</code>. Hence, we need a meta-notion
+of equality/equivalence to express the fact that two terms should be <em>the same</em>.</p>
+<p>We use the <code>≡</code> relation over terms for this. For instance, <code>(x + 1) ≡ (1 + x)</code> or <em>&quot;<code>x + 1</code> is
+equivalent to <code>1 + x</code>&quot;</em> is not a formula, it is a (valid or invalid) statement that both terms are
+equivalent. In <em>model theory</em>, which we will not discuss much here, <code>t₁ ≡ t₂</code> means <em>&quot;whatever the
+valuation <strong>of the variables</strong> in <code>t₁</code> and <code>t₂</code>, both terms evaluate to the same value&quot;</em>. This means
+that <code>(x + 1) ≡ (1 + x)</code> can be thought of as <code>∀ x, x + 1 = 1 + x</code>, which is a valid (true)
+statement.</p>
 <h2 id="z3"><a class="header" href="#z3">Z3</a></h2>
 <p>Examples in the next sections (and the next chapter) will rely on the <a href="https://github.com/Z3Prover/z3" title="Z3 on github">Z3 SMT solver</a> to
 actually run. You can build it from source or recover a binary from the <a href="https://github.com/Z3Prover/z3/releases" title="Z3's releases on github">release page</a>.
@@ -282,7 +298,8 @@ that they are constants. This is because all functions are <em>pure</em> in SMT-
 produce the same output when given the same inputs. Hence, a function with no arguments can only
 produce one value, and is therefore the same as a constant. In fact, <code>(define-fun &lt;ident&gt; () &lt;type&gt; &lt;val&gt;)</code> is the same as <code>(define-const &lt;ident&gt; &lt;type&gt; &lt;val&gt;)</code>, and the <code>(declare-const &lt;ident&gt; &lt;type&gt;)</code> we used in the SMT-LIB script is equivalent to <code>(declare-fun &lt;ident&gt; () &lt;type&gt;)</code>. Again,
 in SMT-LIB (and pure functional languages) a constant is just a function that takes no argument.</p>
-<p>This valuation is a model because <code>(&gt; x 7) ≡ (&gt; 8 7)</code> holds and so does <code>(= y (* 2 x)) ≡ (= 16 (* 2 8))</code>.</p>
+<p>This valuation is a model because since <code>x</code> has value <code>8</code>, then <code>(&gt; x 7) ≡ (&gt; 8 7)</code> holds and so
+does <code>(= y (* 2 x)) ≡ (= 16 (* 2 8))</code> as <code>y</code> is <code>16</code> in the model.</p>
 <p><br />
 </p>
 <p>Now, remember that we can assert more than one constraint, and that Z3 works on the conjunction of
